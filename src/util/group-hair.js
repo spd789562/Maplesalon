@@ -7,7 +7,7 @@ const groupHair = function groupHair(hair) {
   return hair.reduce((allHair, face) => {
     const groupId = Math.floor(face.id / 10)
     const colorType = face.id % 10
-    if (allHair[groupId]) allHair[groupId] = { id: groupId }
+    if (!allHair[groupId]) allHair[groupId] = { id: groupId, colors: {} }
     allHair[groupId]['colors'][colorType] = face
     return allHair
   }, {})

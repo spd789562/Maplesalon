@@ -9,7 +9,7 @@ const groupFace = function groupFace(faces) {
     const splitedId = id.split('')
     const colorType = splitedId.splice(2, 1)
     const groupId = splitedId.join('')
-    if (allFaces[groupId]) allFaces[groupId] = { id: groupId }
+    if (!allFaces[groupId]) allFaces[groupId] = { id: groupId, colors: {} }
     allFaces[groupId]['colors'][colorType] = face
     return allFaces
   }, {})
