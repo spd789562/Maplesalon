@@ -1,0 +1,12 @@
+{
+  "title": "Maplestory Salon - Hair/Face/MixDye Simulator",
+
+  "seo_desc": "Salon Simulator for Maplestory, preview all of hair cut or eyes color and all mix dye recipe.",
+
+  "reset":"Reset",
+  "comma": ", ",
+
+  "page_not_found": "Page Not Found",
+  "error_with_status": "A {{statusCode}} error occurred on server",
+  "error_without_status": "An error occurred on the server"
+}
