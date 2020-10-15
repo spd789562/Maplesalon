@@ -53,7 +53,7 @@ function Home({ t, i18n }) {
       <BackTop />
       <Content className={styles.content}></Content>
       <Footer className={styles.footer}>
-        Maplestory Salon ©2020 Created by 丫村
+        Maplestory Salon ©2020 Created by 丫村, data from maplestory.io
       </Footer>
     </Layout>
   )

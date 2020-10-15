@@ -7,7 +7,7 @@ import '../styles/globals.css'
 
 const NextHead = withTranslation('index')(({ t, i18n: { language } }) => (
   <Head>
-    <title>{t('title')}</title>
+    <title>{t('seo_title')}</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
@@ -25,7 +25,7 @@ const NextHead = withTranslation('index')(({ t, i18n: { language } }) => (
     />
     <meta property="og:locale" content={language} />
     <meta property="og:site_name" content={t('title')} />
-    <meta property="og:title" content={t('title')} />
+    <meta property="og:title" content={t('seo_title')} />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
       rel="stylesheet"
