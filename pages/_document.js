@@ -1,6 +1,12 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
-import { GOOGlE_ANALYTICS_ID } from '../src/config'
+import getConfig from 'next/config'
+
+const {
+  isProd,
+  GOOGlE_ANALYTICS_ID
+} = getConfig().publicRuntimeConfig
+
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -12,15 +18,19 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${GOOGlE_ANALYTICS_ID}`}
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${GOOGlE_ANALYTICS_ID}');`,
-            }}
-          />
+          {isProd && (
+            <>
+              <script
+                async
+                src={`https://www.googletagmanager.com/gtag/js?id=${GOOGlE_ANALYTICS_ID}`}
+              />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${GOOGlE_ANALYTICS_ID}');`,
+                }}
+              />
+            </>
+          )}
         </Head>
         <body>
           <Main />
