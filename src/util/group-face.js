@@ -15,4 +15,14 @@ const groupFace = function groupFace(faces) {
   }, {})
 }
 
+// Black
+// Blue
+// Red
+// Green
+// Hazel
+// Sapphire
+// Violet
+// Amethyst
+// White
+
 export default groupFace
