@@ -2,12 +2,13 @@ import { Fragment } from 'react'
 import App from 'next/app'
 import Head from 'next/head'
 import { appWithTranslation, withTranslation } from '../src/i18n'
+import { Provider } from '../src/store'
 import '../styles/antd.less'
 import '../styles/globals.css'
 
 const NextHead = withTranslation('index')(({ t, i18n: { language } }) => (
   <Head>
-    <title>{t('title')}</title>
+    <title>{t('seo_title')}</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
@@ -25,7 +26,7 @@ const NextHead = withTranslation('index')(({ t, i18n: { language } }) => (
     />
     <meta property="og:locale" content={language} />
     <meta property="og:site_name" content={t('title')} />
-    <meta property="og:title" content={t('title')} />
+    <meta property="og:title" content={t('seo_title')} />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
       rel="stylesheet"
@@ -43,7 +44,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <NextHead />
-      <Component {...pageProps} />
+      <Provider>
+        <Component {...pageProps} />
+      </Provider>
     </Fragment>
   )
 }

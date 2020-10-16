@@ -1,7 +1,8 @@
 {
-  "title": "冒险岛沙龙 - 美发/美容/混染模拟器",
+  "title": "枫沙龙",
+  "seo_title": "枫沙龙 - 冒险岛美发/美容/混染模拟器",
 
-  "seo_desc": "冒險島沙龙，快速预览美发美容的各种颜色，支援混染及变更角色动作",
+  "seo_desc": "枫沙龙，快速预览冒险岛美发美容的各种颜色，支援混染及变更角色动作",
   
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",

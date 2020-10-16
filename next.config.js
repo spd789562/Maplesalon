@@ -6,7 +6,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const withSass = require('@zeit/next-sass')
 const withLess = require('@zeit/next-less')
 const withCSS = require('@zeit/next-css')
-const withPWA = require('next-pwa')
 const path = require('path')
 const config = require('./config')
 
@@ -42,7 +41,6 @@ module.exports = composeConfig(
       localIdentName: '[local]___[hash:base64:5]',
     },
   }),
-  withPWA,
   withBundleAnalyzer
 )({
   lessLoaderOptions: {
@@ -59,6 +57,7 @@ module.exports = composeConfig(
     }
 
     config.plugins.push(new MomentLocalesPlugin())
+    config.resolve.modules.push(path.resolve('./'))
 
     return config
   },
@@ -67,10 +66,9 @@ module.exports = composeConfig(
     ...config,
     GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID || '',
     localeSubpaths,
+    isProd,
   },
-  pwa: {
-    dest: 'public',
-    // only avaliable on production
-    disable: !isProd,
+  experimental: {
+    jsconfigPaths: true,
   },
 })
