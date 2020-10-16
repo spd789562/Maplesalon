@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import App from 'next/app'
 import Head from 'next/head'
 import { appWithTranslation, withTranslation } from '../src/i18n'
+import { Provider } from '../src/store'
 import '../styles/antd.less'
 import '../styles/globals.css'
 
@@ -43,7 +44,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <NextHead />
-      <Component {...pageProps} />
+      <Provider>
+        <Component {...pageProps} />
+      </Provider>
     </Fragment>
   )
 }
