@@ -1,4 +1,5 @@
-import React, { Fragment, useCallback, useEffect } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, memo } from 'react'
+import dynamic from 'next/dynamic'
 import {
   Layout,
   Form,
@@ -14,9 +15,15 @@ import {
   Button,
 } from 'antd'
 
+import { APIGetWz } from '@api'
+import { useStore } from '@store'
+import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
+
 /* component */
+import HairTab from '@components/hair-tab'
 
 /* mapping */
+import LanguageToRegion from '@mapping/language-to-region'
 
 /* helper */
 import { withTranslation } from '../src/i18n'
@@ -27,35 +34,90 @@ const { Header, Content, Footer } = Layout
 
 const initialValues = {}
 
+const ApparanceTabs = [
+  { key: 'hair', tab: 'hair', Component: <HairTab /> },
+  { key: 'face', tab: 'face', Component: <div>face</div> },
+  { key: 'skin', tab: 'skin', Component: <div>skin</div> },
+  { key: 'mixdye', tab: 'mix_dye', Component: <div>mix dye</div> },
+]
+
+const useInitWz = (language) => {
+  const [region, dispatch] = useStore('meta.region.region')
+  useEffect(() => {
+    APIGetWz().then((data) => {
+      dispatch({ type: INITIAL_WZ, payload: data })
+      if (!region)
+        dispatch({
+          type: CHANGE_REGION,
+          payload: data[LanguageToRegion[language] || 'GMS'],
+        })
+    })
+  }, [])
+  const handleChangeWz = (value) =>
+    dispatch({
+      type: CHANGE_REGION,
+      payload: value,
+    })
+  return { region, handleChangeWz }
+}
+
 function Home({ t, i18n }) {
-  return (
-    <Layout className="layout">
-      <Header className={styles.header}>
-        <div className={styles['header-container']}>
-          <h2 style={{ marginBottom: 0 }}>
-            {t('title')}
-            &nbsp;
-          </h2>
-          <div style={{ marginLeft: 'auto', marginRight: '4rem' }}>
-            <Select
-              onChange={(value) =>
-                i18n.changeLanguage && i18n.changeLanguage(value)
-              }
-              defaultValue={i18n.language}
-            >
-              <Select.Option value="en">English</Select.Option>
-              <Select.Option value="zh_tw">繁體中文</Select.Option>
-              <Select.Option value="zh_cn">简体中文</Select.Option>
-            </Select>
+  const { region, handleChangeWz } = useInitWz(i18n.language)
+  return useMemo(
+    () => (
+      <Layout className="layout">
+        <Header className={styles.header}>
+          <div className={styles['header-container']}>
+            <h2 style={{ marginBottom: 0 }}>
+              {t('title')}
+              &nbsp;
+            </h2>
+            <div>
+              <Select
+                onChange={(value) =>
+                  i18n.changeLanguage && i18n.changeLanguage(value)
+                }
+                defaultValue={i18n.language}
+              >
+                <Select.Option value="en">English</Select.Option>
+                <Select.Option value="zh_tw">繁體中文</Select.Option>
+                <Select.Option value="zh_cn">简体中文</Select.Option>
+              </Select>
+            </div>
           </div>
-        </div>
-      </Header>
-      <BackTop />
-      <Content className={styles.content}></Content>
-      <Footer className={styles.footer}>
-        Maplestory Salon ©2020 Created by 丫村, data from maplestory.io
-      </Footer>
-    </Layout>
+        </Header>
+        <BackTop />
+        <Content className={styles.content}>
+          <Row gutter={[16, 16]}>
+            <Col span={24} lg={12} xl={8}>
+              <Card
+                title={t('character_apparance')}
+                bordered={false}
+                tabList={ApparanceTabs}
+              >
+                {/* 
+              extra={
+                <Select size="small" value={region} onChange={handleChangeWz}>
+                  <Select.Option value="GMS">GMS</Select.Option>
+                  <Select.Option value="TWMS">TWMS</Select.Option>
+                  <Select.Option value="KMS">KMS</Select.Option>
+                  <Select.Option value="CMS">CMS</Select.Option>
+                </Select>
+              } */}
+                {ApparanceTabs[0].Component}
+              </Card>
+            </Col>
+            <Col span={24} lg={12} xl={16}>
+              <Card title={t('character')} bordered={false}></Card>
+            </Col>
+          </Row>
+        </Content>
+        <Footer className={styles.footer}>
+          {t('title')} ©2020 Created by 丫村, data from maplestory.io
+        </Footer>
+      </Layout>
+    ),
+    [i18n, region]
   )
 }
 
@@ -63,4 +125,4 @@ Home.getInitialProps = async () => ({
   namespacesRequired: ['index'],
 })
 
-export default withTranslation('index')(Home)
+export default withTranslation('index')(memo(Home))
