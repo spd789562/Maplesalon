@@ -2,11 +2,13 @@ import { createContext, useReducer, useContext } from 'react'
 
 import { combineReducer } from './_helper'
 import hairReducer from './hair'
+import metaReducer from './meta'
 
 const GlobalStore = createContext({})
 
 const [combinedReducers, initialState] = combineReducer({
   hair: hairReducer,
+  meta: metaReducer,
   // face,
   // skin,
   // character
@@ -25,6 +27,8 @@ export const Provider = ({ children }) => {
     </GlobalStore.Provider>
   )
 }
+
+export const useDispatch = () => useContext(GlobalStore).dispatch
 
 export const useStore = (keyPath) => {
   const state = useContext(GlobalStore)
