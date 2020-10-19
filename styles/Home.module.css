@@ -4,11 +4,6 @@
   height: unset;
 }
 .header-container {
-  background-image: url('/harmony_spirit.png');
-  background-position: 100% center;
-  background-size: auto 100%;
-  background-repeat: no-repeat;
-  background-origin: content-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,7 +23,7 @@
   text-align: center;
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1599px) {
   .header-container,
   .content,
   .footer {
@@ -37,11 +32,11 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1600px) {
   .header-container,
   .content {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1600px;
     margin-right: auto;
     margin-left: auto;
   }
