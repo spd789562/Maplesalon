@@ -12,7 +12,9 @@ const initialState = {
     version: (isClient && localStorage.getItem('version')) || '',
   },
   character: {
+    hairId: '',
     hairColorId: '0',
+    faceId: '',
     faceColorId: '0',
     mixHairColorId: '0',
     mixHairOpacity: 0.5,
