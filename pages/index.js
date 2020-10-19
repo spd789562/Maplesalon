@@ -42,7 +42,7 @@ const ApparanceTabs = [
 ]
 
 const useInitWz = (language) => {
-  const [region, dispatch] = useStore('meta.region.region')
+  const [region, dispatch] = useStore('meta.region.region', '')
   useEffect(() => {
     APIGetWz().then((data) => {
       dispatch({ type: INITIAL_WZ, payload: data })
@@ -94,16 +94,19 @@ function Home({ t, i18n }) {
                 title={t('character_apparance')}
                 bordered={false}
                 tabList={ApparanceTabs}
+                extra={
+                  <Select
+                    defaultValue={region}
+                    onChange={handleChangeWz}
+                    name="region"
+                  >
+                    <Select.Option value="GMS">GMS</Select.Option>
+                    <Select.Option value="TWMS">TWMS</Select.Option>
+                    <Select.Option value="KMS">KMS</Select.Option>
+                    <Select.Option value="CMS">CMS</Select.Option>
+                  </Select>
+                }
               >
-                {/* 
-              extra={
-                <Select size="small" value={region} onChange={handleChangeWz}>
-                  <Select.Option value="GMS">GMS</Select.Option>
-                  <Select.Option value="TWMS">TWMS</Select.Option>
-                  <Select.Option value="KMS">KMS</Select.Option>
-                  <Select.Option value="CMS">CMS</Select.Option>
-                </Select>
-              } */}
                 {ApparanceTabs[0].Component}
               </Card>
             </Col>
@@ -117,7 +120,7 @@ function Home({ t, i18n }) {
         </Footer>
       </Layout>
     ),
-    [i18n, region]
+    [i18n.language, region]
   )
 }
 
