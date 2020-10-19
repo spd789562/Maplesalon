@@ -30,7 +30,7 @@ export const Provider = ({ children }) => {
 
 export const useDispatch = () => useContext(GlobalStore).dispatch
 
-export const useStore = (keyPath) => {
+export const useStore = (keyPath, initialValue = null) => {
   const state = useContext(GlobalStore)
   let path = []
   const findValue = (keys) =>
@@ -43,5 +43,14 @@ export const useStore = (keyPath) => {
     path = [keyPath]
   }
 
-  return [findValue(path), state.dispatch]
+  let result = findValue(path)
+  if (
+    initialValue !== null &&
+    result.constructor === Object &&
+    Object.keys(result).length === 0
+  ) {
+    result = initialValue
+  }
+
+  return [result, state.dispatch]
 }
