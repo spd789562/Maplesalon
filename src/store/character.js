@@ -47,7 +47,6 @@ const initialCharacters = (isClient &&
         version: '228',
       },
     },
-    visible: true,
     fhSnap: true,
     flipX: false,
     name: '中文',
@@ -57,12 +56,18 @@ const initialCharacters = (isClient &&
 
 const initialState = {
   characters: (isClient && localStorage.getItem('MAPLESALON_characters')) || [],
-  currentId: initialCharacters[0].id,
+  current: initialCharacters[0],
 }
+
+const findCharacterById = (id, characters) => find(propEq('id', id), characters)
+const findCharacterIndexById = (id, characters) =>
+  findIndex(propEq('id', id), characters)
 
 const reducer = reducerCreator(initialState, {
   [CHARACTER_CHANGE]: (state, payload) =>
-    mergeRight(state, { currentId: payload }),
+    mergeRight(state, {
+      current: findCharacterById(payload, state.characters),
+    }),
   [CHARACTER_APPEND]: (state, payload) =>
     evolve(
       { characters: concat(Array.isArray(payload) ? payload : [payload]) },
@@ -72,7 +77,7 @@ const reducer = reducerCreator(initialState, {
     evolve(
       {
         characters: update(
-          findIndex(propEq('id', payload.id), state.characters),
+          findCharacterIndexById(payload.id, state.characters),
           payload
         ),
       },
@@ -83,7 +88,7 @@ const reducer = reducerCreator(initialState, {
       {
         characters: insert(
           findIndex(propEq('id', payload), state.characters),
-          find(propEq('id', payload), state.characters)
+          findCharacterById(payload, state.characters)
         ),
       },
       state
@@ -92,7 +97,7 @@ const reducer = reducerCreator(initialState, {
     evolve(
       {
         characters: remove(
-          findIndex(propEq('id', payload), state.characters),
+          findCharacterIndexById(payload, state.characters),
           1
         ),
       },
