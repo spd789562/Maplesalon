@@ -12,7 +12,7 @@ const initialState = {
     version: (isClient && localStorage.getItem('version')) || '',
   },
   character: {
-    skinId: '2000',
+    skinId: '',
     hairId: '',
     hairColorId: '0',
     faceId: '',
