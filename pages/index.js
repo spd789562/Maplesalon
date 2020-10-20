@@ -21,6 +21,8 @@ import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
 
 /* component */
 import HairTab from '@components/hair-tab'
+import CharacterDifferent from '@components/character-different'
+import CharacterList from '@components/character-list'
 
 /* mapping */
 import LanguageToRegion from '@mapping/language-to-region'
@@ -36,10 +38,10 @@ const { Header, Content, Footer } = Layout
 const initialValues = {}
 
 const ApparanceTabs = [
-  { key: 'hair', tab: 'hair', Component: HairTab },
-  { key: 'face', tab: 'face', Component: () => <div>face</div> },
-  { key: 'skin', tab: 'skin', Component: () => <div>skin</div> },
-  { key: 'mixdye', tab: 'mix_dye', Component: () => <div>mix dye</div> },
+  { key: 'hair', tab: 'hair', Component: <HairTab></HairTab> },
+  { key: 'face', tab: 'face', Component: <div>face</div> },
+  { key: 'skin', tab: 'skin', Component: <div>skin</div> },
+  { key: 'mixdye', tab: 'mix_dye', Component: <div>mix dye</div> },
 ]
 
 const TabMapping = ApparanceTabs.reduce(
@@ -70,7 +72,7 @@ const useInitWz = (language) => {
 function Home({ t, i18n }) {
   const { region, handleChangeWz } = useInitWz(i18n.language)
   const [tab, changeTab] = useState(ApparanceTabs[0].key)
-  const TabComponent = useMemo(() => TabMapping[tab].Component, [tab])
+  // const TabComponent = useMemo(() => TabMapping[tab].Component, [tab])
   return useMemo(
     () => (
       <Layout className="layout">
@@ -116,11 +118,14 @@ function Home({ t, i18n }) {
                   </Select>
                 }
               >
-                <TabComponent />
+                {TabMapping[tab].Component}
               </Card>
             </Col>
             <Col span={24} lg={12} xl={16}>
-              <Card title={t('character')} bordered={false}></Card>
+              <Card title={t('character')} bordered={false}>
+                <CharacterDifferent />
+                <CharacterList />
+              </Card>
             </Col>
           </Row>
         </Content>
