@@ -52,7 +52,7 @@ const HairTab = () => {
       <FixedSizeGrid
         columnCount={5}
         columnWidth={perWidth}
-        rowCount={beforeSarchHairs.length / 5}
+        rowCount={Math.ceil(beforeSarchHairs.length / 5)}
         rowHeight={95}
         width={width}
         height={300}

@@ -55,7 +55,7 @@ const ColorSelect = () => {
             onChange={handleChange}
           />
           <label
-            for={`color-select-${id}`}
+            htmlFor={`color-select-${id}`}
             className={`select-item-block ${
               hasThisColor(id) ? '' : 'select-item-block__none'
             }`}
