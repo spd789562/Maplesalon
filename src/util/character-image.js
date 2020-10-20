@@ -27,31 +27,29 @@ const characterImage = function characterImage(character, dataInformation) {
 
       return itemEntry
     })
-
+  console.log(itemEntries)
   let itemEntriesPayload = JSON.stringify([
     ...itemEntries,
-    {
-      itemId: Number(character.skin),
-      region: dataInformation.region,
-      version: dataInformation.version,
-    },
-    {
-      itemId: Number(character.skin) + 10000,
-      region: dataInformation.region,
-      version: dataInformation.version,
-    },
+    // {
+    //   itemId: Number(character.skin),
+    //   region: dataInformation.region,
+    //   version: dataInformation.version,
+    // },
+    // {
+    //   itemId: Number(character.skin) + 10000,
+    //   region: dataInformation.region,
+    //   version: dataInformation.version,
+    // },
   ])
   itemEntriesPayload = encodeURIComponent(
     itemEntriesPayload.substr(1, itemEntriesPayload.length - 2)
   )
 
   return `${API_DATA_URL}/api/character/${itemEntriesPayload}/${
-    character.action
-  }/${character.animating ? 'animated' : character.frame}?showears=${
-    character.mercEars
-  }&showLefEars=${character.illiumEars}&showHighLefEars=${
-    character.highFloraEars
-  }&resize=${character.zoom}&name=&flipX=${character.flipX}`
+    character.action || 'stand1'
+  }/${
+    character.animating ? 'animated' : character.frame
+  }?showears=${!!character.mercEars}&showLefEars=${!!character.illiumEars}&showHighLefEars=${!!character.highFloraEars}&resize=1&name=&flipX=${!!character.flipX}`
 }
 
 export default characterImage
