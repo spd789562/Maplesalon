@@ -36,7 +36,6 @@ const CharacterList = () => {
       })
     }
   }, [])
-  console.log(characters)
   return <div></div>
 }
 

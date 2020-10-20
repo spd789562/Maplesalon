@@ -27,7 +27,6 @@ const characterImage = function characterImage(character, dataInformation) {
 
       return itemEntry
     })
-  console.log(itemEntries)
   let itemEntriesPayload = JSON.stringify([
     ...itemEntries,
     // {
