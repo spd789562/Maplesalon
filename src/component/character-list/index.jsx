@@ -12,8 +12,11 @@ import { UPDATE_CHARACTER } from '@store/meta'
 /* components */
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import CharacterImage from '@components/character-image'
+import CharacterItem from './character-item'
 
+/* utils */
 import { getHairColorId } from '@utils/group-hair'
+import { clone } from 'ramda'
 
 import fakeCharacter from './fake-character'
 
@@ -36,10 +39,16 @@ const CharacterList = () => {
       !characters.length &&
         dispatch({
           type: CHARACTER_APPEND,
-          payload: Array.from(Array(20)).map((_, index) => ({
-            ...firstCharacter,
-            id: firstCharacter.id + index,
-          })),
+          payload: Array.from(Array(8))
+            .map((_, index) => ({
+              ...clone(firstCharacter),
+              id: firstCharacter.id + index,
+            }))
+            .map((c, index) => {
+              c.selectedItems.Hair.id = c.selectedItems.Hair.id + index
+              console.log(c.selectedItems.Hair.id)
+              return c
+            }),
         })
       dispatch({
         type: CHARACTER_CHANGE,
@@ -79,25 +88,11 @@ const CharacterList = () => {
               {...dropProvided.droppableProps}
             >
               {characters.map((character, index) => (
-                <Draggable
-                  key={character.id}
-                  draggableId={character.id.toString()}
+                <CharacterItem
+                  data={character}
                   index={index}
-                >
-                  {(dragProvided, dragSnapshot) => (
-                    <div
-                      ref={(ref) => dragProvided.innerRef(ref)}
-                      className={`drag-item ${
-                        dragSnapshot.isDragging ? 'drag-item__isdrag' : ''
-                      }`}
-                      {...dragProvided.draggableProps}
-                      {...dragProvided.dragHandleProps}
-                      draggable
-                    >
-                      <CharacterImage characterData={character} />
-                    </div>
-                  )}
-                </Draggable>
+                  key={character.id}
+                />
               ))}
               {dropProvided.placeholder}
               <div
