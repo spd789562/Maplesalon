@@ -10,10 +10,6 @@ const notEmpty = (str) => str !== '' && str !== undefined
 
 const isImageLoading = (url) =>
   new Promise((resolve) => {
-    if (!url) {
-      resolve(false)
-      return
-    }
     const img = new Image()
     img.onload = () => resolve(true)
     img.onerror = () => resolve(false)
@@ -97,7 +93,7 @@ const CharacterImage = ({ characterData }) => {
           position: absolute;
           top: 0;
           left: 0;
-          background-size: 80%;
+          background-size: 120%;
           display: block;
           width: 100%;
           height: 100%;
