@@ -37,7 +37,10 @@ const CharacterDifferent = () => {
       )
       copyCharacter.isChange = true
     }
-    if (characterChanges.hairId !== copyCharacter.selectedItems.Hair.id) {
+    if (
+      characterChanges.hairId &&
+      characterChanges.hairId !== copyCharacter.selectedItems.Hair.id
+    ) {
       copyCharacter.selectedItems.Hair = mergeRight(
         copyCharacter.selectedItems.Hair || {},
         {
@@ -47,7 +50,10 @@ const CharacterDifferent = () => {
       )
       copyCharacter.isChange = true
     }
-    if (characterChanges.faceId) {
+    if (
+      characterChanges.faceId &&
+      characterChanges.faceId !== copyCharacter.selectedItems.Face.id
+    ) {
       copyCharacter.selectedItems.Face = mergeRight(
         copyCharacter.selectedItems.Face || {},
         {
@@ -85,15 +91,17 @@ const CharacterDifferent = () => {
 
   return (
     <Row style={{ maxWidth: 500, margin: '0 auto' }}>
-      <Col flex={1}>
+      <Col flex="1 0 0">
         <CharacterImage characterData={currentCharacter} />
       </Col>
-      <Col flex="100px" className="changearrow">
+      <Col flex="80px" className="changearrow">
         <div className="changearrow">&gt;</div>
       </Col>
-      <Col flex={1}>
-        {changedCharacter.isChange && (
+      <Col flex="1 0 0">
+        {changedCharacter.isChange ? (
           <CharacterImage characterData={changedCharacter} />
+        ) : (
+          <div>not_thing_change</div>
         )}
       </Col>
       <style jsx>{`
