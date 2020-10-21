@@ -10,9 +10,11 @@ import {
   concat,
   insert,
   remove,
+  move,
 } from 'ramda'
 
 export const CHARACTER_CHANGE = 'CHARACTER_CHANGE'
+export const CHARACTER_REORDER = 'CHARACTER_REORDER'
 export const CHARACTER_APPEND = 'CHARACTER_APPEND'
 export const CHARACTER_UPDATE = 'CHARACTER_UPDATE'
 export const CHARACTER_DUPLICATE = 'CHARACTER_DUPLICATE'
@@ -32,6 +34,11 @@ const reducer = reducerCreator(initialState, {
     mergeRight(state, {
       current: findCharacterById(payload, state.characters),
     }),
+  [CHARACTER_REORDER]: (state, payload) =>
+    evolve(
+      { characters: move(payload.source.index, payload.destination.index) },
+      state
+    ),
   [CHARACTER_APPEND]: (state, payload) =>
     evolve(
       { characters: concat(Array.isArray(payload) ? payload : [payload]) },
