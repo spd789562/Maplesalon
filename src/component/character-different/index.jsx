@@ -18,6 +18,7 @@ const CharacterDifferent = () => {
   const changedCharacter = useMemo(() => {
     if (isEmpty(currentCharacter)) return currentCharacter
     const copyCharacter = clone(currentCharacter)
+    copyCharacter.isChange = false
     if (characterChanges.skinId) {
       copyCharacter.skin = characterChanges.skinId
       copyCharacter.selectedItems.Body = mergeRight(
@@ -36,7 +37,7 @@ const CharacterDifferent = () => {
       )
       copyCharacter.isChange = true
     }
-    if (characterChanges.hairId) {
+    if (characterChanges.hairId !== copyCharacter.selectedItems.Hair.id) {
       copyCharacter.selectedItems.Hair = mergeRight(
         copyCharacter.selectedItems.Hair || {},
         {
@@ -47,7 +48,7 @@ const CharacterDifferent = () => {
       copyCharacter.isChange = true
     }
     if (characterChanges.faceId) {
-      copyCharacter.selectedItems.Hair = mergeRight(
+      copyCharacter.selectedItems.Face = mergeRight(
         copyCharacter.selectedItems.Face || {},
         {
           id: characterChanges.faceId,
@@ -91,7 +92,9 @@ const CharacterDifferent = () => {
         <div className="changearrow">&gt;</div>
       </Col>
       <Col flex={1}>
-        <CharacterImage characterData={changedCharacter} />
+        {changedCharacter.isChange && (
+          <CharacterImage characterData={changedCharacter} />
+        )}
       </Col>
       <style jsx>{`
         .changearrow {
