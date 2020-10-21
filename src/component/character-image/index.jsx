@@ -89,11 +89,11 @@ const CharacterImage = ({ characterData }) => {
         }
         .character-container-image {
           background-repeat: no-repeat;
-          background-position: center;
           position: absolute;
           top: 0;
           left: 0;
-          background-size: 120%;
+          background-size: auto 100%;
+          background-position: center -20%;
           display: block;
           width: 100%;
           height: 100%;
