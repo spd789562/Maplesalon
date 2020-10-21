@@ -9,13 +9,24 @@ const colorRemover = (str) =>
 /**
  * formatHairId
  * @description format hair id to generic hair id
- * @param {number|string} id - hari id
+ * @param {number|string} id - hair id
  * @return {number}
  * @example
  *  formatHairId(30000) // -> 3000
  *  formatHairId(34503) // -> 3450
  */
 export const formatHairId = (id) => Math.floor(+id / 10)
+
+/**
+ * getHairColorId
+ * @description ge hair color id
+ * @param {number|string} id - hair id
+ * @return {number}
+ * @example
+ *  formatHairId(30000) // -> 0
+ *  formatHairId(34503) // -> 3
+ */
+export const getHairColorId = (id) => +id % 10
 
 /**
  * groupHair
@@ -25,7 +36,7 @@ export const formatHairId = (id) => Math.floor(+id / 10)
 const groupHair = function groupHair(hair) {
   return hair.reduce((allHair, face) => {
     const groupId = formatHairId(face.id)
-    const colorType = face.id % 10
+    const colorType = getHairColorId(face.id)
     if (!allHair[groupId]) {
       const name = name
       allHair[groupId] = {
