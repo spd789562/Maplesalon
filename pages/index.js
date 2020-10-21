@@ -124,6 +124,8 @@ function Home({ t, i18n }) {
             <Col span={24} lg={12} xl={16}>
               <Card title={t('character')} bordered={false}>
                 <CharacterDifferent />
+              </Card>
+              <Card title={t('character_selector')} bordered={false}>
                 <CharacterList />
               </Card>
             </Col>
