@@ -3,7 +3,7 @@ import { useMemo, memo, useState, useEffect } from 'react'
 import { useStore } from '@store'
 
 import characterImage from '@utils/character-image'
-import { formatHairId } from '@utils/group-hair'
+import { formatHairId, getHairColorId } from '@utils/group-hair'
 import { clone, isEmpty, identity } from 'ramda'
 
 const notEmpty = (str) => str !== '' && str !== undefined
@@ -23,7 +23,12 @@ const CharacterImage = ({ characterData }) => {
     let mixedCharacter
     let opacity = 1
     const hasCharacter = !isEmpty(characterData)
-    if (hasCharacter && characterData.mixDye) {
+    if (
+      hasCharacter &&
+      characterData.mixDye &&
+      getHairColorId(characterData.selectedItems.Hair.id) !==
+        characterData.mixDye.hairColorId
+    ) {
       const copyCharacter = clone(characterData)
       copyCharacter.selectedItems.Hair.id =
         formatHairId(characterData.selectedItems.Hair.id) * 10 +
@@ -84,7 +89,6 @@ const CharacterImage = ({ characterData }) => {
         .character-container {
           position: relative;
           width: 100%;
-          height: 100%;
           padding-bottom: 150%;
         }
         .character-container-image {

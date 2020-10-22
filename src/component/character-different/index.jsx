@@ -65,8 +65,10 @@ const CharacterDifferent = () => {
     }
     // has mix dye hair
     if (
-      characterChanges.mixHairColorId !== characterChanges.hairColorId ||
-      characterChanges.mixFaceColorId !== characterChanges.faceColorId
+      (characterChanges.mixHairColorId &&
+        characterChanges.mixHairColorId !== characterChanges.hairColorId) ||
+      (characterChanges.mixFaceColorId &&
+        characterChanges.mixFaceColorId !== characterChanges.faceColorId)
     ) {
       copyCharacter.mixDye = {
         hairColorId: characterChanges.mixHairColorId,
