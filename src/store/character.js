@@ -11,6 +11,8 @@ import {
   insert,
   remove,
   move,
+  prop,
+  max,
 } from 'ramda'
 
 export const CHARACTER_CHANGE = 'CHARACTER_CHANGE'
@@ -59,7 +61,9 @@ const reducer = reducerCreator(initialState, {
       {
         characters: insert(
           findIndex(propEq('id', payload), state.characters),
-          findCharacterById(payload, state.characters)
+          mergeRight(findCharacterById(payload, state.characters), {
+            id: state.characters.map(prop('id')).reduce(max, 0) + 1,
+          })
         ),
       },
       state
