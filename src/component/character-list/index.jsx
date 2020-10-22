@@ -13,6 +13,7 @@ import { UPDATE_CHARACTER } from '@store/meta'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import CharacterImage from '@components/character-image'
 import CharacterItem from './character-item'
+import CharacterNew from './character-new'
 
 /* utils */
 import { getHairColorId } from '@utils/group-hair'
@@ -46,7 +47,6 @@ const CharacterList = () => {
             }))
             .map((c, index) => {
               c.selectedItems.Hair.id = c.selectedItems.Hair.id + index
-              console.log(c.selectedItems.Hair.id)
               return c
             }),
         })
@@ -95,10 +95,7 @@ const CharacterList = () => {
                 />
               ))}
               {dropProvided.placeholder}
-              <div
-                className="drag-item"
-                style={{ border: '2px solid #000' }}
-              ></div>
+              <CharacterNew />
             </div>
           )}
         </Droppable>
@@ -108,16 +105,6 @@ const CharacterList = () => {
           overflow-x: auto;
           display: flex;
           height: 200px;
-        }
-        .drag-item {
-          width: 25%;
-          max-width: 120px;
-          flex-shrink: 0;
-          margin-right: 8;
-          outline: none;
-        }
-        .drag-item__isdrag {
-          border: 2px solid #000;
         }
       `}</style>
     </Fragment>
