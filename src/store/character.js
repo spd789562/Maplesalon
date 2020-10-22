@@ -13,6 +13,9 @@ import {
   move,
   prop,
   max,
+  assoc,
+  add,
+  __,
 } from 'ramda'
 
 export const CHARACTER_CHANGE = 'CHARACTER_CHANGE'
@@ -25,6 +28,7 @@ export const CHARACTER_DELETE = 'CHARACTER_DELETE'
 const initialState = {
   characters: [],
   current: {},
+  lastId: 1000000,
 }
 
 const findCharacterById = (id, characters) => find(propEq('id', id), characters)
@@ -43,7 +47,15 @@ const reducer = reducerCreator(initialState, {
     ),
   [CHARACTER_APPEND]: (state, payload) =>
     evolve(
-      { characters: concat(Array.isArray(payload) ? payload : [payload]) },
+      {
+        characters: concat(
+          __,
+          (Array.isArray(payload) ? payload : [payload]).map((c, index) =>
+            assoc('id', state.lastId + 1 + index, c)
+          )
+        ),
+        lastId: add((Array.isArray(payload) ? payload : [payload]).length),
+      },
       state
     ),
   [CHARACTER_UPDATE]: (state, payload) =>
@@ -62,9 +74,10 @@ const reducer = reducerCreator(initialState, {
         characters: insert(
           findIndex(propEq('id', payload), state.characters),
           mergeRight(findCharacterById(payload, state.characters), {
-            id: state.characters.map(prop('id')).reduce(max, 0) + 1,
+            id: state.lastId + 1,
           })
         ),
+        lastId: add(1),
       },
       state
     ),
