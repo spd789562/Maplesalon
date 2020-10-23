@@ -45,8 +45,9 @@ const CharacterDifferent = () => {
       copyCharacter.isChange = true
     }
     if (
-      characterChanges.hairId &&
-      characterChanges.hairId !== copyCharacter.selectedItems.Hair.id
+      !copyCharacter.selectedItems.Hair ||
+      (characterChanges.hairId &&
+        characterChanges.hairId !== copyCharacter.selectedItems.Hair.id)
     ) {
       copyCharacter.selectedItems.Hair = mergeRight(
         copyCharacter.selectedItems.Hair || {},
@@ -58,8 +59,9 @@ const CharacterDifferent = () => {
       copyCharacter.isChange = true
     }
     if (
-      characterChanges.faceId &&
-      characterChanges.faceId !== copyCharacter.selectedItems.Face.id
+      !copyCharacter.selectedItems.faceId ||
+      (characterChanges.faceId &&
+        characterChanges.faceId !== copyCharacter.selectedItems.Face.id)
     ) {
       copyCharacter.selectedItems.Face = mergeRight(
         copyCharacter.selectedItems.Face || {},
