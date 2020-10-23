@@ -2,6 +2,8 @@ import { createContext, useReducer, useContext } from 'react'
 
 import { combineReducer } from './_helper'
 import hairReducer from './hair'
+import faceReducer from './face'
+// import skinReducer from './skin'
 import metaReducer from './meta'
 import characterReducer from './character'
 
@@ -13,8 +15,8 @@ const [combinedReducers, initialState] = combineReducer({
   hair: hairReducer,
   meta: metaReducer,
   character: characterReducer,
-  // face,
-  // skin,
+  face: faceReducer,
+  // skin: skinReducer,
 })
 
 export const Provider = ({ children }) => {
