@@ -13,109 +13,87 @@ import {
 import { Modal } from 'antd'
 
 /* utils */
-import { getHairColorId } from '@utils/group-hair'
-import { filter, identity, map, mergeRight, pipe, propEq } from 'ramda'
+import importCharactersFromFile from '@utils/import-characters-from-file'
 
-const LoadCharacter = (file) =>
-  new Promise((resolve) => {
-    const fr = new FileReader()
-    fr.onload = function loadCharacterJson(event) {
-      try {
-        const data = JSON.parse(event.target.result)
-        resolve(data)
-      } catch {
-        resolve(false)
-      }
-    }
-    fr.readAsText(file)
-  })
-
-const validateCharacter = (character) => {
-  if (!character) return false
-  if (!character.type || character.type !== 'character') return false
-  if (!character.selectedItems?.Body?.id) return false
-  if (!character.selectedItems?.Head?.id) return false
-  return true
-}
-
-const mergeDefaultCharacter = (character) => {
-  const overridableData = mergeRight(
-    {
-      skin: 2000,
-      mercEars: false,
-      illiumEars: false,
-      highFloraEars: false,
-    },
-    character
-  )
-  return mergeRight(overridableData, {
-    action: 'stand1',
-    emotion: 'default',
-    frame: 0,
-    animating: false,
-  })
-}
-
-const ControlBoard = ({ characterData }) => {
+const CharacterNew = () => {
   const dispatch = useDispatch()
   const [isLoading, updateLoadState] = useState(false)
+  const [isDragOver, updateDragState] = useState(false)
   const handelSelect = useCallback(() => {
     dispatch({ type: CHARACTER_APPEND })
   }, [])
-  const { handleUpLoad, handleModal } = useMemo(
+  const importFile = useCallback((files) => {
+    updateLoadState(true)
+    importCharactersFromFile(files).then((data) => {
+      dispatch({ type: CHARACTER_APPEND, payload: data })
+      updateLoadState(false)
+    })
+  }, [])
+  const {
+    handleUpLoad,
+    handleDrop,
+    handleDragOver,
+    handleDragLeave,
+    handleModal,
+  } = useMemo(
     () => ({
       handleUpLoad: (event) => {
-        updateLoadState(true)
-        const loadPromises = Array.from(event.target.files)
-          .filter(propEq('type', 'application/json'))
-          .map(LoadCharacter)
-        Promise.all(loadPromises)
-          .then(pipe(filter(validateCharacter), map(mergeDefaultCharacter)))
-          .then((data) => {
-            dispatch({ type: CHARACTER_APPEND, payload: data })
-            updateLoadState(false)
-          })
+        if (event.target.files.length) importFile(event.target.files)
+      },
+      handleDrop: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+        if (event.dataTransfer && event.dataTransfer.files.length)
+          importFile(event.dataTransfer.files)
+        updateDragState(false)
+      },
+      handleDragOver: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+        updateDragState(true)
+      },
+      handleDragLeave: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+        updateDragState(false)
       },
       handleModal: () => {
         Modal.confirm({ title: 'choice character', content: <span>123</span> })
       },
     }),
-    [characterData]
+    []
   )
   return (
     <Fragment>
       <div
-        className="character-new"
-        onDragOver={console.log}
-        onDrop={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          console.log(e.dataTransfer.files)
-        }}
-        onDragOver={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-        }}
+        className={`character-new ${
+          isDragOver ? 'character-new__dragover' : ''
+        }`}
+        onDrop={handleDrop}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
         multiple
       >
         <PlusOutlined style={{ fontSize: '36px', color: '#bbb' }} />
-        <div className="control-board">
-          <label className="control-board-button">
-            <input
-              className="import-input"
-              type="file"
-              onChange={handleUpLoad}
-              accept=".json"
-              multiple
-            />
-            <ImportOutlined style={{ fontSize: '32px' }} />
-            Import
-          </label>
-          <div className="control-board-button" onClick={() => {}}>
-            <SnippetsOutlined style={{ fontSize: '32px' }} />
-            Select From Template
+        {!isDragOver && (
+          <div className="control-board">
+            <label className="control-board-button">
+              <input
+                className="import-input"
+                type="file"
+                onChange={handleUpLoad}
+                accept=".json"
+                multiple
+              />
+              <ImportOutlined style={{ fontSize: '32px' }} />
+              Import
+            </label>
+            <div className="control-board-button" onClick={() => {}}>
+              <SnippetsOutlined style={{ fontSize: '32px' }} />
+              Select From Template
+            </div>
           </div>
-        </div>
+        )}
         {isLoading && (
           <div className="file-loading">
             <Loading3QuartersOutlined style={{ fontSize: '42px' }} spin />
@@ -131,6 +109,7 @@ const ControlBoard = ({ characterData }) => {
           width: 25%;
           max-width: 120px;
           flex-shrink: 0;
+          transition: background-color 0.3s linear;
         }
         .character-new:before {
           content: '';
@@ -141,6 +120,13 @@ const ControlBoard = ({ characterData }) => {
           bottom: 12px;
           right: 8px;
           border: 2px dashed #bbb;
+          transition: border-color 0.3s linear;
+        }
+        .character-new__dragover {
+          background-color: #dedede;
+        }
+        .character-new__dragover:before {
+          border-color: #aaa;
         }
         .import-input {
           display: none;
@@ -202,4 +188,4 @@ const ControlBoard = ({ characterData }) => {
   )
 }
 
-export default ControlBoard
+export default CharacterNew

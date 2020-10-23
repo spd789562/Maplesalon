@@ -47,7 +47,7 @@ const characterImage = function characterImage(character, dataInformation) {
   return `${API_DATA_URL}/api/character/${itemEntriesPayload}/${
     character.action || 'stand1'
   }/${
-    character.animating ? 'animated' : character.frame
+    character.animating ? 'animated' : character.frame || '0'
   }?showears=${!!character.mercEars}&showLefEars=${!!character.illiumEars}&showHighLefEars=${!!character.highFloraEars}&resize=1&name=&flipX=${!!character.flipX}&renderMode=1`
 }
 
