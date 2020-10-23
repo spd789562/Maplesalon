@@ -107,7 +107,7 @@ function Home({ t, i18n }) {
                 onTabChange={changeTab}
                 extra={
                   <Select
-                    defaultValue={region}
+                    value={region}
                     onChange={handleChangeWz}
                     name="region"
                   >
