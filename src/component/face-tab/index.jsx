@@ -27,7 +27,6 @@ const FaceTab = () => {
     gender: '',
     name: '',
   })
-  console.log(faces)
   useEffect(() => {
     if (region && version)
       APIGetFace({ region, version }).then((data) =>

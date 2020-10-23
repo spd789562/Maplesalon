@@ -14,19 +14,18 @@ import Search from './search'
 import Image from './image'
 
 /* utils */
-import groupHair from '@utils/group-hair'
+import groupHair, { formatHairId } from '@utils/group-hair'
+import { propEq } from 'ramda'
 
 const HairTab = () => {
   const container = useRef(null)
   const [hairs, dispatch] = useStore('hair')
   const [{ region, version }] = useStore('meta.region')
-  const [colorId] = useStore('meta.character.hairColorId', '')
+  const [{ hairColorId: colorId, hairId }] = useStore('meta.character', '')
   const hairsValues = useMemo(() => Object.values(hairs), [hairs])
   const [beforeSarchHairs, updateSearchedHair] = useState(hairsValues)
-  const [searchParam, updateSearchParam] = useState({
-    gender: '',
-    name: '',
-  })
+  const [searchParam] = useStore('search.hair')
+
   useEffect(() => {
     if (region && version)
       APIGetHair({ region, version }).then((data) =>
@@ -44,11 +43,15 @@ const HairTab = () => {
         )
     )
   }, [hairsValues, searchParam, colorId])
+  const initHeight = useMemo(() => {
+    const index = beforeSarchHairs.findIndex(propEq('id', formatHairId(hairId)))
+    return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
+  }, [beforeSarchHairs, hairId])
   const width = container?.current?.offsetWidth || 300
   const perWidth = width / 5
   return (
     <div ref={container}>
-      <Search searchParam={searchParam} updateSearchParam={updateSearchParam} />
+      <Search />
       <FixedSizeGrid
         columnCount={5}
         columnWidth={perWidth}
@@ -57,6 +60,8 @@ const HairTab = () => {
         width={width}
         height={300}
         itemData={beforeSarchHairs}
+        initialScrollTop={initHeight}
+        key={beforeSarchHairs.length}
       >
         {({ columnIndex, rowIndex, data, style }) => {
           return (
