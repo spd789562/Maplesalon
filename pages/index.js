@@ -21,6 +21,7 @@ import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
 
 /* component */
 import HairTab from '@components/hair-tab'
+import FaceTab from '@components/face-tab'
 import CharacterDifferent from '@components/character-different'
 import CharacterList from '@components/character-list'
 
@@ -39,7 +40,7 @@ const initialValues = {}
 
 const ApparanceTabs = [
   { key: 'hair', tab: 'hair', Component: <HairTab></HairTab> },
-  { key: 'face', tab: 'face', Component: <div>face</div> },
+  { key: 'face', tab: 'face', Component: <FaceTab></FaceTab> },
   { key: 'skin', tab: 'skin', Component: <div>skin</div> },
   { key: 'mixdye', tab: 'mix_dye', Component: <div>mix dye</div> },
 ]
