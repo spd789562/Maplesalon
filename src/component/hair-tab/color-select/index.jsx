@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react'
+import { memo, useMemo, useCallback } from 'react'
 import { useStore } from '@store'
 
 /* action */
@@ -26,8 +26,10 @@ const ColorSelect = () => {
     () => (hairId ? hairs[formatHairId(hairId)] : { colors: {} }),
     [hairs, hairId]
   )
+
   const hasThisColor = useCallback(
-    (id) => (hairId ? includes(id, keys(currentHair.colors)) : true),
+    (id) =>
+      hairId && currentHair ? includes(id, keys(currentHair.colors)) : true,
     [hairs, hairId]
   )
 
@@ -51,11 +53,11 @@ const ColorSelect = () => {
             id={`color-select-${id}`}
             className="select-item-checkbox"
             value={id}
-            defaultChecked={id === hairColorId}
+            checked={id === hairColorId}
             onChange={handleChange}
           />
           <label
-            for={`color-select-${id}`}
+            htmlFor={`color-select-${id}`}
             className={`select-item-block ${
               hasThisColor(id) ? '' : 'select-item-block__none'
             }`}
@@ -105,4 +107,4 @@ const ColorSelect = () => {
   )
 }
 
-export default ColorSelect
+export default memo(ColorSelect)

@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useMemo, memo } from 'react'
+import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
 import dynamic from 'next/dynamic'
 import {
   Layout,
@@ -21,12 +21,15 @@ import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
 
 /* component */
 import HairTab from '@components/hair-tab'
+import CharacterDifferent from '@components/character-different'
+import CharacterList from '@components/character-list'
 
 /* mapping */
 import LanguageToRegion from '@mapping/language-to-region'
 
 /* helper */
 import { withTranslation } from '../src/i18n'
+import { assoc } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -35,11 +38,16 @@ const { Header, Content, Footer } = Layout
 const initialValues = {}
 
 const ApparanceTabs = [
-  { key: 'hair', tab: 'hair', Component: <HairTab /> },
+  { key: 'hair', tab: 'hair', Component: <HairTab></HairTab> },
   { key: 'face', tab: 'face', Component: <div>face</div> },
   { key: 'skin', tab: 'skin', Component: <div>skin</div> },
   { key: 'mixdye', tab: 'mix_dye', Component: <div>mix dye</div> },
 ]
+
+const TabMapping = ApparanceTabs.reduce(
+  (mapping, tab) => assoc(tab.key, tab, mapping),
+  {}
+)
 
 const useInitWz = (language) => {
   const [region, dispatch] = useStore('meta.region.region', '')
@@ -63,6 +71,8 @@ const useInitWz = (language) => {
 
 function Home({ t, i18n }) {
   const { region, handleChangeWz } = useInitWz(i18n.language)
+  const [tab, changeTab] = useState(ApparanceTabs[0].key)
+  // const TabComponent = useMemo(() => TabMapping[tab].Component, [tab])
   return useMemo(
     () => (
       <Layout className="layout">
@@ -94,6 +104,7 @@ function Home({ t, i18n }) {
                 title={t('character_apparance')}
                 bordered={false}
                 tabList={ApparanceTabs}
+                onTabChange={changeTab}
                 extra={
                   <Select
                     defaultValue={region}
@@ -107,11 +118,16 @@ function Home({ t, i18n }) {
                   </Select>
                 }
               >
-                {ApparanceTabs[0].Component}
+                {TabMapping[tab].Component}
               </Card>
             </Col>
             <Col span={24} lg={12} xl={16}>
-              <Card title={t('character')} bordered={false}></Card>
+              <Card title={t('character')} bordered={false}>
+                <CharacterDifferent />
+              </Card>
+              <Card title={t('character_selector')} bordered={false}>
+                <CharacterList />
+              </Card>
             </Col>
           </Row>
         </Content>
@@ -120,7 +136,7 @@ function Home({ t, i18n }) {
         </Footer>
       </Layout>
     ),
-    [i18n.language, region]
+    [i18n.language, region, tab]
   )
 }
 

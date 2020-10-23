@@ -1,0 +1,41 @@
+export default {
+  id: 100000000,
+  type: 'character',
+  action: 'stand1',
+  emotion: 'default',
+  skin: '2000',
+  frame: 0,
+  mercEars: false,
+  illiumEars: false,
+  highFloraEars: false,
+  selectedItems: {
+    Body: {
+      id: 2000,
+      region: 'TWMS',
+      version: '228',
+    },
+    Head: {
+      id: 12000,
+      region: 'TWMS',
+      version: '228',
+    },
+    Face: {
+      requiredGender: 1,
+      name: '새초롬 얼굴',
+      id: 28087,
+      region: 'KMS',
+      version: '338',
+    },
+    Hair: {
+      requiredGender: 2,
+      name: '黑色齊眉自然造型',
+      id: 30300,
+      region: 'TWMS',
+      version: '228',
+    },
+  },
+  fhSnap: true,
+  flipX: false,
+  name: '中文',
+  animating: false,
+}

@@ -3,15 +3,18 @@ import { createContext, useReducer, useContext } from 'react'
 import { combineReducer } from './_helper'
 import hairReducer from './hair'
 import metaReducer from './meta'
+import characterReducer from './character'
+
+import { isNil } from 'ramda'
 
 const GlobalStore = createContext({})
 
 const [combinedReducers, initialState] = combineReducer({
   hair: hairReducer,
   meta: metaReducer,
+  character: characterReducer,
   // face,
   // skin,
-  // character
 })
 
 export const Provider = ({ children }) => {
@@ -34,7 +37,11 @@ export const useStore = (keyPath, initialValue = null) => {
   const state = useContext(GlobalStore)
   let path = []
   const findValue = (keys) =>
-    keys.reduce((currentState, key) => currentState[key] || {}, state)
+    keys.reduce(
+      (currentState, key) =>
+        isNil(currentState[key]) ? {} : currentState[key],
+      state
+    )
   if (keyPath.indexOf('.') !== 1) {
     path = keyPath.split('.')
   } else if (Array.isArray(keyPath)) {
@@ -42,7 +49,6 @@ export const useStore = (keyPath, initialValue = null) => {
   } else {
     path = [keyPath]
   }
-
   let result = findValue(path)
   if (
     initialValue !== null &&

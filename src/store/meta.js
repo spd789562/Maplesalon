@@ -12,14 +12,16 @@ const initialState = {
     version: (isClient && localStorage.getItem('version')) || '',
   },
   character: {
+    skinId: '',
     hairId: '',
     hairColorId: '0',
     faceId: '',
     faceColorId: '0',
-    mixHairColorId: '0',
+    mixHairColorId: '',
     mixHairOpacity: 0.5,
-    mixFaceColorId: '0',
+    mixFaceColorId: '',
     mixFaceOpacity: 0.5,
+    items: {},
   },
   wz: {},
 }

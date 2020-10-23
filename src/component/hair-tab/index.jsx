@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useRef } from 'react'
+import { memo, useMemo, useState, useEffect, useRef } from 'react'
 import { useStore } from '@store'
 
 /* api */
@@ -20,7 +20,7 @@ const HairTab = () => {
   const container = useRef(null)
   const [hairs, dispatch] = useStore('hair')
   const [{ region, version }] = useStore('meta.region')
-  const [colorId] = useStore('meta.character.hairColorId')
+  const [colorId] = useStore('meta.character.hairColorId', '')
   const hairsValues = useMemo(() => Object.values(hairs), [hairs])
   const [beforeSarchHairs, updateSearchedHair] = useState(hairsValues)
   const [searchParam, updateSearchParam] = useState({
@@ -52,7 +52,7 @@ const HairTab = () => {
       <FixedSizeGrid
         columnCount={5}
         columnWidth={perWidth}
-        rowCount={beforeSarchHairs.length / 5}
+        rowCount={Math.ceil(beforeSarchHairs.length / 5)}
         rowHeight={95}
         width={width}
         height={300}
@@ -78,4 +78,4 @@ const HairTab = () => {
   )
 }
 
-export default HairTab
+export default memo(HairTab)
