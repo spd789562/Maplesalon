@@ -1,17 +1,20 @@
-import { useMemo, memo } from 'react'
+import { useMemo, useCallback, memo } from 'react'
 
 /* store */
 import { useStore } from '@store'
+import { UPDATE_CHARACTER } from '@store/meta'
+import { CHARACTER_UPDATE, CHARACTER_CHANGE } from '@store/character'
 
 /* components */
-import { Row, Col } from 'antd'
+import { Row, Col, Button } from 'antd'
+import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
 /* utils */
 import { clone, isEmpty, mergeRight } from 'ramda'
 
 const CharacterDifferent = () => {
-  const [currentCharacter] = useStore('character.current', {})
+  const [currentCharacter, dispatch] = useStore('character.current', {})
   const [characterChanges] = useStore('meta.character', {})
   const [regionData] = useStore('meta.region', {})
 
@@ -19,6 +22,10 @@ const CharacterDifferent = () => {
     if (isEmpty(currentCharacter)) return currentCharacter
     const copyCharacter = clone(currentCharacter)
     copyCharacter.isChange = false
+    if (characterChanges.name) {
+      copyCharacter.name = characterChanges.name
+      copyCharacter.isChange = true
+    }
     if (characterChanges.skinId) {
       copyCharacter.skin = characterChanges.skinId
       copyCharacter.selectedItems.Body = mergeRight(
@@ -91,12 +98,28 @@ const CharacterDifferent = () => {
     return copyCharacter
   }, [regionData, currentCharacter, characterChanges])
 
+  const handleReset = useCallback(() => {
+    dispatch({
+      type: UPDATE_CHARACTER,
+      payload: {
+        hairId: currentCharacter.selectedItems?.Hair?.id || '',
+        faceId: currentCharacter.selectedItems?.Face?.id || '',
+        mixHairColorId: currentCharacter.mixDye?.hairColorId || '',
+        mixFaceColorId: currentCharacter.mixDye?.faceColorId || '',
+      },
+    })
+  }, [currentCharacter])
+  const handleSave = useCallback(() => {
+    dispatch({ type: CHARACTER_UPDATE, payload: changedCharacter })
+    dispatch({ type: CHARACTER_CHANGE, payload: changedCharacter.id })
+  }, [changedCharacter])
+
   return (
     <Row style={{ maxWidth: 500, margin: '0 auto' }}>
       <Col flex="1 0 0">
         <CharacterImage characterData={currentCharacter} />
       </Col>
-      <Col flex="80px" className="changearrow">
+      <Col flex="80px">
         <div className="changearrow">&gt;</div>
       </Col>
       <Col flex="1 0 0">
@@ -105,6 +128,35 @@ const CharacterDifferent = () => {
         ) : (
           <div>not_thing_change</div>
         )}
+      </Col>
+      <Col span={24}>
+        <Row>
+          <Col flex="1 0 0">
+            <Button
+              type="default"
+              size="large"
+              icon={<ReloadOutlined />}
+              disabled={!changedCharacter.isChange}
+              onClick={handleReset}
+              block
+            >
+              Reset
+            </Button>
+          </Col>
+          <Col flex="80px"></Col>
+          <Col flex="1 0 0">
+            <Button
+              type="primary"
+              size="large"
+              icon={<SaveOutlined />}
+              disabled={!changedCharacter.isChange}
+              onClick={handleSave}
+              block
+            >
+              Save
+            </Button>
+          </Col>
+        </Row>
       </Col>
       <style jsx>{`
         .changearrow {
