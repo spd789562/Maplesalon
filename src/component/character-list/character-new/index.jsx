@@ -1,4 +1,4 @@
-import { useCallback, Fragment, useMemo, useState } from 'react'
+import { useCallback, Fragment, useMemo, useState, useContext } from 'react'
 /* action */
 import { useDispatch } from '@store'
 import { CHARACTER_APPEND } from '@store/character'
@@ -11,6 +11,7 @@ import {
   Loading3QuartersOutlined,
 } from '@ant-design/icons'
 import { Modal } from 'antd'
+import DefaultCharacter from './default-character'
 
 /* utils */
 import importCharactersFromFile from '@utils/import-characters-from-file'
@@ -19,9 +20,8 @@ const CharacterNew = () => {
   const dispatch = useDispatch()
   const [isLoading, updateLoadState] = useState(false)
   const [isDragOver, updateDragState] = useState(false)
-  const handelSelect = useCallback(() => {
-    dispatch({ type: CHARACTER_APPEND })
-  }, [])
+  const [modalVisible, updateModalVisible] = useState(false)
+  const [selectCharacter, selectDefaultCharacter] = useState(null)
   const importFile = useCallback((files) => {
     updateLoadState(true)
     importCharactersFromFile(files).then((data) => {
@@ -29,13 +29,22 @@ const CharacterNew = () => {
       updateLoadState(false)
     })
   }, [])
-  const {
-    handleUpLoad,
-    handleDrop,
-    handleDragOver,
-    handleDragLeave,
-    handleModal,
-  } = useMemo(
+  const { handleOpenModal, handleCancel, handleOk } = useMemo(
+    () => ({
+      handleOpenModal: () => updateModalVisible(true),
+      handleCancel: () => {
+        updateModalVisible(false)
+        selectDefaultCharacter(null)
+      },
+      handleOk: () => {
+        updateModalVisible(false)
+        dispatch({ type: CHARACTER_APPEND, payload: [selectCharacter] })
+        selectDefaultCharacter(null)
+      },
+    }),
+    [selectCharacter]
+  )
+  const { handleUpLoad, handleDrop, handleDragOver, handleDragLeave } = useMemo(
     () => ({
       handleUpLoad: (event) => {
         if (event.target.files.length) importFile(event.target.files)
@@ -57,9 +66,6 @@ const CharacterNew = () => {
         event.stopPropagation()
         updateDragState(false)
       },
-      handleModal: () => {
-        Modal.confirm({ title: 'choice character', content: <span>123</span> })
-      },
     }),
     []
   )
@@ -75,6 +81,19 @@ const CharacterNew = () => {
         multiple
       >
         <PlusOutlined style={{ fontSize: '36px', color: '#bbb' }} />
+        <Modal
+          title="choice character"
+          visible={modalVisible}
+          width={600}
+          centered
+          onCancel={handleCancel}
+          onOk={handleOk}
+        >
+          <DefaultCharacter
+            id={(selectCharacter && selectCharacter.id) || ''}
+            handleSelect={selectDefaultCharacter}
+          />
+        </Modal>
         {!isDragOver && (
           <div className="control-board">
             <label className="control-board-button">
@@ -88,7 +107,7 @@ const CharacterNew = () => {
               <ImportOutlined style={{ fontSize: '32px' }} />
               Import
             </label>
-            <div className="control-board-button" onClick={() => {}}>
+            <div className="control-board-button" onClick={handleOpenModal}>
               <SnippetsOutlined style={{ fontSize: '32px' }} />
               Select From Template
             </div>
