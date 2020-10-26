@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext } from 'react'
+import { createContext, useReducer, useContext, useMemo } from 'react'
 
 import { combineReducer } from './_helper'
 import hairReducer from './hair'

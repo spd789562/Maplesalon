@@ -1,6 +1,7 @@
 import { reducerCreator } from './_helper'
 
 export const SEARCH_UPDATE = 'SEARCH_UPDATE'
+export const WIDTH_UPDATE = 'WIDTH_UPDATE'
 
 const initialState = {
   hair: {
@@ -11,6 +12,7 @@ const initialState = {
     name: '',
     gender: '',
   },
+  tabWidth: 300,
 }
 
 const reducer = reducerCreator(initialState, {
@@ -20,6 +22,10 @@ const reducer = reducerCreator(initialState, {
       ...state[type],
       [field]: value,
     },
+  }),
+  [WIDTH_UPDATE]: (state, payload) => ({
+    ...state,
+    tabWidth: payload,
   }),
 })
 

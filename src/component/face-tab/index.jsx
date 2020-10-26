@@ -1,4 +1,4 @@
-import { memo, useMemo, useState, useEffect, useRef, createRef } from 'react'
+import { memo, useMemo, useState, useEffect, createRef } from 'react'
 import { useStore } from '@store'
 
 /* api */
@@ -22,11 +22,11 @@ import { propEq } from 'ramda'
 const faceRef = createRef()
 
 const FaceTab = () => {
-  const container = useRef(null)
   const [faces, dispatch] = useStore('face')
   const [{ region, version, face: faceRegion }] = useStore('meta.region')
   const [{ faceColorId: colorId, faceId }] = useStore('meta.character', '')
   const [searchParam] = useStore('search.face')
+  const [width] = useStore('search.tabWidth')
   const facesValues = useMemo(() => Object.values(faces), [faces])
   const [beforeSarchFaces, updateSearchedFace] = useState(facesValues)
   useEffect(() => {
@@ -76,10 +76,9 @@ const FaceTab = () => {
       return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
     }
   }, [beforeSarchFaces, faceId])
-  const width = container?.current?.offsetWidth || 300
   const perWidth = width / 5
   return (
-    <div ref={container}>
+    <div>
       <Search />
       <FixedSizeGrid
         columnCount={5}

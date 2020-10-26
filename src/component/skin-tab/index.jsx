@@ -1,4 +1,6 @@
-import { memo, useState, useEffect, useRef } from 'react'
+import { memo, useRef, useMemo } from 'react'
+
+import { useStore } from '@store'
 
 /* components */
 import { FixedSizeGrid } from 'react-window'
@@ -7,30 +9,30 @@ import Image from './image'
 /* mapping */
 import Skins from './skins'
 
+const COLUMN_COUNT = 4
+
 const FaceTab = () => {
   const container = useRef(null)
-  const [gridWidth, updateWidth] = useState(300)
-  useEffect(() => {
-    if (container?.current) {
-      updateWidth(container.current.offsetWidth)
-    }
-  }, [container])
-  const perWidth = gridWidth / 4
-  return (
-    <div ref={container}>
-      <FixedSizeGrid
-        columnCount={4}
-        columnWidth={perWidth}
-        rowCount={Math.ceil(Skins.length / 4)}
-        rowHeight={105}
-        width={gridWidth}
-        height={300}
-        itemData={Skins}
-        key={gridWidth}
-      >
-        {Image}
-      </FixedSizeGrid>
-    </div>
+  const [width] = useStore('search.tabWidth')
+  const perWidth = width / COLUMN_COUNT
+  return useMemo(
+    () => (
+      <div ref={container}>
+        <FixedSizeGrid
+          columnCount={COLUMN_COUNT}
+          columnWidth={perWidth}
+          rowCount={Math.ceil(Skins.length / COLUMN_COUNT)}
+          rowHeight={105}
+          width={width}
+          height={300}
+          itemData={Skins}
+          key={width}
+        >
+          {Image}
+        </FixedSizeGrid>
+      </div>
+    ),
+    [width]
   )
 }
 

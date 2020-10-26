@@ -1,4 +1,4 @@
-import { memo, useMemo, useState, useEffect, useRef, createRef } from 'react'
+import { memo, useMemo, useState, useEffect, createRef } from 'react'
 import { useStore } from '@store'
 
 /* api */
@@ -22,11 +22,12 @@ import { propEq } from 'ramda'
 const hairRef = createRef()
 
 const HairTab = () => {
-  const container = useRef(null)
   const [hairs, dispatch] = useStore('hair')
   const [{ region, version, hair: hairRegion }] = useStore('meta.region')
   const [{ hairColorId: colorId, hairId }] = useStore('meta.character', '')
   const [searchParam] = useStore('search.hair')
+  const [width] = useStore('search.tabWidth')
+
   const hairsValues = useMemo(() => Object.values(hairs), [hairs])
   const [beforeSarchHairs, updateSearchedHair] = useState(hairsValues)
 
@@ -78,10 +79,9 @@ const HairTab = () => {
       return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
     }
   }, [beforeSarchHairs, hairId])
-  const width = container?.current?.offsetWidth || 300
   const perWidth = width / 5
   return (
-    <div ref={container}>
+    <div>
       <Search />
       <FixedSizeGrid
         columnCount={5}

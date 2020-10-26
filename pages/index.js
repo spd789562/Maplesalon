@@ -24,6 +24,7 @@ import HairTab from '@components/hair-tab'
 import FaceTab from '@components/face-tab'
 import SkinTab from '@components/skin-tab'
 import EarsTab from '@components/ears-tab'
+import TabResizer from '@components/tab-resizer'
 import CharacterDifferent from '@components/character-different'
 import CharacterList from '@components/character-list'
 
@@ -123,6 +124,7 @@ function Home({ t, i18n }) {
                   </Select>
                 }
               >
+                <TabResizer></TabResizer>
                 {TabMapping[tab].Component}
               </Card>
             </Col>
