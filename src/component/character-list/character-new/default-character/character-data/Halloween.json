@@ -1,0 +1,126 @@
+{
+  "id": 1603677570537,
+  "type": "character",
+  "action": "stand1",
+  "emotion": "default",
+  "skin": "2010",
+  "zoom": 1,
+  "frame": 0,
+  "mercEars": false,
+  "illiumEars": false,
+  "selectedItems": {
+    "Body": {
+      "name": "Body",
+      "noIcon": true,
+      "id": 2010,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Body",
+        "lowItemId": 2000,
+        "highItemId": 2999
+      }
+    },
+    "Head": {
+      "name": "Head",
+      "noIcon": true,
+      "id": 12010,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Head",
+        "lowItemId": 12000,
+        "highItemId": 12999
+      }
+    },
+    "Hat": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 5,
+      "name": "萬聖節慶典帽子",
+      "desc": "",
+      "id": 1005439,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Hat",
+        "lowItemId": 1000000,
+        "highItemId": 1010000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Overall": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "萬聖節南瓜套裝",
+      "desc": "",
+      "id": 1051543,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Overall",
+        "lowItemId": 1050000,
+        "highItemId": 1060000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Face": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "萬聖貓臉型(褐色眼)",
+      "desc": "",
+      "id": 27407,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Face",
+        "lowItemId": 20000,
+        "highItemId": 29999
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hair": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "橘色愛美造型",
+      "desc": "",
+      "id": 38472,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Hair",
+        "lowItemId": 30000,
+        "highItemId": 49999
+      },
+      "region": "TWMS",
+      "version": "228"
+    }
+  },
+  "visible": true,
+  "position": {
+    "x": 313,
+    "y": 20
+  },
+  "fhSnap": true,
+  "name": "Halloween"
+}

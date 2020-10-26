@@ -1,0 +1,166 @@
+{
+  "id": 1603677051196,
+  "type": "character",
+  "action": "stand1",
+  "emotion": "default",
+  "skin": 2000,
+  "zoom": 1,
+  "frame": 0,
+  "mercEars": false,
+  "illiumEars": false,
+  "selectedItems": {
+    "Body": {
+      "name": "Body",
+      "noIcon": true,
+      "id": 2000,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Body",
+        "lowItemId": 2000,
+        "highItemId": 2999
+      }
+    },
+    "Head": {
+      "name": "Head",
+      "noIcon": true,
+      "id": 12000,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Head",
+        "lowItemId": 12000,
+        "highItemId": 12999
+      }
+    },
+    "Face": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "阿戴爾臉型",
+      "desc": "",
+      "id": 27192,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Face",
+        "lowItemId": 20000,
+        "highItemId": 29999
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Overall": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 3,
+      "name": "超級大師制服",
+      "desc": "賦予高潔的騎士的制服。",
+      "id": 1053545,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Overall",
+        "lowItemId": 1050000,
+        "highItemId": 1060000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Shoes": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 3,
+      "name": "超級大師靴子",
+      "desc": "賦予高潔的騎士的鞋子。",
+      "id": 1073430,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Shoes",
+        "lowItemId": 1070000,
+        "highItemId": 1080000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Cash": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 2,
+      "name": "超級大師之劍",
+      "desc": "這把劍只授與具有權威和高尚品格的騎士，可裝備在#c所有武器#上。",
+      "id": 1702983,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "One-Handed Weapon",
+        "subCategory": "Cash",
+        "lowItemId": 1701000,
+        "highItemId": 1704000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hat": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 5,
+      "name": "超級大師帽",
+      "desc": "賦予高潔的騎士的帽子。",
+      "id": 1005504,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Hat",
+        "lowItemId": 1000000,
+        "highItemId": 1010000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hair": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "黑色自然雷普髮型",
+      "desc": "",
+      "id": 48660,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Hair",
+        "lowItemId": 30000,
+        "highItemId": 49999
+      },
+      "region": "TWMS",
+      "version": "228"
+    }
+  },
+  "visible": true,
+  "position": {
+    "x": 192,
+    "y": 82
+  },
+  "fhSnap": true,
+  "name": "Adele"
+}
