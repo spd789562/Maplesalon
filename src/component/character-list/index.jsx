@@ -17,6 +17,8 @@ import CharacterNew from './character-new'
 
 /* utils */
 import { getHairColorId } from '@utils/group-hair'
+import { getFaceColorId } from '@utils/group-face'
+import getSkinRegion from '@utils/get-skin-region'
 import { clone } from 'ramda'
 
 import fakeCharacter from './fake-character'
@@ -60,8 +62,9 @@ const CharacterList = () => {
         payload: {
           hairId: firstCharacterHair,
           hairColorId: getHairColorId(firstCharacterHair) + '',
-          // faceId: firstCharacterFace,
-          // skinId: '2001',
+          faceId: firstCharacterFace,
+          faceColorId: getFaceColorId(firstCharacterFace) + '',
+          skinId: getSkinRegion(firstCharacter.skin),
           // mixHairColorId: '1',
           // mixHairOpacity: 0.5,
         },

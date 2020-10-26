@@ -7,7 +7,7 @@ import { FixedSizeGrid } from 'react-window'
 import Image from './image'
 
 /* mapping */
-import Skins from './skins'
+import Skins from '@mapping/skins'
 
 const COLUMN_COUNT = 4
 
