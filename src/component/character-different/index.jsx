@@ -38,6 +38,19 @@ const CharacterDifferent = () => {
       )
       copyCharacter.isChange = true
     }
+    const originEarsType = copyCharacter.highFloraEars
+      ? '3'
+      : copyCharacter.illiumEars
+      ? '2'
+      : copyCharacter.mercEars
+      ? '1'
+      : '0'
+    if (characterChanges.earType !== originEarsType) {
+      copyCharacter.mercEars = characterChanges.earType === '1'
+      copyCharacter.illiumEars = characterChanges.earType === '2'
+      copyCharacter.highFloraEars = characterChanges.earType === '3'
+      copyCharacter.isChange = true
+    }
     if (
       !copyCharacter.selectedItems.Hair ||
       (characterChanges.hairId &&

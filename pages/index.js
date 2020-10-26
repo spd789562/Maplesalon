@@ -23,6 +23,7 @@ import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
 import HairTab from '@components/hair-tab'
 import FaceTab from '@components/face-tab'
 import SkinTab from '@components/skin-tab'
+import EarsTab from '@components/ears-tab'
 import CharacterDifferent from '@components/character-different'
 import CharacterList from '@components/character-list'
 
@@ -43,6 +44,7 @@ const ApparanceTabs = [
   { key: 'hair', tab: 'hair', Component: <HairTab /> },
   { key: 'face', tab: 'face', Component: <FaceTab /> },
   { key: 'skin', tab: 'skin', Component: <SkinTab /> },
+  { key: 'ears', tab: 'ears', Component: <EarsTab /> },
   { key: 'mixdye', tab: 'mix_dye', Component: <div>mix dye</div> },
 ]
 

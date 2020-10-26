@@ -22,6 +22,7 @@ const initialState = {
       region: '',
       version: '',
     },
+    earType: '0',
     skinId: '',
     hairId: '',
     hairColorId: '0',
