@@ -11,7 +11,16 @@ import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
 /* utils */
-import { add, clone, evolve, isEmpty, mergeRight, pipe } from 'ramda'
+import { add, clone, evolve, isEmpty, mergeRight, pick, pipe } from 'ramda'
+
+const currentEarsType = (character) =>
+  character.highFloraEars
+    ? '3'
+    : character.illiumEars
+    ? '2'
+    : character.mercEars
+    ? '1'
+    : '0'
 
 const CharacterDifferent = () => {
   const [currentCharacter, dispatch] = useStore('character.current', {})
@@ -38,13 +47,7 @@ const CharacterDifferent = () => {
       )
       copyCharacter.isChange = true
     }
-    const originEarsType = copyCharacter.highFloraEars
-      ? '3'
-      : copyCharacter.illiumEars
-      ? '2'
-      : copyCharacter.mercEars
-      ? '1'
-      : '0'
+    const originEarsType = currentEarsType(copyCharacter)
     if (characterChanges.earType !== originEarsType) {
       copyCharacter.mercEars = characterChanges.earType === '1'
       copyCharacter.illiumEars = characterChanges.earType === '2'
@@ -115,6 +118,10 @@ const CharacterDifferent = () => {
         faceId: currentCharacter.selectedItems?.Face?.id || '',
         mixHairColorId: currentCharacter.mixDye?.hairColorId || '',
         mixFaceColorId: currentCharacter.mixDye?.faceColorId || '',
+        earsType: currentEarsType(currentCharacter),
+        skin: {
+          ...pick(['region', 'version'], currentCharacter.Body || regionData),
+        },
       },
     })
   }, [currentCharacter])
