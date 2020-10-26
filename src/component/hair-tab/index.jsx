@@ -6,6 +6,7 @@ import { APIGetHair } from '@api'
 
 /* action */
 import { HAIR_INITIAL } from '@store/hair'
+import { CHANGE_DATA_REGION } from '@store/meta'
 
 /* components */
 import { FixedSizeGrid } from 'react-window'
@@ -20,17 +21,25 @@ import { propEq } from 'ramda'
 const HairTab = () => {
   const container = useRef(null)
   const [hairs, dispatch] = useStore('hair')
-  const [{ region, version }] = useStore('meta.region')
+  const [{ region, version, hair: hairRegion }] = useStore('meta.region')
   const [{ hairColorId: colorId, hairId }] = useStore('meta.character', '')
   const hairsValues = useMemo(() => Object.values(hairs), [hairs])
   const [beforeSarchHairs, updateSearchedHair] = useState(hairsValues)
   const [searchParam] = useStore('search.hair')
 
   useEffect(() => {
-    if (region && version)
-      APIGetHair({ region, version }).then((data) =>
+    if (region && version && region !== hairRegion) {
+      APIGetHair({ region, version }).then((data) => {
         dispatch({ type: HAIR_INITIAL, payload: groupHair(data) })
-      )
+        dispatch({
+          type: CHANGE_DATA_REGION,
+          payload: {
+            field: 'hair',
+            region,
+          },
+        })
+      })
+    }
   }, [region, version])
   useEffect(() => {
     updateSearchedHair(

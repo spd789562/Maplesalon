@@ -1,8 +1,11 @@
 import { reducerCreator } from './_helper'
 
+import { evolve } from 'ramda'
+
 export const INITIAL_WZ = 'INITIAL_WZ'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
 export const CHANGE_REGION = 'CHANGE_REGION'
+export const CHANGE_DATA_REGION = 'CHANGE_DATA_REGION'
 
 const isClient = typeof window !== 'undefined'
 
@@ -10,6 +13,8 @@ const initialState = {
   region: {
     region: (isClient && localStorage.getItem('region')) || '',
     version: (isClient && localStorage.getItem('version')) || '',
+    hair: '',
+    face: '',
   },
   character: {
     skinId: '',
@@ -31,7 +36,18 @@ const reducer = reducerCreator(initialState, {
       typeof payload === 'string' ? state.wz[payload] : payload
     localStorage.setItem('region', region)
     localStorage.setItem('version', version)
-    return { ...state, region: { region, version } }
+    return { ...state, region: { ...state.region, region, version } }
+  },
+  [CHANGE_DATA_REGION]: (state, payload) => {
+    return {
+      ...state,
+      region: evolve(
+        {
+          [payload.field]: payload.region,
+        },
+        state.region
+      ),
+    }
   },
   [UPDATE_CHARACTER]: (state, payload) => {
     return { ...state, character: { ...state.character, ...payload } }
