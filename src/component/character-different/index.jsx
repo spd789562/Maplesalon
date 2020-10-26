@@ -11,7 +11,7 @@ import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
 /* utils */
-import { clone, isEmpty, mergeRight } from 'ramda'
+import { add, clone, evolve, isEmpty, mergeRight, pipe } from 'ramda'
 
 const CharacterDifferent = () => {
   const [currentCharacter, dispatch] = useStore('character.current', {})
@@ -26,21 +26,15 @@ const CharacterDifferent = () => {
       copyCharacter.name = characterChanges.name
       copyCharacter.isChange = true
     }
-    if (characterChanges.skinId) {
-      copyCharacter.skin = characterChanges.skinId
+    if (characterChanges.skin.id) {
+      copyCharacter.skin = characterChanges.skin.id
       copyCharacter.selectedItems.Body = mergeRight(
         copyCharacter.selectedItems.Body || {},
-        {
-          id: +characterChanges.skinId,
-          ...regionData,
-        }
+        evolve({ id: Number }, characterChanges.skin)
       )
       copyCharacter.selectedItems.Head = mergeRight(
         copyCharacter.selectedItems.Head || {},
-        {
-          id: +characterChanges.skinId + 10000,
-          ...regionData,
-        }
+        evolve({ id: pipe(Number, add(10000)) }, characterChanges.skin)
       )
       copyCharacter.isChange = true
     }

@@ -17,6 +17,11 @@ const initialState = {
     face: '',
   },
   character: {
+    skin: {
+      id: '',
+      region: '',
+      version: '',
+    },
     skinId: '',
     hairId: '',
     hairColorId: '0',
