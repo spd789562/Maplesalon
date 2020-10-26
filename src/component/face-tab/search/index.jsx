@@ -1,24 +1,36 @@
 import { useCallback, memo } from 'react'
 
-import { debounce } from 'throttle-debounce'
+/* action */
+import { useStore } from '@store'
+import { SEARCH_UPDATE } from '@store/search'
 
 /* components */
 import { Input, Row, Col, Select } from 'antd'
-const SearchBar = ({ searchParam, updateSearchParam }) => {
+
+/* utils */
+import { debounce } from 'throttle-debounce'
+
+const SearchBar = () => {
+  const [searchParam, dispatch] = useStore('search.hair')
   const handleSearch = useCallback(
     debounce(250, (field, value) => {
-      updateSearchParam({
-        ...searchParam,
-        [field]: value,
+      dispatch({
+        type: SEARCH_UPDATE,
+        payload: {
+          type: 'face',
+          field,
+          value,
+        },
       })
     }),
-    [searchParam]
+    []
   )
   return (
     <Row gutter={[8, 8]}>
       <Col span={18}>
         <Input.Search
           placeholder="type_face_name"
+          defaultValue={searchParam.name}
           onChange={({ target: { value } }) => handleSearch('name', value)}
           style={{ width: '100%' }}
         />

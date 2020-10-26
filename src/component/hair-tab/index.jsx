@@ -23,9 +23,9 @@ const HairTab = () => {
   const [hairs, dispatch] = useStore('hair')
   const [{ region, version, hair: hairRegion }] = useStore('meta.region')
   const [{ hairColorId: colorId, hairId }] = useStore('meta.character', '')
+  const [searchParam] = useStore('search.hair')
   const hairsValues = useMemo(() => Object.values(hairs), [hairs])
   const [beforeSarchHairs, updateSearchedHair] = useState(hairsValues)
-  const [searchParam] = useStore('search.hair')
 
   useEffect(() => {
     if (region && version && region !== hairRegion) {
@@ -70,7 +70,6 @@ const HairTab = () => {
         height={300}
         itemData={beforeSarchHairs}
         initialScrollTop={initHeight}
-        key={beforeSarchHairs.length}
       >
         {({ columnIndex, rowIndex, data, style }) => {
           return (
