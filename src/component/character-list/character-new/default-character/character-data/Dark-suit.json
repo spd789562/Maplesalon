@@ -1,0 +1,166 @@
+{
+  "id": 1603677420327,
+  "type": "character",
+  "action": "stand1",
+  "emotion": "default",
+  "skin": 2000,
+  "zoom": 1,
+  "frame": 0,
+  "mercEars": false,
+  "illiumEars": false,
+  "selectedItems": {
+    "Body": {
+      "name": "Body",
+      "noIcon": true,
+      "id": 2000,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Body",
+        "lowItemId": 2000,
+        "highItemId": 2999
+      }
+    },
+    "Head": {
+      "name": "Head",
+      "noIcon": true,
+      "id": 12000,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Head",
+        "lowItemId": 12000,
+        "highItemId": 12999
+      }
+    },
+    "Overall": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 3,
+      "name": "闇月套服(女)",
+      "desc": "",
+      "id": 1053553,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Overall",
+        "lowItemId": 1050000,
+        "highItemId": 1060000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Shoes": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 3,
+      "name": "闇月鞋子",
+      "desc": "",
+      "id": 1073431,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Shoes",
+        "lowItemId": 1070000,
+        "highItemId": 1080000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Cash": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 2,
+      "name": "闇月武器",
+      "desc": "#c所有武器#上都可以套的闇月武器。",
+      "id": 1702985,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "One-Handed Weapon",
+        "subCategory": "Cash",
+        "lowItemId": 1701000,
+        "highItemId": 1704000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hat": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 5,
+      "name": "闇月帽子",
+      "desc": "",
+      "id": 1005508,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Hat",
+        "lowItemId": 1000000,
+        "highItemId": 1010000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hair": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "紫色月石髮型",
+      "desc": "",
+      "id": 48506,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Hair",
+        "lowItemId": 30000,
+        "highItemId": 49999
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Face": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "隱月臉型",
+      "desc": "",
+      "id": 24695,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Face",
+        "lowItemId": 20000,
+        "highItemId": 29999
+      },
+      "region": "TWMS",
+      "version": "228"
+    }
+  },
+  "visible": true,
+  "position": {
+    "x": 170,
+    "y": -41
+  },
+  "fhSnap": true,
+  "name": "Dark suit"
+}

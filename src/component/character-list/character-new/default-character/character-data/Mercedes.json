@@ -1,0 +1,146 @@
+{
+  "id": 1603676907833,
+  "type": "character",
+  "action": "stand1",
+  "emotion": "default",
+  "skin": "2010",
+  "zoom": 1,
+  "frame": 0,
+  "mercEars": false,
+  "illiumEars": false,
+  "selectedItems": {
+    "Body": {
+      "name": "Body",
+      "noIcon": true,
+      "id": 2010,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Body",
+        "lowItemId": 2000,
+        "highItemId": 2999
+      }
+    },
+    "Head": {
+      "name": "Head",
+      "noIcon": true,
+      "id": 12010,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Head",
+        "lowItemId": 12000,
+        "highItemId": 12999
+      }
+    },
+    "Overall": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "精靈之魂上衣",
+      "desc": "",
+      "id": 1051279,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Overall",
+        "lowItemId": 1050000,
+        "highItemId": 1060000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Shoes": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 0,
+      "isCash": true,
+      "requiredGender": 2,
+      "name": "精靈之魂靴子",
+      "desc": "",
+      "id": 1072646,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Shoes",
+        "lowItemId": 1070000,
+        "highItemId": 1080000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hair": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 1,
+      "name": "黃色精靈遊俠造型",
+      "desc": "",
+      "id": 34423,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Hair",
+        "lowItemId": 30000,
+        "highItemId": 49999
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Face": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": true,
+      "requiredGender": 2,
+      "name": "綠色親切精靈臉型",
+      "desc": "",
+      "id": 20357,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Face",
+        "lowItemId": 20000,
+        "highItemId": 29999
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hat": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 33,
+      "isCash": false,
+      "requiredGender": 4,
+      "name": "精靈王之頭冠",
+      "desc": "",
+      "id": 1004780,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Hat",
+        "lowItemId": 1000000,
+        "highItemId": 1010000
+      },
+      "region": "TWMS",
+      "version": "228"
+    }
+  },
+  "visible": true,
+  "position": {
+    "x": 92,
+    "y": 78
+  },
+  "fhSnap": true,
+  "name": "Mercedes"
+}

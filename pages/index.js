@@ -21,6 +21,10 @@ import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
 
 /* component */
 import HairTab from '@components/hair-tab'
+import FaceTab from '@components/face-tab'
+import SkinTab from '@components/skin-tab'
+import EarsTab from '@components/ears-tab'
+import TabResizer from '@components/tab-resizer'
 import CharacterDifferent from '@components/character-different'
 import CharacterList from '@components/character-list'
 
@@ -38,9 +42,10 @@ const { Header, Content, Footer } = Layout
 const initialValues = {}
 
 const ApparanceTabs = [
-  { key: 'hair', tab: 'hair', Component: <HairTab></HairTab> },
-  { key: 'face', tab: 'face', Component: <div>face</div> },
-  { key: 'skin', tab: 'skin', Component: <div>skin</div> },
+  { key: 'hair', tab: 'hair', Component: <HairTab /> },
+  { key: 'face', tab: 'face', Component: <FaceTab /> },
+  { key: 'skin', tab: 'skin', Component: <SkinTab /> },
+  { key: 'ears', tab: 'ears', Component: <EarsTab /> },
   { key: 'mixdye', tab: 'mix_dye', Component: <div>mix dye</div> },
 ]
 
@@ -111,13 +116,15 @@ function Home({ t, i18n }) {
                     onChange={handleChangeWz}
                     name="region"
                   >
+                    <Select.Option value="KMS">KMS</Select.Option>
                     <Select.Option value="GMS">GMS</Select.Option>
                     <Select.Option value="TWMS">TWMS</Select.Option>
-                    <Select.Option value="KMS">KMS</Select.Option>
+                    <Select.Option value="JMS">JMS</Select.Option>
                     <Select.Option value="CMS">CMS</Select.Option>
                   </Select>
                 }
               >
+                <TabResizer></TabResizer>
                 {TabMapping[tab].Component}
               </Card>
             </Col>

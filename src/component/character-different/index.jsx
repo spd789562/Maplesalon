@@ -11,7 +11,16 @@ import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
 /* utils */
-import { clone, isEmpty, mergeRight } from 'ramda'
+import { add, clone, evolve, isEmpty, mergeRight, pick, pipe } from 'ramda'
+
+const currentEarsType = (character) =>
+  character.highFloraEars
+    ? '3'
+    : character.illiumEars
+    ? '2'
+    : character.mercEars
+    ? '1'
+    : '0'
 
 const CharacterDifferent = () => {
   const [currentCharacter, dispatch] = useStore('character.current', {})
@@ -26,22 +35,23 @@ const CharacterDifferent = () => {
       copyCharacter.name = characterChanges.name
       copyCharacter.isChange = true
     }
-    if (characterChanges.skinId) {
-      copyCharacter.skin = characterChanges.skinId
+    if (+characterChanges.skin.id !== +copyCharacter.skin) {
+      copyCharacter.skin = characterChanges.skin.id
       copyCharacter.selectedItems.Body = mergeRight(
         copyCharacter.selectedItems.Body || {},
-        {
-          id: +characterChanges.skinId,
-          ...regionData,
-        }
+        evolve({ id: Number }, characterChanges.skin)
       )
       copyCharacter.selectedItems.Head = mergeRight(
         copyCharacter.selectedItems.Head || {},
-        {
-          id: +characterChanges.skinId + 10000,
-          ...regionData,
-        }
+        evolve({ id: pipe(Number, add(10000)) }, characterChanges.skin)
       )
+      copyCharacter.isChange = true
+    }
+    const originEarsType = currentEarsType(copyCharacter)
+    if (characterChanges.earsType !== originEarsType) {
+      copyCharacter.mercEars = characterChanges.earsType === '1'
+      copyCharacter.illiumEars = characterChanges.earsType === '2'
+      copyCharacter.highFloraEars = characterChanges.earsType === '3'
       copyCharacter.isChange = true
     }
     if (
@@ -59,7 +69,7 @@ const CharacterDifferent = () => {
       copyCharacter.isChange = true
     }
     if (
-      !copyCharacter.selectedItems.faceId ||
+      !copyCharacter.selectedItems.Face ||
       (characterChanges.faceId &&
         characterChanges.faceId !== copyCharacter.selectedItems.Face.id)
     ) {
@@ -108,6 +118,11 @@ const CharacterDifferent = () => {
         faceId: currentCharacter.selectedItems?.Face?.id || '',
         mixHairColorId: currentCharacter.mixDye?.hairColorId || '',
         mixFaceColorId: currentCharacter.mixDye?.faceColorId || '',
+        earsType: currentEarsType(currentCharacter),
+        skin: {
+          ...pick(['region', 'version'], currentCharacter.Body || regionData),
+          id: currentCharacter.skin,
+        },
       },
     })
   }, [currentCharacter])

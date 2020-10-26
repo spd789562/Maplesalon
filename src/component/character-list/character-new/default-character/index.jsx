@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import { Card, Row, Col } from 'antd'
 import CharacterImage from '@components/character-image'
 
-import DefaultCharacters from './characters.json'
+import DefaultCharacters from './characters'
 
 const DefaultCharacter = ({ id, handleSelect }) => {
   return (

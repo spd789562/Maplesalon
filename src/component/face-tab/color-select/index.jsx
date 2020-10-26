@@ -5,55 +5,56 @@ import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* helper */
-import { formatHairId } from '@utils/group-hair'
-import { keys, includes } from 'ramda'
+import { formatFaceId } from '@utils/group-face'
+import { keys, includes, F } from 'ramda'
 
 const colors = [
-  { id: '0', color: 'rgb(68, 68, 68)' },
-  { id: '1', color: 'rgb(255, 89, 89)' },
-  { id: '2', color: 'rgb(255, 185, 99)' },
-  { id: '3', color: 'rgb(245, 226, 57)' },
-  { id: '4', color: 'rgb(160, 216, 147)' },
-  { id: '5', color: 'rgb(147, 183, 216)' },
-  { id: '6', color: 'rgb(179, 147, 216)' },
-  { id: '7', color: 'rgb(135, 107, 78)' },
+  { id: '0', color: '#000' },
+  { id: '1', color: '#2d7fcc' },
+  { id: '2', color: '#ff5959' },
+  { id: '3', color: '#a0d893' },
+  { id: '4', color: '#f5e239' },
+  { id: '5', color: '#53c2d1' },
+  { id: '6', color: '#b393d8' },
+  { id: '7', color: '#cb31ac' },
+  { id: '8', color: '#cdcdcd' },
 ]
 
 const ColorSelect = () => {
-  const [{ hairColorId, hairId }, dispatch] = useStore('meta.character')
-  const [hairs] = useStore('hair')
-  const currentHair = useMemo(
-    () => (hairId ? hairs[formatHairId(hairId)] : { colors: {} }),
-    [hairs, hairId]
+  const [{ faceColorId, faceId }, dispatch] = useStore('meta.character')
+  const [faces] = useStore('face')
+  const currentFace = useMemo(
+    () => (faceId ? faces[formatFaceId(faceId)] : { colors: {} }),
+    [faces, faceId]
   )
 
   const hasThisColor = useCallback(
     (id) =>
-      hairId && currentHair ? includes(id, keys(currentHair.colors)) : true,
-    [hairs, hairId]
+      faceId && currentFace ? includes(id, keys(currentFace.colors)) : true,
+    [faces, faceId]
   )
 
   const handleChange = useCallback(
-    ({ target: { value: hairColorId } }) => {
-      const hasColor = currentHair.colors[hairColorId]
+    ({ target: { value: faceColorId } }) => {
+      const hasColor = currentFace.colors[faceColorId]
       dispatch({
         type: UPDATE_CHARACTER,
-        payload: { hairColorId, hairId: hasColor ? hasColor.id : hairId },
+        payload: { faceColorId, faceId: hasColor ? hasColor.id : faceId },
       })
     },
-    [currentHair, hairId]
+    [currentFace, faceId]
   )
   return (
     <ul className="select">
       {colors.map(({ id, color }) => (
-        <li className="select-item" key={`hair-select-${id}`}>
+        <li className="select-item" key={`face-select-${id}`}>
           <input
             type="radio"
             name="select"
             id={`color-select-${id}`}
             className="select-item-checkbox"
             value={id}
-            checked={+id === +hairColorId}
+            checked={id === faceColorId}
             onChange={handleChange}
           />
           <label

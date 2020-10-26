@@ -1,3 +1,34 @@
+const colorRemover = (str) => {
+  const replaced = str.replace(
+    /(.*)|黑色|青色|紅色|綠色|黃色|藍色|紫色|粉色|Black|Blue|Red|Green|Hazel|Sapphire|Violet|Amethyst|White/g,
+    ''
+  )
+  return (replaced === str ? str : replaced).trim()
+}
+
+/**
+ * formatFaceId
+ * @description format face id to generic face id
+ * @param {number|string} id - face id
+ * @return {number}
+ * @example
+ *  formatFaceId(40100) // -> 4000
+ *  formatFaceId(52301) // -> 5201
+ */
+export const formatFaceId = (id) =>
+  +id.toString().replace(/([0-9][0-9])([0-9])([0-9][0-9])/, '$1$3')
+
+/**
+ * getFaceColorId
+ * @description ge face color id
+ * @param {number|string} id - face id
+ * @return {number}
+ * @example
+ *  formatFaceId(40100) // -> 1
+ *  formatFaceId(52301) // -> 3
+ */
+export const getFaceColorId = (id) => +id.toString().split('').splice(2, 1)
+
 /**
  * groupFace
  * @description Group face list
@@ -9,20 +40,15 @@ const groupFace = function groupFace(faces) {
     const splitedId = id.split('')
     const colorType = splitedId.splice(2, 1)
     const groupId = splitedId.join('')
-    if (!allFaces[groupId]) allFaces[groupId] = { id: groupId, colors: {} }
+    if (!allFaces[groupId])
+      allFaces[groupId] = {
+        id: groupId,
+        colors: {},
+        name: colorRemover(face.name),
+      }
     allFaces[groupId]['colors'][colorType] = face
     return allFaces
   }, {})
 }
-
-// Black
-// Blue
-// Red
-// Green
-// Hazel
-// Sapphire
-// Violet
-// Amethyst
-// White
 
 export default groupFace

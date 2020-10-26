@@ -34,18 +34,18 @@ export const getHairColorId = (id) => +id % 10
  * @param {Array<Face>} hairs
  */
 const groupHair = function groupHair(hair) {
-  return hair.reduce((allHair, face) => {
-    const groupId = formatHairId(face.id)
-    const colorType = getHairColorId(face.id)
+  return hair.reduce((allHair, hair) => {
+    const groupId = formatHairId(hair.id)
+    const colorType = getHairColorId(hair.id)
     if (!allHair[groupId]) {
       const name = name
       allHair[groupId] = {
         id: groupId,
         colors: {},
-        name: colorRemover(face.name),
+        name: colorRemover(hair.name),
       }
     }
-    allHair[groupId]['colors'][colorType] = face
+    allHair[groupId]['colors'][colorType] = hair
     return allHair
   }, {})
 }

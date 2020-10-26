@@ -1,0 +1,146 @@
+{
+  "id": 1603677820492,
+  "type": "character",
+  "action": "stand1",
+  "emotion": "default",
+  "skin": 2000,
+  "zoom": 1,
+  "frame": 0,
+  "mercEars": false,
+  "illiumEars": false,
+  "selectedItems": {
+    "Body": {
+      "name": "Body",
+      "noIcon": true,
+      "id": 2000,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Body",
+        "lowItemId": 2000,
+        "highItemId": 2999
+      }
+    },
+    "Head": {
+      "name": "Head",
+      "noIcon": true,
+      "id": 12000,
+      "region": "TWMS",
+      "version": "228",
+      "typeInfo": {
+        "overallCategory": "Character",
+        "category": "Character",
+        "subCategory": "Head",
+        "lowItemId": 12000,
+        "highItemId": 12999
+      }
+    },
+    "Hair": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": false,
+      "requiredGender": 2,
+      "name": "黑色桐人造型",
+      "desc": "",
+      "id": 32640,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Hair",
+        "lowItemId": 30000,
+        "highItemId": 49999
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Overall": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "requiredLevel": 1,
+      "isCash": false,
+      "requiredGender": 2,
+      "name": "桐人的套服",
+      "desc": "",
+      "id": 1052672,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Armor",
+        "subCategory": "Overall",
+        "lowItemId": 1050000,
+        "highItemId": 1060000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Face": {
+      "requiredJobs": [
+        "Beginner"
+      ],
+      "isCash": false,
+      "requiredGender": 0,
+      "name": "黑色桐人臉型",
+      "desc": "",
+      "id": 23009,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "Character",
+        "subCategory": "Face",
+        "lowItemId": 20000,
+        "highItemId": 29999
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Katara": {
+      "requiredJobs": [
+        "Thief"
+      ],
+      "requiredLevel": 127,
+      "isCash": false,
+      "requiredGender": 2,
+      "name": "The VIP 短劍",
+      "desc": "",
+      "id": 1342033,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "One-Handed Weapon",
+        "subCategory": "Katara",
+        "lowItemId": 1340000,
+        "highItemId": 1350000
+      },
+      "region": "TWMS",
+      "version": "228"
+    },
+    "One-Handed Sword": {
+      "requiredJobs": [
+        "Warrior"
+      ],
+      "requiredLevel": 140,
+      "isCash": false,
+      "requiredGender": 2,
+      "name": "烏特卡勒德軍刀",
+      "desc": "",
+      "id": 1302315,
+      "typeInfo": {
+        "overallCategory": "Equip",
+        "category": "One-Handed Weapon",
+        "subCategory": "One-Handed Sword",
+        "lowItemId": 1300000,
+        "highItemId": 1310000
+      },
+      "region": "TWMS",
+      "version": "228"
+    }
+  },
+  "visible": true,
+  "position": {
+    "x": -112,
+    "y": 221
+  },
+  "fhSnap": true,
+  "name": "Kirito"
+}

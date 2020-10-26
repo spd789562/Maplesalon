@@ -1,0 +1,56 @@
+{
+  "id": 1001,
+  "type": "character",
+  "action": "stand1",
+  "emotion": "default",
+  "skin": "2001",
+  "zoom": 1,
+  "frame": 0,
+  "mercEars": false,
+  "illiumEars": false,
+  "selectedItems": {
+    "Body": {
+      "name": "Body",
+      "id": 2001,
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Head": {
+      "name": "Head",
+      "id": 12001,
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Overall": {
+      "name": "閃雷悍將套服",
+      "id": 1052255,
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Cape": {
+      "name": "閃雷船長披風",
+      "id": 1102242,
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hat": {
+      "name": "閃雷船長帽",
+      "id": 1003092,
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Hair": {
+      "name": "橘色露耳清爽造型",
+      "id": 30212,
+      "region": "TWMS",
+      "version": "228"
+    },
+    "Face": {
+      "name": "充滿熱情臉型(黑色瞳)",
+      "id": 50013,
+      "region": "TWMS",
+      "version": "228"
+    }
+  },
+  "name": "Thunder Breaker"
+}
