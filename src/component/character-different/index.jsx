@@ -59,7 +59,7 @@ const CharacterDifferent = () => {
       copyCharacter.isChange = true
     }
     if (
-      !copyCharacter.selectedItems.faceId ||
+      !copyCharacter.selectedItems.Face ||
       (characterChanges.faceId &&
         characterChanges.faceId !== copyCharacter.selectedItems.Face.id)
     ) {
