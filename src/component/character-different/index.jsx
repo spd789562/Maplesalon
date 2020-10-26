@@ -35,7 +35,7 @@ const CharacterDifferent = () => {
       copyCharacter.name = characterChanges.name
       copyCharacter.isChange = true
     }
-    if (characterChanges.skin.id) {
+    if (+characterChanges.skin.id !== +copyCharacter.skin) {
       copyCharacter.skin = characterChanges.skin.id
       copyCharacter.selectedItems.Body = mergeRight(
         copyCharacter.selectedItems.Body || {},
@@ -48,10 +48,10 @@ const CharacterDifferent = () => {
       copyCharacter.isChange = true
     }
     const originEarsType = currentEarsType(copyCharacter)
-    if (characterChanges.earType !== originEarsType) {
-      copyCharacter.mercEars = characterChanges.earType === '1'
-      copyCharacter.illiumEars = characterChanges.earType === '2'
-      copyCharacter.highFloraEars = characterChanges.earType === '3'
+    if (characterChanges.earsType !== originEarsType) {
+      copyCharacter.mercEars = characterChanges.earsType === '1'
+      copyCharacter.illiumEars = characterChanges.earsType === '2'
+      copyCharacter.highFloraEars = characterChanges.earsType === '3'
       copyCharacter.isChange = true
     }
     if (
@@ -121,6 +121,7 @@ const CharacterDifferent = () => {
         earsType: currentEarsType(currentCharacter),
         skin: {
           ...pick(['region', 'version'], currentCharacter.Body || regionData),
+          id: currentCharacter.skin,
         },
       },
     })

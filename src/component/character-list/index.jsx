@@ -19,6 +19,7 @@ import CharacterNew from './character-new'
 import { getHairColorId } from '@utils/group-hair'
 import { getFaceColorId } from '@utils/group-face'
 import getSkinRegion from '@utils/get-skin-region'
+import getEarsType from '@utils/get-ears-type'
 import { clone } from 'ramda'
 
 import fakeCharacter from './fake-character'
@@ -52,10 +53,6 @@ const CharacterList = () => {
               return c
             }),
         })
-      dispatch({
-        type: CHARACTER_CHANGE,
-        payload: firstCharacter.id,
-      })
       /* fake difference */
       dispatch({
         type: UPDATE_CHARACTER,
@@ -64,7 +61,8 @@ const CharacterList = () => {
           hairColorId: getHairColorId(firstCharacterHair) + '',
           faceId: firstCharacterFace,
           faceColorId: getFaceColorId(firstCharacterFace) + '',
-          skinId: getSkinRegion(firstCharacter.skin),
+          skin: getSkinRegion(firstCharacter.skin),
+          earsType: getEarsType(firstCharacter),
           // mixHairColorId: '1',
           // mixHairOpacity: 0.5,
         },
