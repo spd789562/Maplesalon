@@ -96,8 +96,8 @@ const CharacterImage = ({ characterData }) => {
           position: absolute;
           top: 0;
           left: 0;
-          background-size: auto 100%;
-          background-position: center -20%;
+          background-size: auto 80%;
+          background-position: center center;
           display: block;
           width: 100%;
           height: 100%;
