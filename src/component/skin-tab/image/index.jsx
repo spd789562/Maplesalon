@@ -60,7 +60,7 @@ const Image = ({ columnIndex, rowIndex, style, data }) => {
         `}</style>
       </figure>
     ),
-    [isSelected, item]
+    [isSelected, item, skinId]
   )
 }
 

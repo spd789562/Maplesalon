@@ -22,13 +22,13 @@ import { propEq } from 'ramda'
 const faceRef = createRef()
 
 const FaceTab = () => {
+  const [isFirstRender, updateFirstRender] = useState(true)
   const [faces, dispatch] = useStore('face')
   const [{ region, version, face: faceRegion }] = useStore('meta.region')
   const [{ faceColorId: colorId, faceId }] = useStore('meta.character', '')
   const [searchParam] = useStore('search.face')
   const [width] = useStore('search.tabWidth')
   const facesValues = useMemo(() => Object.values(faces), [faces])
-  const [beforeSarchFaces, updateSearchedFace] = useState(facesValues)
   useEffect(() => {
     if (region && version && region !== faceRegion)
       APIGetFace({ region, version }).then((data) => {
@@ -42,17 +42,13 @@ const FaceTab = () => {
         })
       })
   }, [region, version])
-  useEffect(() => {
-    updateSearchedFace(
-      facesValues
-        .filter(({ colors }) => colors && colors[colorId])
-        .filter(
-          ({ name, colors: { [colorId]: { requiredGender } = {} } }) =>
-            name.indexOf(searchParam.name) !== -1 &&
-            (!searchParam.gender || requiredGender === +searchParam.gender)
-        )
+  const searchedFace = facesValues
+    .filter(({ colors }) => colors && colors[colorId])
+    .filter(
+      ({ name, colors: { [colorId]: { requiredGender } = {} } }) =>
+        name.indexOf(searchParam.name) !== -1 &&
+        (!searchParam.gender || requiredGender === +searchParam.gender)
     )
-  }, [facesValues, searchParam, colorId])
   useEffect(
     () => () => {
       dispatch({
@@ -67,15 +63,21 @@ const FaceTab = () => {
     []
   )
   const initHeight = useMemo(() => {
-    if (searchParam.scrollTop) {
+    if (searchParam.scrollTop && isFirstRender) {
+      updateFirstRender(false)
       return searchParam.scrollTop
     } else {
-      const index = beforeSarchFaces.findIndex(
+      const index = searchedFace.findIndex(
         propEq('id', formatFaceId(faceId) + '')
       )
       return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
     }
-  }, [beforeSarchFaces, faceId])
+  }, [colorId])
+
+  const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
+    faceId,
+    initHeight,
+  ])
   const perWidth = width / 5
   return (
     <div>
@@ -83,12 +85,13 @@ const FaceTab = () => {
       <FixedSizeGrid
         columnCount={5}
         columnWidth={perWidth}
-        rowCount={Math.ceil(beforeSarchFaces.length / 5)}
+        rowCount={Math.ceil(searchedFace.length / 5)}
         rowHeight={95}
         width={width}
         height={300}
-        itemData={beforeSarchFaces}
+        itemData={searchedFace}
         initialScrollTop={initHeight}
+        key={`face-${renderKey}`}
         ref={faceRef}
       >
         {({ columnIndex, rowIndex, data, style }) => {

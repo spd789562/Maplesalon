@@ -1,6 +1,6 @@
 import { reducerCreator } from './_helper'
 
-import { evolve } from 'ramda'
+import { assoc, evolve } from 'ramda'
 
 export const INITIAL_WZ = 'INITIAL_WZ'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
@@ -47,12 +47,7 @@ const reducer = reducerCreator(initialState, {
   [CHANGE_DATA_REGION]: (state, payload) => {
     return {
       ...state,
-      region: evolve(
-        {
-          [payload.field]: payload.region,
-        },
-        state.region
-      ),
+      region: assoc(payload.field, payload.region, state.region),
     }
   },
   [UPDATE_CHARACTER]: (state, payload) => {

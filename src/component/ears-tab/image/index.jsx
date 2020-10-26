@@ -4,7 +4,7 @@ import { UPDATE_CHARACTER } from '@store/meta'
 import { F } from 'ramda'
 
 const Image = ({ columnIndex, rowIndex, style, data }) => {
-  const [{ skin, earType }, dispatch] = useStore('meta.character')
+  const [{ skin, earsType }, dispatch] = useStore('meta.character')
   const [{ region, version }] = useStore('meta.region')
   const item = data[columnIndex + 4 * rowIndex]
   const itemId = item.id
@@ -12,10 +12,10 @@ const Image = ({ columnIndex, rowIndex, style, data }) => {
   const src = `https://maplestory.io/api/${
     skin.region ? `${skin.region}/${skin.version}` : `${region}/${version}`
   }/character/${skin.id || 2000}?${item.query ? `${item.query}=true` : ''}`
-  const isSelected = itemId === earType
+  const isSelected = itemId === earsType
   const handleChange = useCallback(
     (id) => () => {
-      dispatch({ type: UPDATE_CHARACTER, payload: { earType: id } })
+      dispatch({ type: UPDATE_CHARACTER, payload: { earsType: id } })
     },
     []
   )
@@ -63,7 +63,7 @@ const Image = ({ columnIndex, rowIndex, style, data }) => {
         `}</style>
       </figure>
     ),
-    [isSelected, item]
+    [isSelected, item, earsType, skin.id]
   )
 }
 
