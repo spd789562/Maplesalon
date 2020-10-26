@@ -1,4 +1,4 @@
-import { memo, useMemo, useState, useEffect, useRef } from 'react'
+import { memo, useMemo, useState, useEffect, useRef, createRef } from 'react'
 import { useStore } from '@store'
 
 /* api */
@@ -6,6 +6,7 @@ import { APIGetHair } from '@api'
 
 /* action */
 import { HAIR_INITIAL } from '@store/hair'
+import { SEARCH_UPDATE } from '@store/search'
 import { CHANGE_DATA_REGION } from '@store/meta'
 
 /* components */
@@ -17,6 +18,8 @@ import Image from './image'
 /* utils */
 import groupHair, { formatHairId } from '@utils/group-hair'
 import { propEq } from 'ramda'
+
+const hairRef = createRef()
 
 const HairTab = () => {
   const container = useRef(null)
@@ -52,9 +55,28 @@ const HairTab = () => {
         )
     )
   }, [hairsValues, searchParam, colorId])
+  useEffect(
+    () => () => {
+      dispatch({
+        type: SEARCH_UPDATE,
+        payload: {
+          type: 'hair',
+          field: 'scrollTop',
+          value: hairRef?.current?.state?.scrollTop || 0,
+        },
+      })
+    },
+    []
+  )
   const initHeight = useMemo(() => {
-    const index = beforeSarchHairs.findIndex(propEq('id', formatHairId(hairId)))
-    return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
+    if (searchParam.scrollTop) {
+      return searchParam.scrollTop
+    } else {
+      const index = beforeSarchHairs.findIndex(
+        propEq('id', formatHairId(hairId))
+      )
+      return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
+    }
   }, [beforeSarchHairs, hairId])
   const width = container?.current?.offsetWidth || 300
   const perWidth = width / 5
@@ -70,6 +92,7 @@ const HairTab = () => {
         height={300}
         itemData={beforeSarchHairs}
         initialScrollTop={initHeight}
+        ref={hairRef}
       >
         {({ columnIndex, rowIndex, data, style }) => {
           return (
