@@ -25,7 +25,7 @@ const ControlBoard = ({ characterData }) => {
             type: UPDATE_CHARACTER,
             payload: {
               hairId: characterData.selectedItems.Hair.id,
-              hairColoId: getHairColorId(characterData.selectedItems.Hair.id),
+              hairColorId: getHairColorId(characterData.selectedItems.Hair.id),
             },
           })
         }
