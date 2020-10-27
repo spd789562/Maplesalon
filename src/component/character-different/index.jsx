@@ -12,6 +12,7 @@ import CharacterImage from '@components/character-image'
 
 /* utils */
 import { add, clone, evolve, isEmpty, mergeRight, pick, pipe } from 'ramda'
+import getCharacterUpdateData from '@utils/get-character-update-data'
 
 const currentEarsType = (character) =>
   character.highFloraEars
@@ -63,7 +64,7 @@ const CharacterDifferent = () => {
         copyCharacter.selectedItems.Hair || {},
         {
           id: characterChanges.hairId,
-          ...regionData,
+          ...pick(['region', 'version'], regionData),
         }
       )
       copyCharacter.isChange = true
@@ -77,7 +78,7 @@ const CharacterDifferent = () => {
         copyCharacter.selectedItems.Face || {},
         {
           id: characterChanges.faceId,
-          ...regionData,
+          ...pick(['region', 'version'], regionData),
         }
       )
       copyCharacter.isChange = true
@@ -93,10 +94,14 @@ const CharacterDifferent = () => {
         hairColorId: characterChanges.mixHairColorId,
         hairOpacity: characterChanges.mixHairOpacity,
       }
+      const hairColorIsDifferent =
+        characterChanges.hairColorId !== copyCharacter.mixDye.hairColorId
       // has different mix color
       if (
-        currentCharacter.mixDye &&
-        currentCharacter.mixDye.hairColorId !== copyCharacter.mixDye.hairColorId
+        !currentCharacter.mixDye ||
+        (hairColorIsDifferent &&
+          currentCharacter.mixDye.hairOpacity !==
+            characterChanges.mixHairOpacity)
       ) {
         copyCharacter.isChange = true
       }
@@ -113,24 +118,13 @@ const CharacterDifferent = () => {
   const handleReset = useCallback(() => {
     dispatch({
       type: UPDATE_CHARACTER,
-      payload: {
-        hairId: currentCharacter.selectedItems?.Hair?.id || '',
-        faceId: currentCharacter.selectedItems?.Face?.id || '',
-        mixHairColorId: currentCharacter.mixDye?.hairColorId || '',
-        mixFaceColorId: currentCharacter.mixDye?.faceColorId || '',
-        earsType: currentEarsType(currentCharacter),
-        skin: {
-          ...pick(['region', 'version'], currentCharacter.Body || regionData),
-          id: currentCharacter.skin,
-        },
-      },
+      payload: getCharacterUpdateData(currentCharacter),
     })
   }, [currentCharacter])
   const handleSave = useCallback(() => {
     dispatch({ type: CHARACTER_UPDATE, payload: changedCharacter })
     dispatch({ type: CHARACTER_CHANGE, payload: changedCharacter.id })
   }, [changedCharacter])
-
   return (
     <Row style={{ maxWidth: 500, margin: '0 auto' }}>
       <Col flex="1 0 0">

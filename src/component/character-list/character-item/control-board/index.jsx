@@ -13,6 +13,7 @@ import { SelectOutlined, DeleteOutlined, CopyOutlined } from '@ant-design/icons'
 
 /* utils */
 import { getHairColorId } from '@utils/group-hair'
+import getCharacterUpdateData from '@utils/get-character-update-data'
 
 const ControlBoard = ({ characterData }) => {
   const dispatch = useDispatch()
@@ -23,10 +24,7 @@ const ControlBoard = ({ characterData }) => {
         if (characterData.selectedItems.Hair?.id) {
           dispatch({
             type: UPDATE_CHARACTER,
-            payload: {
-              hairId: characterData.selectedItems.Hair.id,
-              hairColorId: getHairColorId(characterData.selectedItems.Hair.id),
-            },
+            payload: getCharacterUpdateData(characterData),
           })
         }
       },
