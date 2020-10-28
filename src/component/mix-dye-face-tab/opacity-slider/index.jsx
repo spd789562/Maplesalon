@@ -9,7 +9,7 @@ import { Row, Col, Slider } from 'antd'
 
 /* utils */
 import { debounce } from 'throttle-debounce'
-import useLongPress from '@utils/use-long-press'
+import useLongPress from '@hooks/use-long-press'
 
 const getMark = (opacity) => ({
   0: `${100 - opacity}%`,

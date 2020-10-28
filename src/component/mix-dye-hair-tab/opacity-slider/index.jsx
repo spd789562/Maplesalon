@@ -10,7 +10,7 @@ import { Row, Col, Card, Slider } from 'antd'
 /* utils */
 import { debounce } from 'throttle-debounce'
 import { formatHairId } from '@utils/group-hair'
-import useLongPress from '@utils/use-long-press'
+import useLongPress from '@hooks/use-long-press'
 import { F, includes, keys } from 'ramda'
 
 const getMark = (opacity) => {
