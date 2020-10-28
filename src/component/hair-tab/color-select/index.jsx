@@ -38,7 +38,11 @@ const ColorSelect = () => {
       const hasColor = currentHair.colors[hairColorId]
       dispatch({
         type: UPDATE_CHARACTER,
-        payload: { hairColorId, hairId: hasColor ? hasColor.id : hairId },
+        payload: {
+          hairColorId,
+          mixHairColorId: hairColorId,
+          hairId: hasColor ? hasColor.id : hairId,
+        },
       })
     },
     [currentHair, hairId]

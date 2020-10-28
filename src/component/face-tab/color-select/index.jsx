@@ -39,7 +39,11 @@ const ColorSelect = () => {
       const hasColor = currentFace.colors[faceColorId]
       dispatch({
         type: UPDATE_CHARACTER,
-        payload: { faceColorId, faceId: hasColor ? hasColor.id : faceId },
+        payload: {
+          faceColorId,
+          mixFaceColorId: faceColorId,
+          faceId: hasColor ? hasColor.id : faceId,
+        },
       })
     },
     [currentFace, faceId]
