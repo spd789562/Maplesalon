@@ -25,6 +25,7 @@ import FaceTab from '@components/face-tab'
 import SkinTab from '@components/skin-tab'
 import EarsTab from '@components/ears-tab'
 import MixDyeHairTab from '@components/mix-dye-hair-tab'
+import MixDyeFaceTab from '@components/mix-dye-face-tab'
 import TabResizer from '@components/tab-resizer'
 import CharacterDifferent from '@components/character-different'
 import CharacterList from '@components/character-list'
@@ -48,6 +49,7 @@ const ApparanceTabs = [
   { key: 'skin', tab: 'skin', Component: <SkinTab /> },
   { key: 'ears', tab: 'ears', Component: <EarsTab /> },
   { key: 'mixdyehair', tab: 'mix_dye_hair', Component: <MixDyeHairTab /> },
+  { key: 'mixdyeface', tab: 'mix_dye_face', Component: <MixDyeFaceTab /> },
 ]
 
 const TabMapping = ApparanceTabs.reduce(
