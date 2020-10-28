@@ -5,24 +5,15 @@ import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* components */
-import { Row, Col, Card, Slider } from 'antd'
+import { Row, Col, Card } from 'antd'
+import OpacitySlider from './opacity-slider'
 
 /* utils */
-import { debounce } from 'throttle-debounce'
 import { formatHairId } from '@utils/group-hair'
 import { F, includes, keys } from 'ramda'
 
 /* mapping */
 import HairColors from '@mapping/hair-color'
-
-const getMark = (opacity) => {
-  const [_, decimalStr] = opacity.toString().split('.')
-  const decimal = decimalStr ? +decimalStr.padEnd(2, '0') : 0
-  return {
-    0: `${100 - decimal}%`,
-    100: `${decimal}%`,
-  }
-}
 
 const MixDyeHair = ({ tabType }) => {
   const [
@@ -64,18 +55,6 @@ const MixDyeHair = ({ tabType }) => {
       '',
     [currentHair.id, region, version]
   )
-  const handleChangeOpacity = useCallback(
-    debounce(200, (value) => {
-      dispatch({
-        type: UPDATE_CHARACTER,
-        payload: {
-          mixHairOpacity: value / 100,
-        },
-      })
-    }),
-    []
-  )
-  const marks = useMemo(() => getMark(mixHairOpacity), [mixHairOpacity])
 
   return (
     <Row gutter={[8, 8]}>
@@ -123,15 +102,7 @@ const MixDyeHair = ({ tabType }) => {
             style={{ opacity: mixHairOpacity || 0 }}
           />
         </div>
-        <div className="mix-opacity">
-          <Slider
-            marks={marks}
-            defaultValue={mixHairOpacity * 100}
-            onChange={handleChangeOpacity}
-            tooltipVisible={false}
-            included
-          />
-        </div>
+        <OpacitySlider />
       </Col>
       <Col xs={{ span: 12, order: 2 }} sm={{ span: 6, order: 3 }}>
         <Card title={'mix_color'} size="small">
@@ -174,11 +145,6 @@ const MixDyeHair = ({ tabType }) => {
         .mix-preview-image {
           position: absolute;
           width: 100%;
-        }
-        .mix-opacity {
-          margin-left: auto;
-          margin-right: auto;
-          width: 80%;
         }
         .select-item-block {
           width: 100%;
