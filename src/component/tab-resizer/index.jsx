@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useCallback, createRef } from 'react'
+import React, { useEffect, useCallback, createRef } from 'react'
 
 import { useDispatch } from '@store'
 import { WIDTH_UPDATE } from '@store/search'
@@ -15,7 +15,7 @@ const TabResizer = () => {
     ),
     [widthRef.current]
   )
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', updateWidth)
     updateWidth()
     return () => window.removeEventListener('resize', updateWidth)
