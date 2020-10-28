@@ -93,15 +93,22 @@ const CharacterDifferent = () => {
       copyCharacter.mixDye = {
         hairColorId: characterChanges.mixHairColorId,
         hairOpacity: characterChanges.mixHairOpacity,
+        faceColorId: characterChanges.mixFaceColorId,
+        faceOpacity: characterChanges.mixFaceOpacity,
       }
       const hairColorIsDifferent =
         characterChanges.hairColorId !== copyCharacter.mixDye.hairColorId
+      const faceColorIsDifferent =
+        characterChanges.faceColorId !== copyCharacter.mixDye.faceColorId
       // has different mix color
       if (
         !currentCharacter.mixDye ||
         (hairColorIsDifferent &&
           currentCharacter.mixDye.hairOpacity !==
-            characterChanges.mixHairOpacity)
+            characterChanges.mixHairOpacity) ||
+        (faceColorIsDifferent &&
+          currentCharacter.mixDye.mixFaceOpacity !==
+            characterChanges.mixFaceOpacity)
       ) {
         copyCharacter.isChange = true
       }

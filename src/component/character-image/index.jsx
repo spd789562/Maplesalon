@@ -4,6 +4,12 @@ import { useStore } from '@store'
 
 import characterImage from '@utils/character-image'
 import { formatHairId, getHairColorId } from '@utils/group-hair'
+import {
+  formatFaceId,
+  changeFaceColorId,
+  getFaceColorId,
+} from '@utils/group-face'
+import transparentifyCharacter from '@utils/transparentify-character'
 import { clone, isEmpty, identity } from 'ramda'
 
 const notEmpty = (str) => str !== '' && str !== undefined
@@ -19,9 +25,17 @@ const isImageLoading = (url) =>
 const CharacterImage = ({ characterData }) => {
   const [regionData] = useStore('meta.region', {})
   const [isLoading, updateState] = useState(true)
-  const { character, mixedCharacter, opacity } = useMemo(() => {
+  const {
+    character,
+    mixedCharacter,
+    mixedFaceCharacter,
+    hairOpacity,
+    faceOpacity,
+  } = useMemo(() => {
     let mixedCharacter
-    let opacity = 1
+    let mixedFaceCharacter
+    let hairOpacity = 1
+    let faceOpacity = 1
     const hasCharacter = !isEmpty(characterData)
     if (
       hasCharacter &&
@@ -34,24 +48,42 @@ const CharacterImage = ({ characterData }) => {
         formatHairId(characterData.selectedItems.Hair.id) * 10 +
         +characterData.mixDye.hairColorId
       mixedCharacter = characterImage(copyCharacter, regionData)
-      opacity = characterData.mixDye.hairOpacity
+      hairOpacity = characterData.mixDye.hairOpacity
+    }
+    if (
+      hasCharacter &&
+      characterData.mixDye &&
+      getFaceColorId(characterData.selectedItems.Face.id) !==
+        characterData.mixDye.faceColorId
+    ) {
+      const transparentCharacter = transparentifyCharacter(characterData)
+      transparentCharacter.selectedItems.Face.id = changeFaceColorId(
+        characterData.selectedItems.Face.id,
+        characterData.mixDye.faceColorId
+      )
+      mixedFaceCharacter = characterImage(transparentCharacter, regionData)
+      faceOpacity = characterData.mixDye.faceOpacity
     }
     return {
       character: hasCharacter ? characterImage(characterData, regionData) : '',
       mixedCharacter,
-      opacity,
+      mixedFaceCharacter,
+      hairOpacity,
+      faceOpacity,
     }
   }, [characterData])
   useEffect(() => {
     updateState(true)
     Promise.all(
-      [character, mixedCharacter].filter(notEmpty).map(isImageLoading)
+      [character, mixedCharacter, mixedFaceCharacter]
+        .filter(notEmpty)
+        .map(isImageLoading)
     ).then((successes) => {
       if (successes.every(identity)) {
         updateState(false)
       }
     })
-  }, [character, mixedCharacter])
+  }, [character, mixedCharacter, mixedFaceCharacter])
   return (
     <div className="character-container">
       <div
@@ -74,12 +106,30 @@ const CharacterImage = ({ characterData }) => {
               ? 'character-container-image__loading'
               : ''
           }`}
-          key={mixedCharacter}
+          key={'mix' + mixedCharacter}
           style={
             mixedCharacter && !isLoading
               ? {
                   backgroundImage: `url(${mixedCharacter})`,
-                  opacity,
+                  opacity: hairOpacity,
+                }
+              : {}
+          }
+        />
+      )}
+      {mixedFaceCharacter && (
+        <div
+          className={`character-container-image ${
+            mixedFaceCharacter && isLoading
+              ? 'character-container-image__loading'
+              : ''
+          }`}
+          key={'face' + mixedFaceCharacter}
+          style={
+            mixedFaceCharacter && !isLoading
+              ? {
+                  backgroundImage: `url(${mixedFaceCharacter})`,
+                  opacity: faceOpacity,
                 }
               : {}
           }
