@@ -54,19 +54,19 @@ const CharacterList = () => {
             }),
         })
       /* fake difference */
-      dispatch({
-        type: UPDATE_CHARACTER,
-        payload: {
-          hairId: firstCharacterHair,
-          hairColorId: getHairColorId(firstCharacterHair) + '',
-          faceId: firstCharacterFace,
-          faceColorId: getFaceColorId(firstCharacterFace) + '',
-          skin: getSkinRegion(firstCharacter.skin),
-          earsType: getEarsType(firstCharacter),
-          // mixHairColorId: '1',
-          // mixHairOpacity: 0.5,
-        },
-      })
+      // dispatch({
+      //   type: UPDATE_CHARACTER,
+      //   payload: {
+      //     hairId: firstCharacterHair,
+      //     hairColorId: getHairColorId(firstCharacterHair) + '',
+      //     faceId: firstCharacterFace,
+      //     faceColorId: getFaceColorId(firstCharacterFace) + '',
+      //     skin: getSkinRegion(firstCharacter.skin),
+      //     earsType: getEarsType(firstCharacter),
+      //     mixHairColorId: getHairColorId(firstCharacterHair) + '',
+      //     // mixHairOpacity: 0.5,
+      //   },
+      // })
     }
   }, [])
   const handleDragEnd = useCallback((result) => {

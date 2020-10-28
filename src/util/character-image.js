@@ -20,8 +20,8 @@ const characterImage = function characterImage(character, dataInformation) {
       //  if (item.saturation != 1) itemEntry.saturation = item.saturation
       //  if (item.contrast != 1) itemEntry.contrast = item.contrast
       //  if (item.brightness != 1) itemEntry.brightness = item.brightness
-      //  if (item.alpha != 1) itemEntry.alpha = item.alpha
-      // keep transformation
+      // keep transformation and alpha
+      if (item.alpha != 1) itemEntry.alpha = item.alpha
       if (item.islot) itemEntry.islot = item.islot
       if (item.vslot) itemEntry.vslot = item.vslot
 
