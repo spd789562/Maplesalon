@@ -19,6 +19,29 @@ export const formatFaceId = (id) =>
   +id.toString().replace(/([0-9][0-9])([0-9])([0-9][0-9])/, '$1$3')
 
 /**
+ * changeFaceColorId
+ * @description change face id to other color
+ * @param {number|string} id - face id
+ * @param {number|string} changeColorId - color id
+ * @return {number}
+ * @example
+ *  formatFaceId(40100, 2) // -> 40200
+ *  formatFaceId(52301, 4) // -> 52401
+ */
+export const changeFaceColorId = (id, changeColorId) => {
+  console.log(
+    id,
+    changeColorId,
+    id
+      .toString()
+      .replace(/([0-9][0-9])([0-9])([0-9][0-9])/, `$1${changeColorId}$3`)
+  )
+  return +id
+    .toString()
+    .replace(/([0-9][0-9])([0-9])([0-9][0-9])/, `$1${changeColorId}$3`)
+}
+
+/**
  * getFaceColorId
  * @description ge face color id
  * @param {number|string} id - face id
