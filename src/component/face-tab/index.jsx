@@ -31,7 +31,7 @@ const FaceTab = () => {
     .filter(({ colors }) => colors && colors[colorId])
     .filter(
       ({ name, colors: { [colorId]: { requiredGender } = {} } }) =>
-        name.indexOf(searchParam.name) !== -1 &&
+        name.toUpperCase().indexOf(searchParam.name.toUpperCase()) !== -1 &&
         (!searchParam.gender || requiredGender === +searchParam.gender)
     )
   useEffect(
