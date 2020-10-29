@@ -5,7 +5,7 @@ import { Card } from 'antd'
 import HairTab from './hair-color'
 import FaceTab from './face-color'
 import SkinTab from './skin'
-// import EarsTab from './ears'
+import EarsTab from './ears'
 
 /* helper */
 import { withTranslation } from '@i18n'
@@ -15,7 +15,7 @@ const PreviewTabs = [
   { key: 'hair', tab: 'hair', Component: <HairTab /> },
   { key: 'face', tab: 'face', Component: <FaceTab /> },
   { key: 'skin', tab: 'skin', Component: <SkinTab /> },
-  // { key: 'ears', tab: 'ears', Component: <EarsTab /> },
+  { key: 'ears', tab: 'ears', Component: <EarsTab /> },
 ]
 
 const PreviewTabMapping = PreviewTabs.reduce(
