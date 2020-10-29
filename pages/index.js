@@ -24,6 +24,7 @@ import HairTab from '@components/hair-tab'
 import FaceTab from '@components/face-tab'
 import SkinTab from '@components/skin-tab'
 import EarsTab from '@components/ears-tab'
+import Preview from '@components/preview'
 import MixDyeHairTab from '@components/mix-dye-hair-tab'
 import MixDyeFaceTab from '@components/mix-dye-face-tab'
 import TabResizer from '@components/tab-resizer'
@@ -127,7 +128,7 @@ function Home({ t, i18n }) {
                   </Select>
                 }
               >
-                <TabResizer></TabResizer>
+                <TabResizer />
                 {TabMapping[tab].Component}
               </Card>
             </Col>
@@ -138,6 +139,9 @@ function Home({ t, i18n }) {
               <Card title={t('character_selector')} bordered={false}>
                 <CharacterList />
               </Card>
+            </Col>
+            <Col span={24}>
+              <Preview />
             </Col>
           </Row>
         </Content>
