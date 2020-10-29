@@ -12,6 +12,9 @@ import { CHANGE_DATA_REGION, UPDATE_CHARACTER } from '@store/meta'
 import { Row, Col, Card } from 'antd'
 import OpacitySlider from './opacity-slider'
 
+/* hooks */
+import { useFaceCheck } from '@hooks/use-check-data'
+
 /* utils */
 import groupFace, { formatFaceId } from '@utils/group-face'
 import { F, includes, keys } from 'ramda'
@@ -24,22 +27,8 @@ const MixDyeFace = ({ tabType }) => {
     { faceId, faceColorId, mixFaceColorId, mixFaceOpacity },
     dispatch,
   ] = useStore('meta.character')
-  const [{ region, version, face: faceRegion }] = useStore('meta.region')
+  const { region, version } = useFaceCheck()
   const [faces] = useStore('face')
-
-  useEffect(() => {
-    if (region && version && region !== faceRegion)
-      APIGetFace({ region, version }).then((data) => {
-        dispatch({ type: FACE_INITIAL, payload: groupFace(data) })
-        dispatch({
-          type: CHANGE_DATA_REGION,
-          payload: {
-            field: 'face',
-            region,
-          },
-        })
-      })
-  }, [region, version])
 
   const currentFace = useMemo(
     () =>
