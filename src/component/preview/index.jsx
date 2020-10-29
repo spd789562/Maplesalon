@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { Card } from 'antd'
 import HairTab from './hair-color'
 import FaceTab from './face-color'
-// import SkinTab from './skin'
+import SkinTab from './skin'
 // import EarsTab from './ears'
 
 /* helper */
@@ -14,7 +14,7 @@ import { assoc } from 'ramda'
 const PreviewTabs = [
   { key: 'hair', tab: 'hair', Component: <HairTab /> },
   { key: 'face', tab: 'face', Component: <FaceTab /> },
-  // { key: 'skin', tab: 'skin', Component: <SkinTab /> },
+  { key: 'skin', tab: 'skin', Component: <SkinTab /> },
   // { key: 'ears', tab: 'ears', Component: <EarsTab /> },
 ]
 
