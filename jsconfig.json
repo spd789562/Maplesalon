@@ -9,6 +9,7 @@
       "@store/*": ["src/store/*"],
       "@hooks/*": ["src/hooks/*"],
       "@store": ["src/store"],
+      "@i18n": ["src/i18n"],
       "@api": ["src/api"]
     }
   }
