@@ -9,6 +9,9 @@ import { Table } from 'antd'
 import CharacterImage from '@components/character-image'
 import ColorDot from '../color-dot'
 
+/* hooks */
+import useChangedCharacter from '@hooks/use-changed-character'
+
 /* helper */
 import { formatHairId } from '@utils/group-hair'
 import { clone, map, pipe, assocPath } from 'ramda'
@@ -66,9 +69,14 @@ const generateTableData = (
 }
 
 const HairColorPreview = () => {
-  const [{ hairColorId, hairId }, dispatch] = useStore('meta.character')
-  const [currentCharacter] = useStore('character.current')
-  const [region] = useStore('meta.region')
+  const [
+    {
+      characterChanges: { hairColorId, hairId },
+      changedCharacter,
+      regionData,
+    },
+    dispatch,
+  ] = useChangedCharacter()
   const [hairs] = useStore('hair')
   const currentHair = useMemo(
     () => (hairId ? hairs[formatHairId(hairId)] : { colors: {} }),
@@ -92,13 +100,13 @@ const HairColorPreview = () => {
   const tableData = useMemo(
     () =>
       generateTableData(
-        currentCharacter,
+        changedCharacter,
         currentHair,
         handleChange,
         hairColorId,
-        region
+        regionData
       ),
-    [currentCharacter, currentHair, hairColorId]
+    [changedCharacter, currentHair, hairColorId]
   )
 
   return (

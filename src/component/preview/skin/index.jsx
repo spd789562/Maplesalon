@@ -8,6 +8,9 @@ import { UPDATE_CHARACTER } from '@store/meta'
 import { Table } from 'antd'
 import CharacterImage from '@components/character-image'
 
+/* hooks */
+import useChangedCharacter from '@hooks/use-changed-character'
+
 /* helper */
 import { clone, map, pipe, assocPath, assoc } from 'ramda'
 
@@ -59,8 +62,11 @@ const generateTableData = (currentCharacter, skinId, handleChange) => {
 }
 
 const SkinPreview = () => {
-  const [skinId, dispatch] = useStore('meta.character.skin.id')
-  const [currentCharacter] = useStore('character.current')
+  const [
+    { characterChanges, changedCharacter },
+    dispatch,
+  ] = useChangedCharacter()
+  const skinId = characterChanges.skin.id
   const handleChange = useCallback((skin) => {
     dispatch({
       type: UPDATE_CHARACTER,
@@ -71,8 +77,8 @@ const SkinPreview = () => {
   }, [])
 
   const tableData = useMemo(
-    () => generateTableData(currentCharacter, skinId, handleChange),
-    [currentCharacter, skinId]
+    () => generateTableData(changedCharacter, skinId, handleChange),
+    [changedCharacter, skinId]
   )
 
   return (

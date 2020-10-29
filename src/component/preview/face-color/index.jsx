@@ -10,6 +10,7 @@ import CharacterImage from '@components/character-image'
 import ColorDot from '../color-dot'
 
 /* hooks */
+import useChangedCharacter from '@hooks/use-changed-character'
 import { useFaceCheck } from '@hooks/use-check-data'
 
 /* helper */
@@ -69,9 +70,15 @@ const generateTableData = (
 }
 
 const FaceColorPreview = () => {
-  const [{ faceColorId, faceId }, dispatch] = useStore('meta.character')
-  const region = useFaceCheck()
-  const [currentCharacter] = useStore('character.current')
+  const [
+    {
+      characterChanges: { faceColorId, faceId },
+      changedCharacter,
+      regionData,
+    },
+    dispatch,
+  ] = useChangedCharacter()
+
   const [faces] = useStore('face')
   const currentFace = useMemo(
     () =>
@@ -96,13 +103,13 @@ const FaceColorPreview = () => {
   const tableData = useMemo(
     () =>
       generateTableData(
-        currentCharacter,
+        changedCharacter,
         currentFace,
         handleChange,
         faceColorId,
-        region
+        regionData
       ),
-    [currentCharacter, currentFace, faceColorId]
+    [changedCharacter, currentFace, faceColorId]
   )
 
   return (

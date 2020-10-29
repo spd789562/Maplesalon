@@ -21,7 +21,6 @@ const applyChangesCharacter = function applyChangesCharacter(
   characterChanges,
   regionData
 ) {
-  console.log(character)
   if (isEmpty(character) || isNil(character)) return character
   const copyCharacter = clone(character)
   copyCharacter.isChange = false
