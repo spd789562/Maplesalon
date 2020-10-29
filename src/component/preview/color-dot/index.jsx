@@ -8,8 +8,6 @@ const ColorDot = ({ color, name }) => (
         height: 28px;
         border-radius: 50%;
         display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
       }
     `}</style>
   </div>
