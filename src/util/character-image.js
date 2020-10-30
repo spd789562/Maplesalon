@@ -48,7 +48,9 @@ const characterImage = function characterImage(character, dataInformation) {
     character.action || 'stand1'
   }/${
     character.animating ? 'animated' : character.frame || '0'
-  }?showears=${!!character.mercEars}&showLefEars=${!!character.illiumEars}&showHighLefEars=${!!character.highFloraEars}&resize=1&name=&flipX=${!!character.flipX}&renderMode=1`
+  }?showears=${!!character.mercEars}&showLefEars=${!!character.illiumEars}&showHighLefEars=${!!character.highFloraEars}&resize=1&name=&flipX=${!!character.flipX}&renderMode=${
+    character.action === 'ladder' ? '2' : '1'
+  }`
 }
 
 export default characterImage
