@@ -70,6 +70,7 @@ const generateTableData = (
 }
 
 const FaceColorPreview = () => {
+  useFaceCheck()
   const [
     {
       characterChanges: { faceColorId, faceId },
