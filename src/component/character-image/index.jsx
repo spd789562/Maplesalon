@@ -53,7 +53,7 @@ const CharacterImage = ({ characterData }) => {
       hasCharacter &&
       characterData.mixDye &&
       getHairColorId(characterData.selectedItems.Hair.id) !==
-        characterData.mixDye.hairColorId
+        +characterData.mixDye.hairColorId
     ) {
       const copyCharacter = clone(characterData)
       copyCharacter.selectedItems.Hair.id =
@@ -65,8 +65,9 @@ const CharacterImage = ({ characterData }) => {
     if (
       hasCharacter &&
       characterData.mixDye &&
+      characterData.mixDye.faceColorId &&
       getFaceColorId(characterData.selectedItems.Face.id) !==
-        characterData.mixDye.faceColorId
+        +characterData.mixDye.faceColorId
     ) {
       const transparentCharacter = transparentifyCharacter(characterData)
       transparentCharacter.selectedItems.Face.id = changeFaceColorId(
