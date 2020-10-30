@@ -6,6 +6,7 @@ import HairTab from './hair-color'
 import FaceTab from './face-color'
 import SkinTab from './skin'
 import EarsTab from './ears'
+import EmotionTab from './emotion'
 
 /* helper */
 import { withTranslation } from '@i18n'
@@ -16,6 +17,7 @@ const PreviewTabs = [
   { key: 'face', tab: 'face', Component: <FaceTab /> },
   { key: 'skin', tab: 'skin', Component: <SkinTab /> },
   { key: 'ears', tab: 'ears', Component: <EarsTab /> },
+  { key: 'emotion', tab: 'emotion', Component: <EmotionTab /> },
 ]
 
 const PreviewTabMapping = PreviewTabs.reduce(

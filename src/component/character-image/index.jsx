@@ -48,7 +48,8 @@ const CharacterImage = ({ characterData }) => {
     let mixedFaceCharacter
     let hairOpacity = 1
     let faceOpacity = 1
-    const hasCharacter = !isEmpty(characterData) && !isNil(characterData)
+    const hasCharacter =
+      !isEmpty(characterData) && !isNil(characterData) && characterData.skin
     if (
       hasCharacter &&
       characterData.mixDye &&
