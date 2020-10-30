@@ -25,6 +25,7 @@ import FaceTab from '@components/face-tab'
 import SkinTab from '@components/skin-tab'
 import EarsTab from '@components/ears-tab'
 import Preview from '@components/preview'
+import MixPreview from '@components/preview/mix-preview'
 import MixDyeHairTab from '@components/mix-dye-hair-tab'
 import MixDyeFaceTab from '@components/mix-dye-face-tab'
 import TabResizer from '@components/tab-resizer'
@@ -142,6 +143,9 @@ function Home({ t, i18n }) {
             </Col>
             <Col span={24}>
               <Preview />
+            </Col>
+            <Col span={24}>
+              <MixPreview />
             </Col>
           </Row>
         </Content>
