@@ -30,6 +30,7 @@ const SearchBar = () => {
           defaultValue={searchParam.name}
           onChange={({ target: { value } }) => handleSearch('name', value)}
           style={{ width: '100%' }}
+          allowClear
         />
       </Col>
       <Col span={6}>

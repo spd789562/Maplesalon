@@ -19,20 +19,14 @@ const getMark = (opacity) => ({
   },
 })
 
-const OpacitySlider = () => {
-  const [mixOpacity, dispatch] = useStore('meta.character.mixFaceOpacity')
+const OpacitySlider = ({ mixOpacity, onChange }) => {
   const [opacity, updateOpacity] = useState((mixOpacity * 1000) / 10)
 
   useEffect(() => updateOpacity((mixOpacity * 1000) / 10), [mixOpacity])
 
   const handleChangeOpacity = useCallback(
     debounce(200, (value) => {
-      dispatch({
-        type: UPDATE_CHARACTER,
-        payload: {
-          mixFaceOpacity: value / 100,
-        },
-      })
+      onChange(value / 100)
     }),
     []
   )

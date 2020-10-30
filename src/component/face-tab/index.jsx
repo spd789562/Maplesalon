@@ -1,13 +1,8 @@
 import { memo, useMemo, useState, useEffect, createRef } from 'react'
 import { useStore } from '@store'
 
-/* api */
-import { APIGetFace } from '@api'
-
 /* action */
-import { FACE_INITIAL } from '@store/face'
 import { SEARCH_UPDATE } from '@store/search'
-import { CHANGE_DATA_REGION } from '@store/meta'
 
 /* components */
 import { FixedSizeGrid } from 'react-window'
@@ -15,8 +10,11 @@ import ColorSelect from './color-select'
 import Search from './search'
 import Image from './image'
 
+/* hooks */
+import { useFaceCheck } from '@hooks/use-check-data'
+
 /* utils */
-import groupFace, { formatFaceId } from '@utils/group-face'
+import { formatFaceId } from '@utils/group-face'
 import { propEq } from 'ramda'
 
 const faceRef = createRef()
@@ -24,29 +22,16 @@ const faceRef = createRef()
 const FaceTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
   const [faces, dispatch] = useStore('face')
-  const [{ region, version, face: faceRegion }] = useStore('meta.region')
+  const { region, version } = useFaceCheck()
   const [{ faceColorId: colorId, faceId }] = useStore('meta.character', '')
   const [searchParam] = useStore('search.face')
   const [width] = useStore('search.tabWidth')
   const facesValues = useMemo(() => Object.values(faces), [faces])
-  useEffect(() => {
-    if (region && version && region !== faceRegion)
-      APIGetFace({ region, version }).then((data) => {
-        dispatch({ type: FACE_INITIAL, payload: groupFace(data) })
-        dispatch({
-          type: CHANGE_DATA_REGION,
-          payload: {
-            field: 'face',
-            region,
-          },
-        })
-      })
-  }, [region, version])
   const searchedFace = facesValues
     .filter(({ colors }) => colors && colors[colorId])
     .filter(
       ({ name, colors: { [colorId]: { requiredGender } = {} } }) =>
-        name.indexOf(searchParam.name) !== -1 &&
+        name.toUpperCase().indexOf(searchParam.name.toUpperCase()) !== -1 &&
         (!searchParam.gender || requiredGender === +searchParam.gender)
     )
   useEffect(

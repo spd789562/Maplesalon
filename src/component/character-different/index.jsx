@@ -10,117 +10,17 @@ import { Row, Col, Button } from 'antd'
 import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
+/* hooks */
+import useChangedCharacter from '@hooks/use-changed-character'
+
 /* utils */
-import { add, clone, evolve, isEmpty, mergeRight, pick, pipe } from 'ramda'
 import getCharacterUpdateData from '@utils/get-character-update-data'
 
-const currentEarsType = (character) =>
-  character.highFloraEars
-    ? '3'
-    : character.illiumEars
-    ? '2'
-    : character.mercEars
-    ? '1'
-    : '0'
-
 const CharacterDifferent = () => {
-  const [currentCharacter, dispatch] = useStore('character.current', {})
-  const [characterChanges] = useStore('meta.character', {})
-  const [regionData] = useStore('meta.region', {})
-
-  const changedCharacter = useMemo(() => {
-    if (isEmpty(currentCharacter)) return currentCharacter
-    const copyCharacter = clone(currentCharacter)
-    copyCharacter.isChange = false
-    if (characterChanges.name) {
-      copyCharacter.name = characterChanges.name
-      copyCharacter.isChange = true
-    }
-    if (+characterChanges.skin.id !== +copyCharacter.skin) {
-      copyCharacter.skin = characterChanges.skin.id
-      copyCharacter.selectedItems.Body = mergeRight(
-        copyCharacter.selectedItems.Body || {},
-        evolve({ id: Number }, characterChanges.skin)
-      )
-      copyCharacter.selectedItems.Head = mergeRight(
-        copyCharacter.selectedItems.Head || {},
-        evolve({ id: pipe(Number, add(10000)) }, characterChanges.skin)
-      )
-      copyCharacter.isChange = true
-    }
-    const originEarsType = currentEarsType(copyCharacter)
-    if (characterChanges.earsType !== originEarsType) {
-      copyCharacter.mercEars = characterChanges.earsType === '1'
-      copyCharacter.illiumEars = characterChanges.earsType === '2'
-      copyCharacter.highFloraEars = characterChanges.earsType === '3'
-      copyCharacter.isChange = true
-    }
-    if (
-      !copyCharacter.selectedItems.Hair ||
-      (characterChanges.hairId &&
-        characterChanges.hairId !== copyCharacter.selectedItems.Hair.id)
-    ) {
-      copyCharacter.selectedItems.Hair = mergeRight(
-        copyCharacter.selectedItems.Hair || {},
-        {
-          id: characterChanges.hairId,
-          ...pick(['region', 'version'], regionData),
-        }
-      )
-      copyCharacter.isChange = true
-    }
-    if (
-      !copyCharacter.selectedItems.Face ||
-      (characterChanges.faceId &&
-        characterChanges.faceId !== copyCharacter.selectedItems.Face.id)
-    ) {
-      copyCharacter.selectedItems.Face = mergeRight(
-        copyCharacter.selectedItems.Face || {},
-        {
-          id: characterChanges.faceId,
-          ...pick(['region', 'version'], regionData),
-        }
-      )
-      copyCharacter.isChange = true
-    }
-    // has mix dye hair
-    if (
-      (characterChanges.mixHairColorId &&
-        characterChanges.mixHairColorId !== characterChanges.hairColorId) ||
-      (characterChanges.mixFaceColorId &&
-        characterChanges.mixFaceColorId !== characterChanges.faceColorId)
-    ) {
-      copyCharacter.mixDye = {
-        hairColorId: characterChanges.mixHairColorId,
-        hairOpacity: characterChanges.mixHairOpacity,
-        faceColorId: characterChanges.mixFaceColorId,
-        faceOpacity: characterChanges.mixFaceOpacity,
-      }
-      const hairColorIsDifferent =
-        characterChanges.hairColorId !== copyCharacter.mixDye.hairColorId
-      const faceColorIsDifferent =
-        characterChanges.faceColorId !== copyCharacter.mixDye.faceColorId
-      // has different mix color
-      if (
-        !currentCharacter.mixDye ||
-        (hairColorIsDifferent &&
-          currentCharacter.mixDye.hairOpacity !==
-            characterChanges.mixHairOpacity) ||
-        (faceColorIsDifferent &&
-          currentCharacter.mixDye.mixFaceOpacity !==
-            characterChanges.mixFaceOpacity)
-      ) {
-        copyCharacter.isChange = true
-      }
-    } else {
-      copyCharacter.mixDye = undefined
-      // cancle mix color
-      if (currentCharacter.mixDye) {
-        copyCharacter.isChange = true
-      }
-    }
-    return copyCharacter
-  }, [regionData, currentCharacter, characterChanges])
+  const [
+    { currentCharacter, changedCharacter },
+    dispatch,
+  ] = useChangedCharacter()
 
   const handleReset = useCallback(() => {
     dispatch({

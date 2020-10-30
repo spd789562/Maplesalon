@@ -10,16 +10,28 @@ import {
   getFaceColorId,
 } from '@utils/group-face'
 import transparentifyCharacter from '@utils/transparentify-character'
-import { clone, isEmpty, identity } from 'ramda'
+import { clone, isEmpty, isNil, identity } from 'ramda'
 
 const notEmpty = (str) => str !== '' && str !== undefined
 
 const isImageLoading = (url) =>
   new Promise((resolve) => {
-    const img = new Image()
-    img.onload = () => resolve(true)
-    img.onerror = () => resolve(false)
-    img.src = url
+    let counter = 0,
+      timer
+    const loadImage = () => {
+      if (counter <= 3) {
+        const img = new Image()
+        img.onload = () => resolve(true)
+        img.onerror = () => {
+          counter += 1
+          loadImage()
+        }
+        img.src = url
+      } else {
+        resolve(false)
+      }
+    }
+    loadImage()
   })
 
 const CharacterImage = ({ characterData }) => {
@@ -36,12 +48,13 @@ const CharacterImage = ({ characterData }) => {
     let mixedFaceCharacter
     let hairOpacity = 1
     let faceOpacity = 1
-    const hasCharacter = !isEmpty(characterData)
+    const hasCharacter =
+      !isEmpty(characterData) && !isNil(characterData) && characterData.skin
     if (
       hasCharacter &&
       characterData.mixDye &&
       getHairColorId(characterData.selectedItems.Hair.id) !==
-        characterData.mixDye.hairColorId
+        +characterData.mixDye.hairColorId
     ) {
       const copyCharacter = clone(characterData)
       copyCharacter.selectedItems.Hair.id =
@@ -53,8 +66,9 @@ const CharacterImage = ({ characterData }) => {
     if (
       hasCharacter &&
       characterData.mixDye &&
+      characterData.mixDye.faceColorId &&
       getFaceColorId(characterData.selectedItems.Face.id) !==
-        characterData.mixDye.faceColorId
+        +characterData.mixDye.faceColorId
     ) {
       const transparentCharacter = transparentifyCharacter(characterData)
       transparentCharacter.selectedItems.Face.id = changeFaceColorId(

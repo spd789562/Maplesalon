@@ -1,13 +1,8 @@
 import { memo, useMemo, useState, useEffect, createRef } from 'react'
 import { useStore } from '@store'
 
-/* api */
-import { APIGetHair } from '@api'
-
 /* action */
-import { HAIR_INITIAL } from '@store/hair'
 import { SEARCH_UPDATE } from '@store/search'
-import { CHANGE_DATA_REGION } from '@store/meta'
 
 /* components */
 import { FixedSizeGrid } from 'react-window'
@@ -15,8 +10,11 @@ import ColorSelect from './color-select'
 import Search from './search'
 import Image from './image'
 
+/* hooks */
+import { useHairCheck } from '@hooks/use-check-data'
+
 /* utils */
-import groupHair, { formatHairId } from '@utils/group-hair'
+import { formatHairId } from '@utils/group-hair'
 import { propEq } from 'ramda'
 
 const hairRef = createRef()
@@ -24,32 +22,18 @@ const hairRef = createRef()
 const HairTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
   const [hairs, dispatch] = useStore('hair')
-  const [{ region, version, hair: hairRegion }] = useStore('meta.region')
+  const { region, version } = useHairCheck()
   const [{ hairColorId: colorId, hairId }] = useStore('meta.character', '')
   const [searchParam] = useStore('search.hair')
   const [width] = useStore('search.tabWidth')
 
   const hairsValues = useMemo(() => Object.values(hairs), [hairs])
 
-  useEffect(() => {
-    if (region && version && region !== hairRegion) {
-      APIGetHair({ region, version }).then((data) => {
-        dispatch({ type: HAIR_INITIAL, payload: groupHair(data) })
-        dispatch({
-          type: CHANGE_DATA_REGION,
-          payload: {
-            field: 'hair',
-            region,
-          },
-        })
-      })
-    }
-  }, [region, version])
   const searchedHair = hairsValues
     .filter(({ colors }) => colors && colors[colorId])
     .filter(
       ({ name, colors: { [colorId]: { requiredGender } = {} } }) =>
-        name.indexOf(searchParam.name) !== -1 &&
+        name.toUpperCase().indexOf(searchParam.name.toUpperCase()) !== -1 &&
         (!searchParam.gender || requiredGender === +searchParam.gender)
     )
   useEffect(
