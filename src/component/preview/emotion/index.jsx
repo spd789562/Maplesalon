@@ -8,7 +8,7 @@ import CharacterImage from '@components/character-image'
 import useChangedCharacter from '@hooks/use-changed-character'
 
 /* helper */
-import { clone, map, pipe, assoc } from 'ramda'
+import { clone, map, pipe, assoc, includes } from 'ramda'
 
 /* mapping */
 import Emotions from '@mapping/emotions'
@@ -16,8 +16,15 @@ import Emotions from '@mapping/emotions'
 const generateTableData = (currentCharacter) => {
   const columns = Emotions.map(({ text, type }, index) => ({
     id: type,
-    title: (
-      <img src={`/emotions/${type}.png`} alt={text} style={{ width: 32 }} />
+    title: includes(type, ['default', 'qBlue']) ? (
+      <span>{text}</span>
+    ) : (
+      <img
+        src={`/emotions/${type}.png`}
+        alt={text}
+        title={text}
+        style={{ width: 32 }}
+      />
     ),
     dataIndex: index,
     width: 100,
