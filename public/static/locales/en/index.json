@@ -13,6 +13,12 @@
   "character_preview_all_color": "Preview All",
   "character_preview_mix_color": "Preview Mix Dye",
 
+  "edit_character_name": "Edit Character Name",
+  "type_character_name": "Character Name",
+  "search_character": "Search Character",
+  "reset_character": "Reset",
+  "save_character": "Save",
+
   "tab_hair": "Hair",
   "tab_face": "Face",
   "tab_skin": "Skin",

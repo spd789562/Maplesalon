@@ -6,17 +6,20 @@ import { UPDATE_CHARACTER } from '@store/meta'
 import { CHARACTER_UPDATE, CHARACTER_CHANGE } from '@store/character'
 
 /* components */
-import { Row, Col, Button, Input } from 'antd'
+import { Row, Col, Button, Input, Tooltip } from 'antd'
 import { ReloadOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
 /* hooks */
 import useChangedCharacter from '@hooks/use-changed-character'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* utils */
 import getCharacterUpdateData from '@utils/get-character-update-data'
 
-const CharacterDifferent = () => {
+const CharacterDifferent = ({ t }) => {
   const [
     { currentCharacter, changedCharacter },
     dispatch,
@@ -42,13 +45,15 @@ const CharacterDifferent = () => {
   return (
     <Row style={{ maxWidth: 500, margin: '0 auto' }}>
       <Col span={24}>
-        <Input
-          placeholder={'edit_character_name'}
-          onChange={handleEditName}
-          defaultValue={currentCharacter.name}
-          key={currentCharacter.name}
-          prefix={<UserOutlined />}
-        />
+        <Tooltip title={t('edit_character_name')}>
+          <Input
+            placeholder={t('type_character_name')}
+            onChange={handleEditName}
+            defaultValue={currentCharacter.name}
+            key={currentCharacter.name}
+            prefix={<UserOutlined />}
+          />
+        </Tooltip>
       </Col>
       <Col span={24}>
         <Row>
@@ -78,7 +83,7 @@ const CharacterDifferent = () => {
               onClick={handleReset}
               block
             >
-              Reset
+              {t('reset_character')}
             </Button>
           </Col>
           <Col flex="80px"></Col>
@@ -91,7 +96,7 @@ const CharacterDifferent = () => {
               onClick={handleSave}
               block
             >
-              Save
+              {t('save_character')}
             </Button>
           </Col>
         </Row>
@@ -108,4 +113,8 @@ const CharacterDifferent = () => {
   )
 }
 
-export default CharacterDifferent
+CharacterDifferent.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(CharacterDifferent)

@@ -13,6 +13,12 @@
   "character_preview_all_color": "预览所有外观",
   "character_preview_mix_color": "预览所有混染",
 
+  "edit_character_name": "编辑角色名称",
+  "type_character_name": "角色名称",
+  "search_character": "搜寻角色",
+  "reset_character": "重置",
+  "save_character": "储存",
+
   "tab_hair": "美发",
   "tab_face": "美容",
   "tab_skin": "护肤",
