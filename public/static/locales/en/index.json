@@ -21,6 +21,11 @@
   "tab_mix_dye_hair": "Mix Dye Hair",
   "tab_mix_dye_face": "Mix Dye Face",
 
+  "base_color": "Base",
+  "mix_color": "Mix",
+  "mix_hair_preview": "Preview Hair",
+  "mix_face_preview": "Preview Face",
+
   "switch_front": "Front",
   "switch_back": "Back",
 

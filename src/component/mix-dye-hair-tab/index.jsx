@@ -12,10 +12,13 @@ import OpacitySlider from './opacity-slider'
 import { formatHairId } from '@utils/group-hair'
 import { F, includes, keys } from 'ramda'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* mapping */
 import HairColors from '@mapping/hair-color'
 
-const MixDyeHair = ({ tabType }) => {
+const MixDyeHair = ({ tabType, t }) => {
   const [
     { hairId, hairColorId, mixHairColorId, mixHairOpacity },
     dispatch,
@@ -59,7 +62,11 @@ const MixDyeHair = ({ tabType }) => {
   return (
     <Row gutter={[8, 8]}>
       <Col xs={{ span: 12, order: 1 }} sm={{ span: 6, order: 1 }}>
-        <Card title={'base_color'} size="small">
+        <Card
+          title={t('base_color')}
+          size="small"
+          headStyle={{ textAlign: 'center' }}
+        >
           <Row gutter={[6, 6]}>
             {HairColors.map(({ id, color, name }) => (
               <Col span={12} key={`base-${id}`}>
@@ -88,7 +95,7 @@ const MixDyeHair = ({ tabType }) => {
         </Card>
       </Col>
       <Col xs={{ span: 24, order: 3 }} sm={{ span: 12, order: 2 }}>
-        <h3>{'mix_preview'}</h3>
+        <h3 className="mix-text">{t('mix_hair_preview')}</h3>
         <div className="mix-preview">
           <img
             className="mix-preview-image"
@@ -105,7 +112,11 @@ const MixDyeHair = ({ tabType }) => {
         <OpacitySlider />
       </Col>
       <Col xs={{ span: 12, order: 2 }} sm={{ span: 6, order: 3 }}>
-        <Card title={'mix_color'} size="small">
+        <Card
+          title={t('mix_color')}
+          size="small"
+          headStyle={{ textAlign: 'center' }}
+        >
           <Row gutter={[6, 6]}>
             {HairColors.map(({ id, color, name }) => (
               <Col span={12} key={`mix-${id}`}>
@@ -134,6 +145,9 @@ const MixDyeHair = ({ tabType }) => {
         </Card>
       </Col>
       <style jsx>{`
+        .mix-text {
+          text-align: center;
+        }
         .mix-preview {
           position: relative;
           margin-left: auto;
@@ -182,4 +196,8 @@ const MixDyeHair = ({ tabType }) => {
   )
 }
 
-export default MixDyeHair
+MixDyeHair.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(MixDyeHair)

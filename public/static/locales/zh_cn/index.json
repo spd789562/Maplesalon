@@ -21,6 +21,11 @@
   "tab_mix_dye_hair": "混染发",
   "tab_mix_dye_face": "混染眼",
 
+  "base_color": "基本",
+  "mix_color": "混合",
+  "mix_hair_preview": "发色预览",
+  "mix_face_preview": "顏色預覽",
+
   "switch_front": "正面",
   "switch_back": "背面",
 
