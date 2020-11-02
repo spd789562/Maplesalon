@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maplestory-salon.vercel.app/sitemap.xml
+Sitemap: https://maplesalon.vercel.app/sitemap.xml
