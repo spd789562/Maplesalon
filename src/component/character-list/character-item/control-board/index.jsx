@@ -24,7 +24,7 @@ import getCharacterUpdateData from '@utils/get-character-update-data'
 
 const ControlBoard = ({ characterData, t }) => {
   const dispatch = useDispatch()
-  const { handleChange, handleDuplicate, handleDelete } = useMemo(
+  const { handleChange, handleExport, handleDuplicate, handleDelete } = useMemo(
     () => ({
       handleChange: () => {
         dispatch({ type: CHARACTER_CHANGE, payload: characterData.id })
@@ -34,6 +34,17 @@ const ControlBoard = ({ characterData, t }) => {
             payload: getCharacterUpdateData(characterData),
           })
         }
+      },
+      handleExport: () => {
+        const target = document.createElement('a')
+        const blob = new Blob([JSON.stringify(characterData, null, 2)], {
+          type: 'application/json',
+        })
+        const url = URL.createObjectURL(blob)
+        target.href = url
+        target.download = `${characterData.name || 'empty'}-data.json`
+        target.click()
+        target.remove()
       },
       handleDuplicate: () =>
         dispatch({ type: CHARACTER_DUPLICATE, payload: characterData.id }),
@@ -52,7 +63,11 @@ const ControlBoard = ({ characterData, t }) => {
         >
           <SelectOutlined style={{ fontSize: '24px' }} />
         </div>
-        <div title={t('control_export')} className="control-board-button">
+        <div
+          title={t('control_export')}
+          className="control-board-button"
+          onClick={handleExport}
+        >
           <DownloadOutlined style={{ fontSize: '24px' }} />
         </div>
         <div
