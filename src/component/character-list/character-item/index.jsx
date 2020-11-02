@@ -29,8 +29,7 @@ const CharacterItem = ({ data, index, isDragDisabled }) => (
     </Draggable>
     <style jsx>{`
       .drag-item {
-        width: 25%;
-        max-width: 120px;
+        width: 120px;
         flex-shrink: 0;
         padding-right: 8px;
         padding-left: 8px;

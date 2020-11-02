@@ -133,7 +133,6 @@ const FaceColorPreview = () => {
   const [isFront, changePosture] = useState(true)
   const [mixFaceOpacity, changeOpacity] = useState(0.5)
   const [faces] = useStore('face')
-  console.log(faces)
   const currentFace = useMemo(
     () => (faceId ? faces[formatFaceId(faceId)] : { colors: {} }),
     [faces, faceId]
