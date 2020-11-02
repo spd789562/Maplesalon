@@ -5,9 +5,13 @@ import { Draggable } from 'react-beautiful-dnd'
 import CharacterImage from '@components/character-image'
 import ControlBoard from './control-board'
 
-const CharacterItem = ({ data, index }) => (
+const CharacterItem = ({ data, index, isDragDisabled }) => (
   <Fragment>
-    <Draggable draggableId={data.id.toString()} index={index}>
+    <Draggable
+      draggableId={data.id.toString()}
+      index={index}
+      isDragDisabled={isDragDisabled}
+    >
       {(provided, dragSnapshot) => (
         <div
           ref={(ref) => provided.innerRef(ref)}
