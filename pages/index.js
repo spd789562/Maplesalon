@@ -37,7 +37,7 @@ import LanguageToRegion from '@mapping/language-to-region'
 
 /* helper */
 import { withTranslation } from '../src/i18n'
-import { assoc } from 'ramda'
+import { assoc, evolve } from 'ramda'
 
 import styles from '../styles/Home.module.css'
 
@@ -46,12 +46,12 @@ const { Header, Content, Footer } = Layout
 const initialValues = {}
 
 const ApparanceTabs = [
-  { key: 'hair', tab: 'hair', Component: <HairTab /> },
-  { key: 'face', tab: 'face', Component: <FaceTab /> },
-  { key: 'skin', tab: 'skin', Component: <SkinTab /> },
-  { key: 'ears', tab: 'ears', Component: <EarsTab /> },
-  { key: 'mixdyehair', tab: 'mix_dye_hair', Component: <MixDyeHairTab /> },
-  { key: 'mixdyeface', tab: 'mix_dye_face', Component: <MixDyeFaceTab /> },
+  { key: 'hair', tab: 'tab_hair', Component: <HairTab /> },
+  { key: 'face', tab: 'tab_face', Component: <FaceTab /> },
+  { key: 'skin', tab: 'tab_skin', Component: <SkinTab /> },
+  { key: 'ears', tab: 'tab_ears', Component: <EarsTab /> },
+  { key: 'mixdyehair', tab: 'tab_mix_dye_hair', Component: <MixDyeHairTab /> },
+  { key: 'mixdyeface', tab: 'tab_mix_dye_face', Component: <MixDyeFaceTab /> },
 ]
 
 const TabMapping = ApparanceTabs.reduce(
@@ -82,6 +82,9 @@ const useInitWz = (language) => {
 function Home({ t, i18n }) {
   const { region, handleChangeWz } = useInitWz(i18n.language)
   const [tab, changeTab] = useState(ApparanceTabs[0].key)
+  const translateTab = useMemo(() => ApparanceTabs.map(evolve({ tab: t })), [
+    i18n.language,
+  ])
   // const TabComponent = useMemo(() => TabMapping[tab].Component, [tab])
   return useMemo(
     () => (
@@ -113,7 +116,7 @@ function Home({ t, i18n }) {
               <Card
                 title={t('character_apparance')}
                 bordered={false}
-                tabList={ApparanceTabs}
+                tabList={translateTab}
                 onTabChange={changeTab}
                 extra={
                   <Select

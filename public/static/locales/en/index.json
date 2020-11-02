@@ -13,6 +13,14 @@
   "character_preview_all_color": "Preview All",
   "character_preview_mix_color": "Preview Mix Dye",
 
+  "tab_hair": "Hair",
+  "tab_face": "Face",
+  "tab_skin": "Skin",
+  "tab_ears": "Ears",
+  "tab_emotion": "Emotion",
+  "tab_mix_dye_hair": "Mix Dye Hair",
+  "tab_mix_dye_face": "Mix Dye Face",
+
   "page_not_found": "Page Not Found",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

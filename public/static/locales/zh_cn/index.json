@@ -13,6 +13,14 @@
   "character_preview_all_color": "预览所有外观",
   "character_preview_mix_color": "预览所有混染",
 
+  "tab_hair": "美发",
+  "tab_face": "美容",
+  "tab_skin": "护肤",
+  "tab_ears": "耳朵",
+  "tab_emotion": "表情",
+  "tab_mix_dye_hair": "混染发",
+  "tab_mix_dye_face": "混染眼",
+
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"
