@@ -23,7 +23,12 @@
 
   "switch_front": "正面",
   "switch_back": "背面",
-  
+
+  "ears_normal": "一般",
+  "ears_elf": "精靈",
+  "ears_flora": "木雷普",
+  "ears_high_flora": "亥雷普",
+
   "page_not_found": "無此頁面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

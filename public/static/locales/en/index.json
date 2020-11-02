@@ -24,6 +24,11 @@
   "switch_front": "Front",
   "switch_back": "Back",
 
+  "ears_normal": "Normal",
+  "ears_elf": "Eercedes",
+  "ears_flora": "Flora",
+  "ears_high_flora": "High Flora",
+
   "page_not_found": "Page Not Found",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

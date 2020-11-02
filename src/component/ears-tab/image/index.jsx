@@ -2,13 +2,14 @@ import { Fragment, useCallback, useMemo } from 'react'
 import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 import { F } from 'ramda'
+import { withTranslation } from '@i18n'
 
-const Image = ({ columnIndex, rowIndex, style, data }) => {
+const Image = ({ columnIndex, rowIndex, style, data, t }) => {
   const [{ skin, earsType }, dispatch] = useStore('meta.character')
   const [{ region, version }] = useStore('meta.region')
   const item = data[columnIndex + 4 * rowIndex]
   const itemId = item.id
-  const itemName = item.name
+  const itemName = t(item.name)
   const src = `https://maplestory.io/api/${
     skin.region ? `${skin.region}/${skin.version}` : `${region}/${version}`
   }/character/${skin.id || 2000}?${item.query ? `${item.query}=true` : ''}`
@@ -67,4 +68,8 @@ const Image = ({ columnIndex, rowIndex, style, data }) => {
   )
 }
 
-export default Image
+Image.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(Image)
