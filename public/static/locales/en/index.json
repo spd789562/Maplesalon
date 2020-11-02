@@ -18,6 +18,12 @@
   "search_character": "Search Character",
   "reset_character": "Reset",
   "save_character": "Save",
+  "not_thing_change": "Nothing Change",
+
+  "control_select": "Select",
+  "control_export": "Export",
+  "control_duplicate": "Duplicate",
+  "control_delete": "Delete",
 
   "tab_hair": "Hair",
   "tab_face": "Face",

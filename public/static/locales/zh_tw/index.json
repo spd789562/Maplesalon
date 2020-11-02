@@ -18,6 +18,12 @@
   "search_character": "搜尋角色",
   "reset_character": "重置",
   "save_character": "儲存",
+  "not_thing_change": "尚未變更",
+
+  "control_select": "選擇",
+  "control_export": "匯出",
+  "control_duplicate": "複製",
+  "control_delete": "刪除",
 
   "tab_hair": "美髮",
   "tab_face": "美容",

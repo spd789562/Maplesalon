@@ -18,6 +18,12 @@
   "search_character": "搜寻角色",
   "reset_character": "重置",
   "save_character": "储存",
+  "not_thing_change": "尚未变更",
+
+  "control_select": "选择",
+  "control_export": "汇出",
+  "control_duplicate": "复制",
+  "control_delete": "删除",
 
   "tab_hair": "美发",
   "tab_face": "美容",

@@ -17,14 +17,17 @@ import { Input, Col } from 'antd'
 import CharacterItem from './character-item'
 import CharacterNew from './character-new'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* utils */
 import { includes, pipe, prop } from 'ramda'
 
 import fakeCharacter from './fake-character'
 
-const CharacterList = () => {
+const CharacterList = ({ t }) => {
   const [characters, dispatch] = useStore('character.characters', [])
-  const [search, updateSearch] = useState('中')
+  const [search, updateSearch] = useState('')
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storageCharacters = (localStorage.getItem(
@@ -64,7 +67,7 @@ const CharacterList = () => {
     <Fragment>
       <Col span={24} sm={18} xl={12} xxl={8}>
         <Input.Search
-          placeholder="type_character_name"
+          placeholder={t('search_character')}
           onChange={({ target: { value } }) => updateSearch(value)}
           allowClear
         />
@@ -108,4 +111,8 @@ const CharacterList = () => {
   )
 }
 
-export default memo(CharacterList)
+CharacterList.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default memo(withTranslation('index')(CharacterList))

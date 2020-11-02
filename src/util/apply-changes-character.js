@@ -98,7 +98,7 @@ const applyChangesCharacter = function applyChangesCharacter(
       (hairColorIsDifferent &&
         character.mixDye.hairOpacity !== characterChanges.mixHairOpacity) ||
       (faceColorIsDifferent &&
-        character.mixDye.mixFaceOpacity !== characterChanges.mixFaceOpacity)
+        character.mixDye.faceOpacity !== characterChanges.mixFaceOpacity)
     ) {
       copyCharacter.isChange = true
     }

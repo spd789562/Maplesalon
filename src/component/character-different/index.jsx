@@ -45,7 +45,7 @@ const CharacterDifferent = ({ t }) => {
   return (
     <Row style={{ maxWidth: 500, margin: '0 auto' }}>
       <Col span={24}>
-        <Tooltip title={t('edit_character_name')}>
+        <Tooltip title={t('edit_character_name')} key={currentCharacter.name}>
           <Input
             placeholder={t('type_character_name')}
             onChange={handleEditName}
@@ -67,7 +67,7 @@ const CharacterDifferent = ({ t }) => {
             {changedCharacter.isChange ? (
               <CharacterImage characterData={changedCharacter} />
             ) : (
-              <div>not_thing_change</div>
+              <div className="not-change">{t('not_thing_change')}</div>
             )}
           </Col>
         </Row>
@@ -107,6 +107,14 @@ const CharacterDifferent = ({ t }) => {
           justify-content: center;
           align-items: center;
           height: 100%;
+        }
+        .not-change {
+          height: 100%;
+          color: #999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          word-break: break-all;
         }
       `}</style>
     </Row>
