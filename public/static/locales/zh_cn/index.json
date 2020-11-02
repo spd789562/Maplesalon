@@ -3,7 +3,16 @@
   "seo_title": "枫沙龙 - 冒险岛美发/美容/混染模拟器",
 
   "seo_desc": "枫沙龙，快速预览冒险岛美发美容的各种颜色，支援混染及变更角色动作",
-  
+
+  "reset":"重置",
+  "comma": ", ",
+
+  "character_apparance": "角色外观",
+  "character_comparison": "比较",
+  "character_list": "角色列表",
+  "character_preview_all_color": "预览所有外观",
+  "character_preview_mix_color": "预览所有混染",
+
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

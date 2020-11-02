@@ -3,7 +3,16 @@
   "seo_title": "楓沙龍 - 楓之谷美髮/美容/混染模擬器",
 
   "seo_desc": "楓沙龍，快速預覽楓之谷美髮美容的各種顏色，支援混染及變更角色動作",
-  
+
+  "reset":"重置",
+  "comma": ", ",
+
+  "character_apparance": "角色外觀",
+  "character_comparison": "比較",
+  "character_list": "角色列表",
+  "character_preview_all_color": "預覽所有外觀",
+  "character_preview_mix_color": "預覽所有混染",
+
   "page_not_found": "無此頁面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

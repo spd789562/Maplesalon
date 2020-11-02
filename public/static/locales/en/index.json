@@ -7,6 +7,12 @@
   "reset":"Reset",
   "comma": ", ",
 
+  "character_apparance": "Apparance",
+  "character_comparison": "Character Comparison",
+  "character_list": "Character List",
+  "character_preview_all_color": "Preview All",
+  "character_preview_mix_color": "Preview Mix Dye",
+
   "page_not_found": "Page Not Found",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"
