@@ -6,8 +6,8 @@ import { UPDATE_CHARACTER } from '@store/meta'
 import { CHARACTER_UPDATE, CHARACTER_CHANGE } from '@store/character'
 
 /* components */
-import { Row, Col, Button } from 'antd'
-import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
+import { Row, Col, Button, Input } from 'antd'
+import { ReloadOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
 /* hooks */
@@ -21,7 +21,14 @@ const CharacterDifferent = () => {
     { currentCharacter, changedCharacter },
     dispatch,
   ] = useChangedCharacter()
-
+  const handleEditName = ({ target: { value } }) => {
+    dispatch({
+      type: UPDATE_CHARACTER,
+      payload: {
+        name: value,
+      },
+    })
+  }
   const handleReset = useCallback(() => {
     dispatch({
       type: UPDATE_CHARACTER,
@@ -34,18 +41,30 @@ const CharacterDifferent = () => {
   }, [changedCharacter])
   return (
     <Row style={{ maxWidth: 500, margin: '0 auto' }}>
-      <Col flex="1 0 0">
-        <CharacterImage characterData={currentCharacter} />
+      <Col span={24}>
+        <Input
+          placeholder={'edit_character_name'}
+          onChange={handleEditName}
+          defaultValue={currentCharacter.name}
+          prefix={<UserOutlined />}
+        />
       </Col>
-      <Col flex="80px">
-        <div className="changearrow">&gt;</div>
-      </Col>
-      <Col flex="1 0 0">
-        {changedCharacter.isChange ? (
-          <CharacterImage characterData={changedCharacter} />
-        ) : (
-          <div>not_thing_change</div>
-        )}
+      <Col span={24}>
+        <Row>
+          <Col flex="1 0 0">
+            <CharacterImage characterData={currentCharacter} />
+          </Col>
+          <Col flex="80px">
+            <div className="changearrow">&gt;</div>
+          </Col>
+          <Col flex="1 0 0">
+            {changedCharacter.isChange ? (
+              <CharacterImage characterData={changedCharacter} />
+            ) : (
+              <div>not_thing_change</div>
+            )}
+          </Col>
+        </Row>
       </Col>
       <Col span={24}>
         <Row>
