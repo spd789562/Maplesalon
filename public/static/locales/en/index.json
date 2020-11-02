@@ -21,6 +21,9 @@
   "tab_mix_dye_hair": "Mix Dye Hair",
   "tab_mix_dye_face": "Mix Dye Face",
 
+  "switch_front": "Front",
+  "switch_back": "Back",
+
   "page_not_found": "Page Not Found",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

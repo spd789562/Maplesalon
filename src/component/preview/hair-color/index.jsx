@@ -5,8 +5,9 @@ import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* components */
-import { Table, Switch } from 'antd'
+import { Table } from 'antd'
 import CharacterImage from '@components/character-image'
+import FrontBackSwitch from '@components/front-back-switch'
 import ColorDot from '../color-dot'
 
 /* hooks */
@@ -116,12 +117,7 @@ const HairColorPreview = () => {
   return (
     <Fragment>
       <div style={{ paddingBottom: 16 }}>
-        <Switch
-          checkedChildren={'front'}
-          unCheckedChildren={'back'}
-          checked={isFront}
-          onChange={changePosture}
-        />
+        <FrontBackSwitch checked={isFront} onChange={changePosture} />
       </div>
       <Table
         dataSource={[tableData.data]}

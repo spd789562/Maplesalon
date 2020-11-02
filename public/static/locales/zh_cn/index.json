@@ -21,6 +21,9 @@
   "tab_mix_dye_hair": "混染发",
   "tab_mix_dye_face": "混染眼",
 
+  "switch_front": "正面",
+  "switch_back": "背面",
+
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"
