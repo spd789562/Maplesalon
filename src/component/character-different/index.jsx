@@ -46,6 +46,7 @@ const CharacterDifferent = () => {
           placeholder={'edit_character_name'}
           onChange={handleEditName}
           defaultValue={currentCharacter.name}
+          key={currentCharacter.name}
           prefix={<UserOutlined />}
         />
       </Col>
