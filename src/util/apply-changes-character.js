@@ -24,7 +24,7 @@ const applyChangesCharacter = function applyChangesCharacter(
   if (isEmpty(character) || isNil(character)) return character
   const copyCharacter = clone(character)
   copyCharacter.isChange = false
-  if (characterChanges.name) {
+  if (characterChanges.name && characterChanges.name !== character.name) {
     copyCharacter.name = characterChanges.name
     copyCharacter.isChange = true
   }
