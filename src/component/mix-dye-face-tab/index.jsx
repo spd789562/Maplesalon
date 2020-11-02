@@ -19,10 +19,13 @@ import { useFaceCheck } from '@hooks/use-check-data'
 import groupFace, { formatFaceId } from '@utils/group-face'
 import { F, includes, keys } from 'ramda'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* mapping */
 import FaceColors from '@mapping/face-color'
 
-const MixDyeFace = ({ tabType }) => {
+const MixDyeFace = ({ t }) => {
   const [
     { faceId, faceColorId, mixFaceColorId, mixFaceOpacity },
     dispatch,
@@ -71,7 +74,11 @@ const MixDyeFace = ({ tabType }) => {
   return (
     <Row gutter={[8, 8]}>
       <Col xs={{ span: 12, order: 1 }} sm={{ span: 6, order: 1 }}>
-        <Card title={'base_color'} size="small">
+        <Card
+          title={t('base_color')}
+          size="small"
+          headStyle={{ textAlign: 'center' }}
+        >
           <Row gutter={[6, 6]}>
             {FaceColors.map(({ id, color, name }) => (
               <Col span={12} key={`base-${id}`}>
@@ -100,7 +107,7 @@ const MixDyeFace = ({ tabType }) => {
         </Card>
       </Col>
       <Col xs={{ span: 24, order: 3 }} sm={{ span: 12, order: 2 }}>
-        <h3>{'mix_preview'}</h3>
+        <h3 className="mix-text">{t('mix_face_preview')}</h3>
         <div className="mix-preview">
           <img
             className="mix-preview-image"
@@ -117,7 +124,11 @@ const MixDyeFace = ({ tabType }) => {
         <OpacitySlider />
       </Col>
       <Col xs={{ span: 12, order: 2 }} sm={{ span: 6, order: 3 }}>
-        <Card title={'mix_color'} size="small">
+        <Card
+          title={t('mix_color')}
+          size="small"
+          headStyle={{ textAlign: 'center' }}
+        >
           <Row gutter={[6, 6]}>
             {FaceColors.map(({ id, color, name }) => (
               <Col span={12} key={`mix-${id}`}>
@@ -146,6 +157,9 @@ const MixDyeFace = ({ tabType }) => {
         </Card>
       </Col>
       <style jsx>{`
+        .mix-text {
+          text-align: center;
+        }
         .mix-preview {
           position: relative;
           margin-left: auto;
@@ -194,4 +208,8 @@ const MixDyeFace = ({ tabType }) => {
   )
 }
 
-export default MixDyeFace
+MixDyeFace.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(MixDyeFace)

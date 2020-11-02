@@ -5,8 +5,9 @@ import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* components */
-import { Table, Switch, Row, Col } from 'antd'
+import { Table, Row, Col } from 'antd'
 import CharacterImage from '@components/character-image'
+import FrontBackSwitch from '@components/front-back-switch'
 import ColorDot from '../color-dot'
 import OpacitySlider from '../opacity-slider'
 
@@ -168,12 +169,7 @@ const HairColorPreview = () => {
           <OpacitySlider mixOpacity={mixHairOpacity} onChange={changeOpacity} />
         </Col>
         <Col xs={24} md={4}>
-          <Switch
-            checkedChildren={'front'}
-            unCheckedChildren={'back'}
-            checked={isFront}
-            onChange={changePosture}
-          />
+          <FrontBackSwitch checked={isFront} onChange={changePosture} />
         </Col>
       </Row>
       <Table

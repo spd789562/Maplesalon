@@ -6,22 +6,32 @@ import { UPDATE_CHARACTER } from '@store/meta'
 import { CHARACTER_UPDATE, CHARACTER_CHANGE } from '@store/character'
 
 /* components */
-import { Row, Col, Button } from 'antd'
-import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
+import { Row, Col, Button, Input, Tooltip } from 'antd'
+import { ReloadOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 
 /* hooks */
 import useChangedCharacter from '@hooks/use-changed-character'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* utils */
 import getCharacterUpdateData from '@utils/get-character-update-data'
 
-const CharacterDifferent = () => {
+const CharacterDifferent = ({ t }) => {
   const [
     { currentCharacter, changedCharacter },
     dispatch,
   ] = useChangedCharacter()
-
+  const handleEditName = ({ target: { value } }) => {
+    dispatch({
+      type: UPDATE_CHARACTER,
+      payload: {
+        name: value,
+      },
+    })
+  }
   const handleReset = useCallback(() => {
     dispatch({
       type: UPDATE_CHARACTER,
@@ -34,18 +44,33 @@ const CharacterDifferent = () => {
   }, [changedCharacter])
   return (
     <Row style={{ maxWidth: 500, margin: '0 auto' }}>
-      <Col flex="1 0 0">
-        <CharacterImage characterData={currentCharacter} />
+      <Col span={24}>
+        <Tooltip title={t('edit_character_name')} key={currentCharacter.name}>
+          <Input
+            placeholder={t('type_character_name')}
+            onChange={handleEditName}
+            defaultValue={currentCharacter.name}
+            key={currentCharacter.name}
+            prefix={<UserOutlined />}
+          />
+        </Tooltip>
       </Col>
-      <Col flex="80px">
-        <div className="changearrow">&gt;</div>
-      </Col>
-      <Col flex="1 0 0">
-        {changedCharacter.isChange ? (
-          <CharacterImage characterData={changedCharacter} />
-        ) : (
-          <div>not_thing_change</div>
-        )}
+      <Col span={24}>
+        <Row>
+          <Col flex="1 0 0">
+            <CharacterImage characterData={currentCharacter} />
+          </Col>
+          <Col flex="80px">
+            <div className="changearrow">&gt;</div>
+          </Col>
+          <Col flex="1 0 0">
+            {changedCharacter.isChange ? (
+              <CharacterImage characterData={changedCharacter} />
+            ) : (
+              <div className="not-change">{t('not_thing_change')}</div>
+            )}
+          </Col>
+        </Row>
       </Col>
       <Col span={24}>
         <Row>
@@ -58,7 +83,7 @@ const CharacterDifferent = () => {
               onClick={handleReset}
               block
             >
-              Reset
+              {t('reset_character')}
             </Button>
           </Col>
           <Col flex="80px"></Col>
@@ -71,7 +96,7 @@ const CharacterDifferent = () => {
               onClick={handleSave}
               block
             >
-              Save
+              {t('save_character')}
             </Button>
           </Col>
         </Row>
@@ -83,9 +108,21 @@ const CharacterDifferent = () => {
           align-items: center;
           height: 100%;
         }
+        .not-change {
+          height: 100%;
+          color: #999;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          word-break: break-all;
+        }
       `}</style>
     </Row>
   )
 }
 
-export default CharacterDifferent
+CharacterDifferent.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(CharacterDifferent)

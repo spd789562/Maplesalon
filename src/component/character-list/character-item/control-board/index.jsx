@@ -9,15 +9,22 @@ import {
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* components */
-import { SelectOutlined, DeleteOutlined, CopyOutlined } from '@ant-design/icons'
+import {
+  SelectOutlined,
+  DeleteOutlined,
+  CopyOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons'
+
+/* i18n */
+import { withTranslation } from '@i18n'
 
 /* utils */
-import { getHairColorId } from '@utils/group-hair'
 import getCharacterUpdateData from '@utils/get-character-update-data'
 
-const ControlBoard = ({ characterData }) => {
+const ControlBoard = ({ characterData, t }) => {
   const dispatch = useDispatch()
-  const { handleChange, handleDuplicate, handleDelete } = useMemo(
+  const { handleChange, handleExport, handleDuplicate, handleDelete } = useMemo(
     () => ({
       handleChange: () => {
         dispatch({ type: CHARACTER_CHANGE, payload: characterData.id })
@@ -27,6 +34,17 @@ const ControlBoard = ({ characterData }) => {
             payload: getCharacterUpdateData(characterData),
           })
         }
+      },
+      handleExport: () => {
+        const target = document.createElement('a')
+        const blob = new Blob([JSON.stringify(characterData, null, 2)], {
+          type: 'application/json',
+        })
+        const url = URL.createObjectURL(blob)
+        target.href = url
+        target.download = `${characterData.name || 'empty'}-data.json`
+        target.click()
+        target.remove()
       },
       handleDuplicate: () =>
         dispatch({ type: CHARACTER_DUPLICATE, payload: characterData.id }),
@@ -39,19 +57,32 @@ const ControlBoard = ({ characterData }) => {
     <Fragment>
       <div className="control-board">
         <div
-          className="control-board-button control-board-button__full"
+          title={t('control_select')}
+          className="control-board-button"
           onClick={handleChange}
         >
-          <SelectOutlined style={{ fontSize: '32px' }} />
-          Select
+          <SelectOutlined style={{ fontSize: '24px' }} />
         </div>
-        <div className="control-board-button" onClick={handleDuplicate}>
+        <div
+          title={t('control_export')}
+          className="control-board-button"
+          onClick={handleExport}
+        >
+          <DownloadOutlined style={{ fontSize: '24px' }} />
+        </div>
+        <div
+          title={t('control_duplicate')}
+          className="control-board-button"
+          onClick={handleDuplicate}
+        >
           <CopyOutlined style={{ fontSize: '24px' }} />
-          Duplicate
         </div>
-        <div className="control-board-button" onClick={handleDelete}>
+        <div
+          title={t('control_delete')}
+          className="control-board-button"
+          onClick={handleDelete}
+        >
           <DeleteOutlined style={{ fontSize: '24px' }} />
-          Delete
         </div>
       </div>
       <style jsx>{`
@@ -86,9 +117,12 @@ const ControlBoard = ({ characterData }) => {
           background-color: #c1c8f1;
         }
         .control-board-button:nth-child(2) {
-          background-color: #fbc965;
+          background-color: #8ed66c;
         }
         .control-board-button:nth-child(3) {
+          background-color: #fbc965;
+        }
+        .control-board-button:nth-child(4) {
           background-color: #fc4d4f;
         }
         .control-board-button:hover {
@@ -99,4 +133,8 @@ const ControlBoard = ({ characterData }) => {
   )
 }
 
-export default ControlBoard
+ControlBoard.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(ControlBoard)

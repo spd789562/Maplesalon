@@ -7,11 +7,11 @@ import FaceTab from './face-mix-color'
 
 /* helper */
 import { withTranslation } from '@i18n'
-import { assoc } from 'ramda'
+import { assoc, evolve } from 'ramda'
 
 const PreviewTabs = [
-  { key: 'hair', tab: 'hair', Component: <HairTab /> },
-  { key: 'face', tab: 'face', Component: <FaceTab /> },
+  { key: 'hair', tab: 'tab_hair', Component: <HairTab /> },
+  { key: 'face', tab: 'tab_face', Component: <FaceTab /> },
 ]
 
 const PreviewTabMapping = PreviewTabs.reduce(
@@ -25,7 +25,7 @@ function Preview({ t }) {
     <Card
       title={t('character_preview_mix_color')}
       bordered={false}
-      tabList={PreviewTabs}
+      tabList={PreviewTabs.map(evolve({ tab: t }))}
       onTabChange={changePreviewTab}
     >
       {PreviewTabMapping[previewTab].Component}

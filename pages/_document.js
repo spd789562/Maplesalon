@@ -2,11 +2,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 import getConfig from 'next/config'
 
-const {
-  isProd,
-  GOOGlE_ANALYTICS_ID
-} = getConfig().publicRuntimeConfig
-
+const { isProd, GOOGLE_ANALYTICS_ID } = getConfig().publicRuntimeConfig
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -22,7 +18,7 @@ class MyDocument extends Document {
             <>
               <script
                 async
-                src={`https://www.googletagmanager.com/gtag/js?id=${GOOGlE_ANALYTICS_ID}`}
+                src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}
               />
               <script
                 dangerouslySetInnerHTML={{

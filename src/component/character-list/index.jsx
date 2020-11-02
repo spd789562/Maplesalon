@@ -1,31 +1,33 @@
-import { useMemo, memo, useEffect, useCallback, Fragment } from 'react'
+import {
+  useMemo,
+  memo,
+  useEffect,
+  useCallback,
+  useState,
+  Fragment,
+} from 'react'
 
 /* store */
 import { useStore } from '@store'
-import {
-  CHARACTER_APPEND,
-  CHARACTER_CHANGE,
-  CHARACTER_REORDER,
-} from '@store/character'
-import { UPDATE_CHARACTER } from '@store/meta'
+import { CHARACTER_APPEND, CHARACTER_REORDER } from '@store/character'
 
 /* components */
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import CharacterImage from '@components/character-image'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { Input, Col } from 'antd'
 import CharacterItem from './character-item'
 import CharacterNew from './character-new'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* utils */
-import { getHairColorId } from '@utils/group-hair'
-import { getFaceColorId } from '@utils/group-face'
-import getSkinRegion from '@utils/get-skin-region'
-import getEarsType from '@utils/get-ears-type'
-import { clone } from 'ramda'
+import { includes, pipe, prop } from 'ramda'
 
 import fakeCharacter from './fake-character'
 
-const CharacterList = () => {
+const CharacterList = ({ t }) => {
   const [characters, dispatch] = useStore('character.characters', [])
+  const [search, updateSearch] = useState('')
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storageCharacters = (localStorage.getItem(
@@ -34,24 +36,11 @@ const CharacterList = () => {
         JSON.parse(localStorage.getItem('MAPLESALON_characters'))) || [
         fakeCharacter,
       ]
-      const firstCharacter = storageCharacters[0] || {}
-      const firstCharacterHair =
-        storageCharacters[0]?.selectedItems?.Hair.id || ''
-      const firstCharacterFace =
-        storageCharacters[0]?.selectedItems?.Face.id || ''
 
       !characters.length &&
         dispatch({
           type: CHARACTER_APPEND,
-          payload: Array.from(Array(8))
-            .map((_, index) => ({
-              ...clone(firstCharacter),
-              id: firstCharacter.id + index,
-            }))
-            .map((c, index) => {
-              c.selectedItems.Hair.id = c.selectedItems.Hair.id + index
-              return c
-            }),
+          payload: storageCharacters,
         })
       /* fake difference */
       // dispatch({
@@ -76,6 +65,13 @@ const CharacterList = () => {
   }, [])
   return (
     <Fragment>
+      <Col span={24} sm={18} xl={12} xxl={8}>
+        <Input.Search
+          placeholder={t('search_character')}
+          onChange={({ target: { value } }) => updateSearch(value)}
+          allowClear
+        />
+      </Col>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable
           droppableId="characters"
@@ -88,13 +84,16 @@ const CharacterList = () => {
               className="drop"
               {...dropProvided.droppableProps}
             >
-              {characters.map((character, index) => (
-                <CharacterItem
-                  data={character}
-                  index={index}
-                  key={character.id}
-                />
-              ))}
+              {characters
+                .filter(pipe(prop('name'), includes(search)))
+                .map((character, index) => (
+                  <CharacterItem
+                    data={character}
+                    index={index}
+                    key={character.id}
+                    isDragDisabled={!!search}
+                  />
+                ))}
               {dropProvided.placeholder}
               <CharacterNew />
             </div>
@@ -112,4 +111,8 @@ const CharacterList = () => {
   )
 }
 
-export default memo(CharacterList)
+CharacterList.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default memo(withTranslation('index')(CharacterList))

@@ -5,15 +5,16 @@ import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* components */
-import { Table, Switch } from 'antd'
+import { Table } from 'antd'
 import CharacterImage from '@components/character-image'
+import FrontBackSwitch from '@components/front-back-switch'
 import ColorDot from '../color-dot'
 
 /* hooks */
 import useChangedCharacter from '@hooks/use-changed-character'
 
 /* helper */
-import { formatHairId } from '@utils/group-hair'
+import { formatHairId, getHairColorId } from '@utils/group-hair'
 import { clone, map, pipe, assocPath, assoc } from 'ramda'
 
 /* mapping */
@@ -60,6 +61,7 @@ const generateTableData = (
         assocPath(['selectedItems', 'Hair', 'id'], id),
         assocPath(['selectedItems', 'Hair', 'region'], region.region),
         assocPath(['selectedItems', 'Hair', 'version'], region.version),
+        assocPath(['mixDye', 'hairColorId'], getHairColorId(id)),
         assoc('action', isFront ? 'stand1' : 'ladder')
       )(currentCharacter),
     currentHair.colors
@@ -116,12 +118,7 @@ const HairColorPreview = () => {
   return (
     <Fragment>
       <div style={{ paddingBottom: 16 }}>
-        <Switch
-          checkedChildren={'front'}
-          unCheckedChildren={'back'}
-          checked={isFront}
-          onChange={changePosture}
-        />
+        <FrontBackSwitch checked={isFront} onChange={changePosture} />
       </div>
       <Table
         dataSource={[tableData.data]}

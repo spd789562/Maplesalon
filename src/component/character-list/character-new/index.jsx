@@ -13,10 +13,13 @@ import {
 import { Modal } from 'antd'
 import DefaultCharacter from './default-character'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* utils */
 import importCharactersFromFile from '@utils/import-characters-from-file'
 
-const CharacterNew = () => {
+const CharacterNew = ({ t }) => {
   const dispatch = useDispatch()
   const [isLoading, updateLoadState] = useState(false)
   const [isDragOver, updateDragState] = useState(false)
@@ -82,7 +85,9 @@ const CharacterNew = () => {
       >
         <PlusOutlined style={{ fontSize: '36px', color: '#bbb' }} />
         <Modal
-          title="choice character"
+          title={t('import_template_title')}
+          okText={t('import_template_ok')}
+          cancelText={t('import_template_cancel')}
           visible={modalVisible}
           width={600}
           centered
@@ -105,11 +110,11 @@ const CharacterNew = () => {
                 multiple
               />
               <ImportOutlined style={{ fontSize: '32px' }} />
-              Import
+              {t('import_import')}
             </label>
             <div className="control-board-button" onClick={handleOpenModal}>
               <SnippetsOutlined style={{ fontSize: '32px' }} />
-              Select From Template
+              {t('import_template')}
             </div>
           </div>
         )}
@@ -179,6 +184,7 @@ const CharacterNew = () => {
           flex-direction: column;
           text-align: center;
           cursor: pointer;
+          padding: 0 8px;
         }
         .control-board-button:nth-child(1) {
           background-color: #c1c8f1;
@@ -207,4 +213,8 @@ const CharacterNew = () => {
   )
 }
 
-export default CharacterNew
+CharacterNew.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(CharacterNew)

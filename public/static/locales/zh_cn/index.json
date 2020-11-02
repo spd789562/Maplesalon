@@ -3,7 +3,76 @@
   "seo_title": "枫沙龙 - 冒险岛美发/美容/混染模拟器",
 
   "seo_desc": "枫沙龙，快速预览冒险岛美发美容的各种颜色，支援混染及变更角色动作",
-  
+
+  "reset":"重置",
+  "comma": ", ",
+
+  "character_apparance": "角色外观",
+  "character_comparison": "比较",
+  "character_list": "角色列表",
+  "character_preview_all_color": "预览所有外观",
+  "character_preview_mix_color": "预览所有混染",
+
+  "edit_character_name": "编辑角色名称",
+  "type_character_name": "角色名称",
+  "search_character": "搜寻角色",
+  "reset_character": "重置",
+  "save_character": "储存",
+  "not_thing_change": "尚未变更",
+
+  "control_select": "选择",
+  "control_export": "汇出",
+  "control_duplicate": "复制",
+  "control_delete": "删除",
+
+  "import_import": "点击汇入 maples.im 档案",
+  "import_template": "选择预设角色",
+  "import_template_title": "选择预设角色",
+  "import_template_ok": "确认",
+  "import_template_cancel": "取消",
+
+  "tab_hair": "美发",
+  "tab_face": "美容",
+  "tab_skin": "护肤",
+  "tab_ears": "耳朵",
+  "tab_emotion": "表情",
+  "tab_mix_dye_hair": "混染发",
+  "tab_mix_dye_face": "混染眼",
+
+  "base_color": "基本",
+  "mix_color": "混合",
+  "mix_hair_preview": "发色预览",
+  "mix_face_preview": "顏色預覽",
+
+  "switch_front": "正面",
+  "switch_back": "背面",
+
+  "ears_normal": "一般",
+  "ears_elf": "精灵",
+  "ears_flora": "木雷普",
+  "ears_high_flora": "亥雷普",
+
+  "skin_light": "Light",
+  "skin_lanned": "Lanned",
+  "skin_dark": "Dark",
+  "skin_pale": "Pale",
+  "skin_ashen": "Ashen",
+  "skin_green": "Green",
+  "skin_gold": "Gold",
+  "skin_silver": "Silver",
+  "skin_copper": "Copper",
+  "skin_white": "White",
+  "skin_pale_pink": "Pale Pink",
+  "skin_clay": "Clay",
+  "skin_mercedes": "Mercedes",
+  "skin_ghostly": "Ghostly",
+  "skin_pink": "Pink",
+  "skin_soft_petal": "Soft Petal",
+  "skin_blushing_petal": "Blushing Petal",
+  "skin_hazy": "Hazy",
+  "skin_lavender": "Lavender",
+  "skin_lavender_cheek": "Lavender Cheek",
+
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

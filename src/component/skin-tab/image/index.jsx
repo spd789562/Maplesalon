@@ -2,12 +2,13 @@ import { Fragment, useCallback, useMemo } from 'react'
 import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 import { F } from 'ramda'
+import { withTranslation } from '@i18n'
 
-const Image = ({ columnIndex, rowIndex, style, data }) => {
+const Image = ({ columnIndex, rowIndex, style, data, t }) => {
   const [skinId, dispatch] = useStore('meta.character.skin.id')
   const item = data[columnIndex + 4 * rowIndex] || {}
   const itemId = item.id
-  const itemName = item.name
+  const itemName = t(item.name)
   const src = `https://maplestory.io/api/${item.region}/${item.version}/character/${itemId}`
   const isSelected = itemId === skinId
   const handleChange = useCallback(
@@ -60,8 +61,12 @@ const Image = ({ columnIndex, rowIndex, style, data }) => {
         `}</style>
       </figure>
     ),
-    [isSelected, item, skinId]
+    [isSelected, item, skinId, t]
   )
 }
 
-export default Image
+Image.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(Image)

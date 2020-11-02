@@ -13,14 +13,15 @@ import useChangedCharacter from '@hooks/use-changed-character'
 
 /* helper */
 import { clone, map, pipe, assoc } from 'ramda'
+import { withTranslation } from '@i18n'
 
 /* mapping */
 import Ears from '@mapping/ears'
 
-const generateTableData = (currentCharacter, earsType, handleChange) => {
+const generateTableData = (currentCharacter, earsType, handleChange, t) => {
   const columns = Ears.map(({ id, name }, index) => ({
     id: id,
-    title: name,
+    title: t(name),
     dataIndex: index,
     width: 100,
     align: 'center',
@@ -56,7 +57,7 @@ const generateTableData = (currentCharacter, earsType, handleChange) => {
   }
 }
 
-const EarsPreview = () => {
+const EarsPreview = ({ t }) => {
   const [
     { characterChanges, changedCharacter },
     dispatch,
@@ -72,8 +73,8 @@ const EarsPreview = () => {
   }, [])
 
   const tableData = useMemo(
-    () => generateTableData(changedCharacter, earsType, handleChange),
-    [changedCharacter, earsType]
+    () => generateTableData(changedCharacter, earsType, handleChange, t),
+    [changedCharacter, earsType, t]
   )
 
   return (
@@ -87,4 +88,8 @@ const EarsPreview = () => {
   )
 }
 
-export default memo(EarsPreview)
+EarsPreview.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default memo(withTranslation('index')(EarsPreview))

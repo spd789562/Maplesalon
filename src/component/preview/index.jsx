@@ -10,14 +10,14 @@ import EmotionTab from './emotion'
 
 /* helper */
 import { withTranslation } from '@i18n'
-import { assoc } from 'ramda'
+import { assoc, evolve } from 'ramda'
 
 const PreviewTabs = [
-  { key: 'hair', tab: 'hair', Component: <HairTab /> },
-  { key: 'face', tab: 'face', Component: <FaceTab /> },
-  { key: 'skin', tab: 'skin', Component: <SkinTab /> },
-  { key: 'ears', tab: 'ears', Component: <EarsTab /> },
-  { key: 'emotion', tab: 'emotion', Component: <EmotionTab /> },
+  { key: 'hair', tab: 'tab_hair', Component: <HairTab /> },
+  { key: 'face', tab: 'tab_face', Component: <FaceTab /> },
+  { key: 'skin', tab: 'tab_skin', Component: <SkinTab /> },
+  { key: 'ears', tab: 'tab_ears', Component: <EarsTab /> },
+  { key: 'emotion', tab: 'tab_emotion', Component: <EmotionTab /> },
 ]
 
 const PreviewTabMapping = PreviewTabs.reduce(
@@ -31,7 +31,7 @@ function Preview({ t }) {
     <Card
       title={t('character_preview_all_color')}
       bordered={false}
-      tabList={PreviewTabs}
+      tabList={PreviewTabs.map(evolve({ tab: t }))}
       onTabChange={changePreviewTab}
     >
       {PreviewTabMapping[previewTab].Component}
