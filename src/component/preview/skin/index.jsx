@@ -13,14 +13,15 @@ import useChangedCharacter from '@hooks/use-changed-character'
 
 /* helper */
 import { clone, map, pipe, assocPath, assoc } from 'ramda'
+import { withTranslation } from '@i18n'
 
 /* mapping */
 import Skins from '@mapping/skins'
 
-const generateTableData = (currentCharacter, skinId, handleChange) => {
+const generateTableData = (currentCharacter, skinId, handleChange, t) => {
   const columns = Skins.map((skin, index) => ({
     id: skin.id,
-    title: skin.name,
+    title: t(skin.name),
     dataIndex: index,
     width: 100,
     align: 'center',
@@ -61,7 +62,7 @@ const generateTableData = (currentCharacter, skinId, handleChange) => {
   }
 }
 
-const SkinPreview = () => {
+const SkinPreview = ({ t }) => {
   const [
     { characterChanges, changedCharacter },
     dispatch,
@@ -77,8 +78,8 @@ const SkinPreview = () => {
   }, [])
 
   const tableData = useMemo(
-    () => generateTableData(changedCharacter, skinId, handleChange),
-    [changedCharacter, skinId]
+    () => generateTableData(changedCharacter, skinId, handleChange, t),
+    [changedCharacter, skinId, t]
   )
 
   return (
@@ -92,4 +93,8 @@ const SkinPreview = () => {
   )
 }
 
-export default memo(SkinPreview)
+SkinPreview.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default withTranslation('index')(memo(SkinPreview))

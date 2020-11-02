@@ -74,7 +74,7 @@ const EarsPreview = ({ t }) => {
 
   const tableData = useMemo(
     () => generateTableData(changedCharacter, earsType, handleChange, t),
-    [changedCharacter, earsType]
+    [changedCharacter, earsType, t]
   )
 
   return (
