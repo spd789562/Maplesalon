@@ -16,6 +16,11 @@ import {
   assoc,
   add,
   __,
+  ifElse,
+  pipe,
+  append,
+  curry,
+  equals,
 } from 'ramda'
 
 export const CHARACTER_CHANGE = 'CHARACTER_CHANGE'
@@ -32,8 +37,9 @@ const initialState = {
 }
 
 const findCharacterById = (id, characters) => find(propEq('id', id), characters)
-const findCharacterIndexById = (id, characters) =>
+const findCharacterIndexById = curry((id, characters) =>
   findIndex(propEq('id', id), characters)
+)
 
 const reducer = reducerCreator(initialState, {
   [CHARACTER_CHANGE]: (state, payload) =>
@@ -61,9 +67,14 @@ const reducer = reducerCreator(initialState, {
   [CHARACTER_UPDATE]: (state, payload) =>
     evolve(
       {
-        characters: update(
-          findCharacterIndexById(payload.id, state.characters),
-          payload
+        characters: pipe(
+          findCharacterIndexById(payload.id),
+          ifElse(
+            // If character has been delete, append this
+            equals(-1),
+            () => append(payload, state.characters),
+            update(__, payload, state.characters)
+          )
         ),
       },
       state
