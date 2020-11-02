@@ -53,6 +53,7 @@ const CharacterImage = ({ characterData }) => {
     if (
       hasCharacter &&
       characterData.mixDye &&
+      characterData.mixDye.hairColorId &&
       getHairColorId(characterData.selectedItems.Hair.id) !==
         +characterData.mixDye.hairColorId
     ) {
@@ -129,6 +130,7 @@ const CharacterImage = ({ characterData }) => {
                 }
               : {}
           }
+          data-hair
         />
       )}
       {mixedFaceCharacter && (
@@ -147,6 +149,7 @@ const CharacterImage = ({ characterData }) => {
                 }
               : {}
           }
+          data-face
         />
       )}
       <style jsx>{`
