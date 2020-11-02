@@ -25,6 +25,12 @@
   "control_duplicate": "Duplicate",
   "control_delete": "Delete",
 
+  "import_import": "Import From maples.im",
+  "import_template": "Select From Template",
+  "import_template_title": "Choice Character",
+  "import_template_ok": "Ok",
+  "import_template_cancel": "Cancel",
+
   "tab_hair": "Hair",
   "tab_face": "Face",
   "tab_skin": "Skin",

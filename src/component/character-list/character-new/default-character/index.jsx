@@ -10,27 +10,20 @@ const DefaultCharacter = ({ id, handleSelect }) => {
   return (
     <Fragment>
       {DefaultCharacters.map(({ title, list }) => (
-        <Card
-          key={`${title}-list`}
-          title={title}
-          bordered={false}
-          style={{ marginLeft: -24, marginRight: -24 }}
-        >
-          <Row gutter={[8, 8]}>
-            {list.map((character, index) => (
-              <Col span={6} md={4} key={`${character.id}-${index}-item`}>
-                <div
-                  className={`default-character ${
-                    character.id === id ? 'default-character__select' : ''
-                  }`}
-                  onClick={() => handleSelect(character)}
-                >
-                  <CharacterImage characterData={character} />
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </Card>
+        <Row gutter={[8, 8]} key={`${title}-list`}>
+          {list.map((character, index) => (
+            <Col span={6} md={4} key={`${character.id}-${index}-item`}>
+              <div
+                className={`default-character ${
+                  character.id === id ? 'default-character__select' : ''
+                }`}
+                onClick={() => handleSelect(character)}
+              >
+                <CharacterImage characterData={character} />
+              </div>
+            </Col>
+          ))}
+        </Row>
       ))}
       <style jsx>{`
         .default-character {
