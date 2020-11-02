@@ -14,7 +14,7 @@ import useChangedCharacter from '@hooks/use-changed-character'
 import { useFaceCheck } from '@hooks/use-check-data'
 
 /* helper */
-import { formatFaceId } from '@utils/group-face'
+import { formatFaceId, getFaceColorId } from '@utils/group-face'
 import { clone, map, pipe, assocPath } from 'ramda'
 
 /* mapping */
@@ -59,7 +59,8 @@ const generateTableData = (
         clone,
         assocPath(['selectedItems', 'Face', 'id'], id),
         assocPath(['selectedItems', 'Face', 'region'], region.region),
-        assocPath(['selectedItems', 'Face', 'version'], region.version)
+        assocPath(['selectedItems', 'Face', 'version'], region.version),
+        assocPath(['mixDye', 'faceColorId'], getFaceColorId(id))
       )(currentCharacter),
     currentFace.colors
   )

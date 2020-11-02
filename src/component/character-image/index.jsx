@@ -24,7 +24,7 @@ const isImageLoading = (url) =>
         img.onload = () => resolve(true)
         img.onerror = () => {
           counter += 1
-          loadImage()
+          setTimeout(loadImage, 500)
         }
         img.src = url
       } else {

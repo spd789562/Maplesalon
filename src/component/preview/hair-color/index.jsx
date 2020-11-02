@@ -14,7 +14,7 @@ import ColorDot from '../color-dot'
 import useChangedCharacter from '@hooks/use-changed-character'
 
 /* helper */
-import { formatHairId } from '@utils/group-hair'
+import { formatHairId, getHairColorId } from '@utils/group-hair'
 import { clone, map, pipe, assocPath, assoc } from 'ramda'
 
 /* mapping */
@@ -61,6 +61,7 @@ const generateTableData = (
         assocPath(['selectedItems', 'Hair', 'id'], id),
         assocPath(['selectedItems', 'Hair', 'region'], region.region),
         assocPath(['selectedItems', 'Hair', 'version'], region.version),
+        assocPath(['mixDye', 'hairColorId'], getHairColorId(id)),
         assoc('action', isFront ? 'stand1' : 'ladder')
       )(currentCharacter),
     currentHair.colors
