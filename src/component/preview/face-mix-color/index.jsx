@@ -7,7 +7,6 @@ import { UPDATE_CHARACTER } from '@store/meta'
 /* components */
 import { Table, Row, Col } from 'antd'
 import CharacterImage from '@components/character-image'
-import FrontBackSwitch from '@components/front-back-switch'
 import ColorDot from '../color-dot'
 import OpacitySlider from '../opacity-slider'
 
@@ -41,7 +40,6 @@ const generateTableData = ({
   handleChange,
   faceColorId,
   mixFaceOpacity,
-  isFront,
   region,
 }) => {
   const filterdColors = filter(pipe(prop('id'), has(__, currentFace.colors)))(
@@ -91,13 +89,13 @@ const generateTableData = ({
             assocPath(['selectedItems', 'Face', 'region'], region.region),
             assocPath(['selectedItems', 'Face', 'version'], region.version),
             assocPath(['mixDye', 'faceColorId'], id),
-            assocPath(['mixDye', 'faceOpacity'], mixFaceOpacity),
-            assoc('action', isFront ? 'stand1' : 'ladder')
+            assocPath(['mixDye', 'faceOpacity'], mixFaceOpacity)
           )(changedCharacter)
           return colors
         },
         {
           'color-dot': { color, name },
+          key: name,
         }
       )(filterdColors)
     )
@@ -130,7 +128,6 @@ const FaceColorPreview = () => {
     },
     dispatch,
   ] = useChangedCharacter()
-  const [isFront, changePosture] = useState(true)
   const [mixFaceOpacity, changeOpacity] = useState(0.5)
   const [faces] = useStore('face')
   const currentFace = useMemo(
@@ -158,10 +155,9 @@ const FaceColorPreview = () => {
         mixFaceOpacity,
         handleChange,
         faceColorId,
-        isFront,
         region: regionData,
       }),
-    [changedCharacter, currentFace, faceColorId, isFront, mixFaceOpacity]
+    [changedCharacter, currentFace, faceColorId, mixFaceOpacity]
   )
 
   return (
@@ -169,9 +165,6 @@ const FaceColorPreview = () => {
       <Row gutter={[8, 8]}>
         <Col xs={24} sm={20} md={16} lg={12} xl={8} xxl={6}>
           <OpacitySlider mixOpacity={mixFaceOpacity} onChange={changeOpacity} />
-        </Col>
-        <Col xs={24} md={4}>
-          <FrontBackSwitch checked={isFront} onChange={changePosture} />
         </Col>
       </Row>
       <Table

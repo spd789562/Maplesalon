@@ -33,6 +33,7 @@ const generateTableData = (
       id,
       title: <ColorDot color={color} name={name} />,
       dataIndex: id,
+      key: `hair-${id}`,
       width: 100,
       align: 'center',
       className: +id === +hairColorId ? 'table-column__active' : '',
@@ -66,6 +67,9 @@ const generateTableData = (
       )(currentCharacter),
     currentHair.colors
   )
+
+  data.key = 'hair'
+
   return {
     columns,
     data,

@@ -51,6 +51,7 @@ const generateTableData = ({
       id,
       title: <ColorDot color={color} name={name} />,
       dataIndex: id,
+      key: `hair-mix-${id}`,
       width: 116,
       align: 'center',
       render: (data) => (
@@ -97,6 +98,7 @@ const generateTableData = ({
         },
         {
           'color-dot': { color, name },
+          key: name,
         }
       )(filterdColors)
     )
@@ -159,7 +161,7 @@ const HairColorPreview = () => {
         isFront,
         region: regionData,
       }),
-    [changedCharacter, currentHair, hairColorId, isFront, mixHairOpacity]
+    [changedCharacter, currentHair, hairColorId, mixHairOpacity]
   )
 
   return (
