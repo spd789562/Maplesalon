@@ -127,9 +127,9 @@ const CharacterImage = ({ characterData }) => {
               : 1
           ctx.drawImage(
             image,
-            canvas.width / 2 - (canvas.height * imageRadio * resize) / 2,
+            canvas.width / 2 - ((canvas.height / imageRadio) * resize) / 2,
             canvas.height / 2 - (canvas.height * resize) / 2,
-            canvas.height * imageRadio * resize,
+            (canvas.height / imageRadio) * resize,
             canvas.height * resize
           )
           ctx.restore()

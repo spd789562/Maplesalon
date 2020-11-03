@@ -161,7 +161,7 @@ const HairColorPreview = () => {
         isFront,
         region: regionData,
       }),
-    [changedCharacter, currentHair, hairColorId, mixHairOpacity]
+    [changedCharacter, currentHair, hairColorId, isFront, mixHairOpacity]
   )
 
   return (
