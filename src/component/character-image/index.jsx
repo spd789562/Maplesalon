@@ -39,7 +39,6 @@ const useCanvas = () => {
   useEffect(() => {
     const canvas = canvasRef.current
     if (canvas) {
-      const ctx = canvas.getContext('2d')
       const dpr = window.devicePixelRatio || 1
       const rect = canvas.getBoundingClientRect()
       canvas.width = rect.width * dpr
@@ -116,6 +115,7 @@ const CharacterImage = ({ characterData }) => {
           const canvas = canvasRef.current
           const ctx = canvas.getContext('2d')
           const imageRadio = image.height / image.width
+          const resize = 0.8
           ctx.save()
           ctx.globalAlpha =
             index === 1
@@ -127,10 +127,10 @@ const CharacterImage = ({ characterData }) => {
               : 1
           ctx.drawImage(
             image,
-            canvas.width / 2 - (canvas.height * imageRadio) / 2,
-            0,
-            canvas.height * imageRadio,
-            canvas.height
+            canvas.width / 2 - (canvas.height * imageRadio * resize) / 2,
+            canvas.height / 2 - (canvas.height * resize) / 2,
+            canvas.height * imageRadio * resize,
+            canvas.height * resize
           )
           ctx.restore()
         })
@@ -146,57 +146,6 @@ const CharacterImage = ({ characterData }) => {
           className={`character-container-image character-container-image__loading`}
         />
       )}
-      {/* <div
-        className={`character-container-image ${
-          character && isLoading ? 'character-container-image__loading' : ''
-        }`}
-        key={character}
-        style={
-          character && !isLoading
-            ? {
-                backgroundImage: `url(${character})`,
-              }
-            : {}
-        }
-      />
-      {mixedCharacter && (
-        <div
-          className={`character-container-image ${
-            mixedCharacter && isLoading
-              ? 'character-container-image__loading'
-              : ''
-          }`}
-          key={'mix' + mixedCharacter}
-          style={
-            mixedCharacter && !isLoading
-              ? {
-                  backgroundImage: `url(${mixedCharacter})`,
-                  opacity: hairOpacity,
-                }
-              : {}
-          }
-          data-hair
-        />
-      )}
-      {mixedFaceCharacter && (
-        <div
-          className={`character-container-image ${
-            mixedFaceCharacter && isLoading
-              ? 'character-container-image__loading'
-              : ''
-          }`}
-          key={'face' + mixedFaceCharacter}
-          style={
-            mixedFaceCharacter && !isLoading
-              ? {
-                  backgroundImage: `url(${mixedFaceCharacter})`,
-                  opacity: faceOpacity,
-                }
-              : {}
-          }
-          data-face
-        />
-      )} */}
       <style jsx>{`
         .character-container {
           position: relative;
