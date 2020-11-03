@@ -1,4 +1,4 @@
-import { useMemo, memo, useState, useEffect } from 'react'
+import { useMemo, useRef, useState, useEffect } from 'react'
 
 import { useStore } from '@store'
 
@@ -21,22 +21,38 @@ const isImageLoading = (url) =>
     const loadImage = () => {
       if (counter <= 3) {
         const img = new Image()
-        img.onload = () => resolve(true)
+        img.onload = () => resolve(img)
         img.onerror = () => {
           counter += 1
           setTimeout(loadImage, 500)
         }
         img.src = url
       } else {
-        resolve(false)
+        resolve(undefined)
       }
     }
     loadImage()
   })
 
+const useCanvas = () => {
+  const canvasRef = useRef(null)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (canvas) {
+      const ctx = canvas.getContext('2d')
+      const dpr = window.devicePixelRatio || 1
+      const rect = canvas.getBoundingClientRect()
+      canvas.width = rect.width * dpr
+      canvas.height = rect.height * dpr
+    }
+  }, [])
+  return canvasRef
+}
+
 const CharacterImage = ({ characterData }) => {
   const [regionData] = useStore('meta.region', {})
   const [isLoading, updateState] = useState(true)
+  const canvasRef = useCanvas()
   const {
     character,
     mixedCharacter,
@@ -96,12 +112,41 @@ const CharacterImage = ({ characterData }) => {
     ).then((successes) => {
       if (successes.every(identity)) {
         updateState(false)
+        successes.forEach((image, index) => {
+          const canvas = canvasRef.current
+          const ctx = canvas.getContext('2d')
+          const imageRadio = image.height / image.width
+          ctx.save()
+          ctx.globalAlpha =
+            index === 1
+              ? mixedCharacter
+                ? hairOpacity
+                : faceOpacity
+              : index === 2
+              ? faceOpacity
+              : 1
+          ctx.drawImage(
+            image,
+            canvas.width / 2 - (canvas.height * imageRadio) / 2,
+            0,
+            canvas.height * imageRadio,
+            canvas.height
+          )
+          ctx.restore()
+        })
       }
     })
   }, [character, mixedCharacter, mixedFaceCharacter])
+
   return (
     <div className="character-container">
-      <div
+      <canvas className="character-container-image" ref={canvasRef} />
+      {isLoading && (
+        <div
+          className={`character-container-image character-container-image__loading`}
+        />
+      )}
+      {/* <div
         className={`character-container-image ${
           character && isLoading ? 'character-container-image__loading' : ''
         }`}
@@ -151,7 +196,7 @@ const CharacterImage = ({ characterData }) => {
           }
           data-face
         />
-      )}
+      )} */}
       <style jsx>{`
         .character-container {
           position: relative;
