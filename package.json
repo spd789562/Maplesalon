@@ -28,6 +28,7 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "16.13.1",
     "react-window": "^1.8.5",
-    "throttle-debounce": "^2.3.0"
+    "throttle-debounce": "^2.3.0",
+    "use-context-selector": "^1.2.10"
   }
 }
