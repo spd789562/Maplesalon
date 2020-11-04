@@ -28,45 +28,50 @@ const generateTableData = (
   isFront,
   region
 ) => {
-  const columns = map(
-    ({ id, color, name }) => ({
-      id,
-      title: <ColorDot color={color} name={name} />,
-      dataIndex: id,
-      key: `hair-${id}`,
-      width: 100,
-      align: 'center',
-      className: +id === +hairColorId ? 'table-column__active' : '',
-      render: (data) => (
-        <div
-          className="character-block"
-          style={{ display: 'inline-block', width: '100px' }}
-          onClick={() => handleChange(id)}
-        >
-          <CharacterImage characterData={data} />
-          <style jsx>{`
-            .character-block {
-              cursor: pointer;
-            }
-          `}</style>
-        </div>
-      ),
-    }),
-    HairColor
-  ).filter(({ id }) => !!currentHair.colors[id])
+  const columns = currentHair
+    ? map(
+        ({ id, color, name }) => ({
+          id,
+          title: <ColorDot color={color} name={name} />,
+          dataIndex: id,
+          key: `hair-${id}`,
+          width: 100,
+          align: 'center',
+          className: +id === +hairColorId ? 'table-column__active' : '',
+          render: (data) =>
+            data && (
+              <div
+                className="character-block"
+                style={{ display: 'inline-block', width: '100px' }}
+                onClick={() => handleChange(id)}
+              >
+                <CharacterImage characterData={data} />
+                <style jsx>{`
+                  .character-block {
+                    cursor: pointer;
+                  }
+                `}</style>
+              </div>
+            ),
+        }),
+        HairColor
+      ).filter(({ id }) => !!currentHair.colors[id])
+    : []
 
-  const data = map(
-    ({ id }) =>
-      pipe(
-        clone,
-        assocPath(['selectedItems', 'Hair', 'id'], id),
-        assocPath(['selectedItems', 'Hair', 'region'], region.region),
-        assocPath(['selectedItems', 'Hair', 'version'], region.version),
-        assocPath(['mixDye', 'hairColorId'], getHairColorId(id)),
-        assoc('action', isFront ? 'stand1' : 'ladder')
-      )(currentCharacter),
-    currentHair.colors
-  )
+  const data = currentHair
+    ? map(
+        ({ id }) =>
+          pipe(
+            clone,
+            assocPath(['selectedItems', 'Hair', 'id'], id),
+            assocPath(['selectedItems', 'Hair', 'region'], region.region),
+            assocPath(['selectedItems', 'Hair', 'version'], region.version),
+            assocPath(['mixDye', 'hairColorId'], getHairColorId(id)),
+            assoc('action', isFront ? 'stand1' : 'ladder')
+          )(currentCharacter),
+        currentHair.colors
+      )
+    : []
 
   data.key = 'hair'
 

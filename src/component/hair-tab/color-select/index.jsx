@@ -6,7 +6,7 @@ import { UPDATE_CHARACTER } from '@store/meta'
 
 /* helper */
 import { formatHairId } from '@utils/group-hair'
-import { keys, includes } from 'ramda'
+import { keys, includes, isEmpty } from 'ramda'
 
 const colors = [
   { id: '0', color: 'rgb(68, 68, 68)' },
@@ -23,7 +23,8 @@ const ColorSelect = () => {
   const [{ hairColorId, hairId }, dispatch] = useStore('meta.character')
   const [hairs] = useStore('hair')
   const currentHair = useMemo(
-    () => (hairId ? hairs[formatHairId(hairId)] : { colors: {} }),
+    () =>
+      !isEmpty(hairs) && hairId ? hairs[formatHairId(hairId)] : { colors: {} },
     [hairs, hairId]
   )
 

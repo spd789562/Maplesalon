@@ -10,7 +10,7 @@ import OpacitySlider from './opacity-slider'
 
 /* utils */
 import { formatHairId } from '@utils/group-hair'
-import { F, includes, keys } from 'ramda'
+import { F, includes, keys, isEmpty } from 'ramda'
 
 /* i18n */
 import { withTranslation } from '@i18n'
@@ -26,7 +26,8 @@ const MixDyeHair = ({ tabType, t }) => {
   const [{ region, version }] = useStore('meta.region')
   const [hairs] = useStore('hair')
   const currentHair = useMemo(
-    () => (hairId ? hairs[formatHairId(hairId)] : { colors: {} }),
+    () =>
+      !isEmpty(hairs) && hairId ? hairs[formatHairId(hairId)] : { colors: {} },
     [hairs, hairId]
   )
   const hasThisColor = useCallback(
