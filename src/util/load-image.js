@@ -64,7 +64,7 @@ const loadImage = (url) =>
           .then(resolve)
           .catch(() => {
             counter += 1
-            if (counter === 3) timer = setTimeout(imageLoader, 500)
+            if (counter < 3) timer = setTimeout(imageLoader, 1000)
           })
       } else {
         clearTimeout(timer)
