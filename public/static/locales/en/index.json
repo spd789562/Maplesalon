@@ -13,6 +13,13 @@
   "character_preview_all_color": "Preview All",
   "character_preview_mix_color": "Preview Mix Dye",
 
+  "type_hair_name": "Search hair name",
+  "type_face_name": "Search face name",
+  "filter_gender_all": "All",
+  "filter_gender_general": "General",
+  "filter_gender_male": "Male",
+  "filter_gender_female": "Female",
+
   "edit_character_name": "Edit Character Name",
   "type_character_name": "Character Name",
   "search_character": "Search Character",

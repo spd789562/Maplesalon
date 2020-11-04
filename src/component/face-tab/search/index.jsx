@@ -7,10 +7,13 @@ import { SEARCH_UPDATE } from '@store/search'
 /* components */
 import { Input, Row, Col, Select } from 'antd'
 
+/* i18n */
+import { withTranslation } from '@i18n'
+
 /* utils */
 import { debounce } from 'throttle-debounce'
 
-const SearchBar = () => {
+const SearchBar = ({ t }) => {
   const [searchParam, dispatch] = useStore('search.hair')
   const handleSearch = useCallback(
     debounce(250, (field, value) => {
@@ -29,7 +32,7 @@ const SearchBar = () => {
     <Row gutter={[8, 8]}>
       <Col span={18}>
         <Input.Search
-          placeholder="type_face_name"
+          placeholder={t('type_face_name')}
           defaultValue={searchParam.name}
           onChange={({ target: { value } }) => handleSearch('name', value)}
           style={{ width: '100%' }}
@@ -42,14 +45,18 @@ const SearchBar = () => {
           defaultValue={searchParam.gender}
           style={{ width: '100%' }}
         >
-          <Select.Option value="">all</Select.Option>
-          <Select.Option value="0">0</Select.Option>
-          <Select.Option value="1">1</Select.Option>
-          <Select.Option value="2">2</Select.Option>
+          <Select.Option value="">{t('filter_gender_all')}</Select.Option>
+          <Select.Option value="0">{t('filter_gender_male')}</Select.Option>
+          <Select.Option value="1">{t('filter_gender_female')}</Select.Option>
+          <Select.Option value="2">{t('filter_gender_general')}</Select.Option>
         </Select>
       </Col>
     </Row>
   )
 }
 
-export default memo(SearchBar)
+SearchBar.getInitialProps = async () => ({
+  namespacesRequired: ['index'],
+})
+
+export default memo(withTranslation('index')(SearchBar))

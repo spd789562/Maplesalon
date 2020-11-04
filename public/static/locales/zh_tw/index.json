@@ -13,6 +13,13 @@
   "character_preview_all_color": "預覽所有外觀",
   "character_preview_mix_color": "預覽所有混染",
 
+  "type_hair_name": "輸入髮型名稱",
+  "type_face_name": "輸入臉型名稱",
+  "filter_gender_all": "全部",
+  "filter_gender_general": "共通",
+  "filter_gender_male": "男",
+  "filter_gender_female": "女",
+
   "edit_character_name": "編輯角色名稱",
   "type_character_name": "角色名稱",
   "search_character": "搜尋角色",
