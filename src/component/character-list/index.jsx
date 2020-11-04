@@ -9,7 +9,11 @@ import {
 
 /* store */
 import { useStore } from '@store'
-import { CHARACTER_APPEND, CHARACTER_REORDER } from '@store/character'
+import {
+  CHARACTER_INITIAL,
+  CHARACTER_APPEND,
+  CHARACTER_REORDER,
+} from '@store/character'
 
 /* components */
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
@@ -30,16 +34,13 @@ const CharacterList = ({ t }) => {
   const [search, updateSearch] = useState('')
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storageCharacters = (localStorage.getItem(
-        'MAPLESALON_characters'
-      ) &&
-        JSON.parse(localStorage.getItem('MAPLESALON_characters'))) || [
-        fakeCharacter,
-      ]
+      const storageCharacters =
+        localStorage.getItem('MAPLESALON_characters') &&
+        JSON.parse(localStorage.getItem('MAPLESALON_characters'))
 
       !characters.length &&
         dispatch({
-          type: CHARACTER_APPEND,
+          type: CHARACTER_INITIAL,
           payload: storageCharacters,
         })
       /* fake difference */
