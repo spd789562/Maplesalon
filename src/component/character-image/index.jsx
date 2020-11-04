@@ -4,18 +4,41 @@ import { useStore } from '@store'
 
 import characterImage from '@utils/character-image'
 import { formatHairId, getHairColorId } from '@utils/group-hair'
-import {
-  formatFaceId,
-  changeFaceColorId,
-  getFaceColorId,
-} from '@utils/group-face'
+import { changeFaceColorId, getFaceColorId } from '@utils/group-face'
 import transparentifyCharacter from '@utils/transparentify-character'
 import loadImage from '@utils/load-image'
 import { clone, isEmpty, isNil, identity } from 'ramda'
 
-import * as Omggif from 'omggif'
-
 const notEmpty = (str) => str !== '' && str !== undefined
+
+const renderCharacter = (
+  canvas,
+  images,
+  { frame = 0, mixedCharacter, hairOpacity, faceOpacity, resize = 0.8 }
+) => {
+  images.forEach(({ image, frames }, index) => {
+    const ctx = canvas.getContext('2d')
+    const imageRadio = image.height / image.width
+    const _image = frames ? frames[frame].image : image
+    ctx.save()
+    ctx.globalAlpha =
+      index === 1
+        ? mixedCharacter
+          ? hairOpacity
+          : faceOpacity
+        : index === 2
+        ? faceOpacity
+        : 1
+    ctx.drawImage(
+      _image,
+      canvas.width / 2 - ((canvas.height / imageRadio) * resize) / 2,
+      canvas.height / 2 - (canvas.height * resize) / 2,
+      (canvas.height / imageRadio) * resize,
+      canvas.height * resize
+    )
+    ctx.restore()
+  })
+}
 
 const useCanvas = () => {
   const canvasRef = useRef(null)
@@ -87,6 +110,7 @@ const CharacterImage = ({ characterData }) => {
   }, [characterData])
   useEffect(() => {
     updateState(true)
+    let _timer
     const canvas = canvasRef.current
     if (canvas) {
       canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
@@ -97,33 +121,49 @@ const CharacterImage = ({ characterData }) => {
         .filter(notEmpty)
         .map(loadImage)
     ).then((successes) => {
-      if (successes.every(identity)) {
+      if (successes.length && successes.every(identity)) {
         updateState(false)
-        successes.forEach(({ image, frames }, index) => {
-          const ctx = canvas.getContext('2d')
-          const imageRadio = image.height / image.width
-          const resize = 0.8
-          const _image = frames ? frames[0].image : image
-          ctx.save()
-          ctx.globalAlpha =
-            index === 1
-              ? mixedCharacter
-                ? hairOpacity
-                : faceOpacity
-              : index === 2
-              ? faceOpacity
-              : 1
-          ctx.drawImage(
-            _image,
-            canvas.width / 2 - ((canvas.height / imageRadio) * resize) / 2,
-            canvas.height / 2 - (canvas.height * resize) / 2,
-            (canvas.height / imageRadio) * resize,
-            canvas.height * resize
-          )
-          ctx.restore()
-        })
+        if (successes[0].frames) {
+          let start = null
+          let currentFrame = 0
+          const frameCount = successes[0].frames.length
+          const renderGif = (timestamp) => {
+            const ms = timestamp - start
+            const currentFrameDelay =
+              successes[0].frames[currentFrame].delay * 10
+            if (ms > currentFrameDelay || !start) {
+              currentFrame =
+                start && currentFrame + 1 < frameCount ? currentFrame + 1 : 0
+              start = timestamp
+              canvas
+                .getContext('2d')
+                .clearRect(0, 0, canvas.width, canvas.height)
+              renderCharacter(canvas, successes, {
+                frame: currentFrame,
+                mixedCharacter,
+                hairOpacity,
+                faceOpacity,
+              })
+            }
+            _timer = requestAnimationFrame(renderGif)
+          }
+          _timer = requestAnimationFrame(renderGif)
+        } else {
+          renderCharacter(canvas, successes, {
+            mixedCharacter,
+            hairOpacity,
+            faceOpacity,
+          })
+        }
+      } else {
+        updateState(false)
       }
     })
+    return () => {
+      const cancelAnimationFrame =
+        window.cancelAnimationFrame || window.mozCancelAnimationFrame
+      cancelAnimationFrame(_timer)
+    }
   }, [character, mixedCharacter, mixedFaceCharacter])
 
   return (

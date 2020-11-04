@@ -1,6 +1,8 @@
+import { clone } from 'ramda'
 const { API_DATA_URL } = require('next/config').default().publicRuntimeConfig
 
-const characterImage = function characterImage(character, dataInformation) {
+const characterImage = function characterImage(_character, dataInformation) {
+  const character = clone(_character)
   let itemEntries = Object.values(character.selectedItems)
     .filter((item) => item.id && (item.visible === undefined || item.visible))
     .map((item) => {
