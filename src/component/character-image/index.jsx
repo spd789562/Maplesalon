@@ -10,29 +10,12 @@ import {
   getFaceColorId,
 } from '@utils/group-face'
 import transparentifyCharacter from '@utils/transparentify-character'
+import loadImage from '@utils/load-image'
 import { clone, isEmpty, isNil, identity } from 'ramda'
 
-const notEmpty = (str) => str !== '' && str !== undefined
+import * as Omggif from 'omggif'
 
-const isImageLoading = (url) =>
-  new Promise((resolve) => {
-    let counter = 0,
-      timer
-    const loadImage = () => {
-      if (counter <= 3) {
-        const img = new Image()
-        img.onload = () => resolve(img)
-        img.onerror = () => {
-          counter += 1
-          setTimeout(loadImage, 500)
-        }
-        img.src = url
-      } else {
-        resolve(undefined)
-      }
-    }
-    loadImage()
-  })
+const notEmpty = (str) => str !== '' && str !== undefined
 
 const useCanvas = () => {
   const canvasRef = useRef(null)
@@ -104,18 +87,23 @@ const CharacterImage = ({ characterData }) => {
   }, [characterData])
   useEffect(() => {
     updateState(true)
+    const canvas = canvasRef.current
+    if (canvas) {
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+    }
+
     Promise.all(
       [character, mixedCharacter, mixedFaceCharacter]
         .filter(notEmpty)
-        .map(isImageLoading)
+        .map(loadImage)
     ).then((successes) => {
       if (successes.every(identity)) {
         updateState(false)
-        successes.forEach((image, index) => {
-          const canvas = canvasRef.current
+        successes.forEach(({ image, frames }, index) => {
           const ctx = canvas.getContext('2d')
           const imageRadio = image.height / image.width
           const resize = 0.8
+          const _image = frames ? frames[0].image : image
           ctx.save()
           ctx.globalAlpha =
             index === 1
@@ -126,7 +114,7 @@ const CharacterImage = ({ characterData }) => {
               ? faceOpacity
               : 1
           ctx.drawImage(
-            image,
+            _image,
             canvas.width / 2 - ((canvas.height / imageRadio) * resize) / 2,
             canvas.height / 2 - (canvas.height * resize) / 2,
             (canvas.height / imageRadio) * resize,

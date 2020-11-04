@@ -23,6 +23,7 @@
     "next": "9.5.3",
     "next-i18next": "^6.0.2",
     "next-pwa": "^3.1.5",
+    "omggif": "^1.0.10",
     "ramda": "^0.27.1",
     "react": "16.13.1",
     "react-beautiful-dnd": "^13.0.0",
