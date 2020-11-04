@@ -38,6 +38,11 @@
   "import_template_ok": "確認",
   "import_template_cancel": "取消",
 
+  "control_delete_title": "刪除確認",
+  "control_delete_content": "確定要刪除{{name}}嗎?",
+  "control_delete_yes": "確認",
+  "control_delete_no": "取消",
+
   "tab_hair": "美髮",
   "tab_face": "美容",
   "tab_skin": "護膚",

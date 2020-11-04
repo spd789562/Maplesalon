@@ -32,6 +32,11 @@
   "control_duplicate": "Duplicate",
   "control_delete": "Delete",
 
+  "control_delete_title": "Delete Confirm",
+  "control_delete_content": "Are you sure want to delete {{name}}?",
+  "control_delete_yes": "Yes",
+  "control_delete_no": "No",
+
   "import_import": "Import From maples.im",
   "import_template": "Select From Template",
   "import_template_title": "Choice Character",
