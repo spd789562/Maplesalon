@@ -40,7 +40,7 @@ const renderCharacter = (
   })
 }
 
-const useCanvas = (characterData) => {
+const useCanvas = (square) => {
   const canvasRef = useRef(null)
   useEffect(() => {
     const canvas = canvasRef.current
@@ -50,14 +50,14 @@ const useCanvas = (characterData) => {
       canvas.width = rect.width * dpr
       canvas.height = rect.height * dpr
     }
-  }, [characterData])
+  }, [square])
   return canvasRef
 }
 
 const CharacterImage = ({ characterData, resize = 0.8, square }) => {
   const [regionData] = useStore('meta.region', {})
   const [isLoading, updateState] = useState(true)
-  const canvasRef = useCanvas(characterData)
+  const canvasRef = useCanvas(square)
   const {
     character,
     mixedCharacter,
@@ -118,9 +118,7 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
     updateState(true)
     let _timer
     const canvas = canvasRef.current
-    if (canvas) {
-      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-    }
+    const ctx = canvas.getContext('2d')
     cancelAnimationFrame(_timer)
     Promise.all(
       [character, mixedCharacter, mixedFaceCharacter]
@@ -128,6 +126,7 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
         .map(loadImage)
     ).then((successes) => {
       if (successes.length && successes.every(identity)) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
         updateState(false)
         if (successes[0].frames) {
           let start = null
@@ -141,9 +140,7 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
               currentFrame =
                 start && currentFrame + 1 < frameCount ? currentFrame + 1 : 0
               start = timestamp
-              canvas
-                .getContext('2d')
-                .clearRect(0, 0, canvas.width, canvas.height)
+              ctx.clearRect(0, 0, canvas.width, canvas.height)
               renderCharacter(canvas, successes, {
                 frame: currentFrame,
                 mixedCharacter,
@@ -172,7 +169,7 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
         window.cancelAnimationFrame || window.mozCancelAnimationFrame
       cancelAnimationFrame(_timer)
     }
-  }, [character, mixedCharacter, mixedFaceCharacter, resize])
+  }, [character, mixedCharacter, mixedFaceCharacter, resize, square])
 
   return (
     <div className="character-container">
