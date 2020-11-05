@@ -51,7 +51,7 @@ const characterImage = function characterImage(_character, dataInformation) {
   }/${
     character.animating ? 'animated' : character.frame || '0'
   }?showears=${!!character.mercEars}&showLefEars=${!!character.illiumEars}&showHighLefEars=${!!character.highFloraEars}&resize=1&name=&flipX=${!!character.flipX}&renderMode=${
-    character.action === 'ladder' ? '2' : '1'
+    dataInformation.square ? 0 : character.action === 'ladder' ? '2' : '1'
   }`
 }
 

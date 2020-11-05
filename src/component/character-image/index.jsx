@@ -40,7 +40,7 @@ const renderCharacter = (
   })
 }
 
-const useCanvas = () => {
+const useCanvas = (characterData) => {
   const canvasRef = useRef(null)
   useEffect(() => {
     const canvas = canvasRef.current
@@ -50,14 +50,14 @@ const useCanvas = () => {
       canvas.width = rect.width * dpr
       canvas.height = rect.height * dpr
     }
-  }, [])
+  }, [characterData])
   return canvasRef
 }
 
-const CharacterImage = ({ characterData }) => {
+const CharacterImage = ({ characterData, resize = 0.8, square }) => {
   const [regionData] = useStore('meta.region', {})
   const [isLoading, updateState] = useState(true)
-  const canvasRef = useCanvas()
+  const canvasRef = useCanvas(characterData)
   const {
     character,
     mixedCharacter,
@@ -71,6 +71,10 @@ const CharacterImage = ({ characterData }) => {
     let faceOpacity = 1
     const hasCharacter =
       !isEmpty(characterData) && !isNil(characterData) && characterData.skin
+    const dataInformation = {
+      ...regionData,
+      square,
+    }
     if (
       hasCharacter &&
       characterData.mixDye &&
@@ -82,7 +86,7 @@ const CharacterImage = ({ characterData }) => {
       copyCharacter.selectedItems.Hair.id =
         formatHairId(characterData.selectedItems.Hair.id) * 10 +
         +characterData.mixDye.hairColorId
-      mixedCharacter = characterImage(copyCharacter, regionData)
+      mixedCharacter = characterImage(copyCharacter, dataInformation)
       hairOpacity = characterData.mixDye.hairOpacity
     }
     if (
@@ -97,11 +101,13 @@ const CharacterImage = ({ characterData }) => {
         characterData.selectedItems.Face.id,
         characterData.mixDye.faceColorId
       )
-      mixedFaceCharacter = characterImage(transparentCharacter, regionData)
+      mixedFaceCharacter = characterImage(transparentCharacter, dataInformation)
       faceOpacity = characterData.mixDye.faceOpacity
     }
     return {
-      character: hasCharacter ? characterImage(characterData, regionData) : '',
+      character: hasCharacter
+        ? characterImage(characterData, dataInformation)
+        : '',
       mixedCharacter,
       mixedFaceCharacter,
       hairOpacity,
@@ -115,7 +121,7 @@ const CharacterImage = ({ characterData }) => {
     if (canvas) {
       canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
     }
-
+    cancelAnimationFrame(_timer)
     Promise.all(
       [character, mixedCharacter, mixedFaceCharacter]
         .filter(notEmpty)
@@ -143,6 +149,7 @@ const CharacterImage = ({ characterData }) => {
                 mixedCharacter,
                 hairOpacity,
                 faceOpacity,
+                resize,
               })
             }
             _timer = requestAnimationFrame(renderGif)
@@ -153,6 +160,7 @@ const CharacterImage = ({ characterData }) => {
             mixedCharacter,
             hairOpacity,
             faceOpacity,
+            resize,
           })
         }
       } else {
@@ -164,7 +172,7 @@ const CharacterImage = ({ characterData }) => {
         window.cancelAnimationFrame || window.mozCancelAnimationFrame
       cancelAnimationFrame(_timer)
     }
-  }, [character, mixedCharacter, mixedFaceCharacter])
+  }, [character, mixedCharacter, mixedFaceCharacter, resize])
 
   return (
     <div className="character-container">
@@ -178,7 +186,7 @@ const CharacterImage = ({ characterData }) => {
         .character-container {
           position: relative;
           width: 100%;
-          padding-bottom: 150%;
+          padding-bottom: ${square ? '100%' : '150%'};
         }
         .character-container-image {
           background-repeat: no-repeat;
