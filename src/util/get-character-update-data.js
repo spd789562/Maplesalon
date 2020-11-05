@@ -16,20 +16,6 @@ const getCharacterUpdateData = function getCharacterUpdateData(character) {
   const mixFaceColorId = character.mixDye?.faceColorId || characterFaceColorId
   const mixFaceOpacity = character.mixDye?.faceOpacity || 0.5
 
-  console.log({
-    name,
-    hairId: characterHairId,
-    hairColorId: characterHairColorId,
-    faceId: characterFaceId,
-    faceColorId: characterFaceColorId,
-    skin,
-    earsType,
-    mixHairColorId,
-    mixHairOpacity,
-    mixFaceColorId,
-    mixFaceOpacity,
-  })
-
   return {
     name,
     hairId: characterHairId,

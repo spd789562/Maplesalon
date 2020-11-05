@@ -1,4 +1,10 @@
-import { createContext, useReducer, useContext, useMemo } from 'react'
+import { useReducer, useMemo } from 'react'
+
+import {
+  createContext,
+  useContext,
+  useContextSelector,
+} from 'use-context-selector'
 
 import { combineReducer } from './_helper'
 import hairReducer from './hair'
@@ -8,7 +14,7 @@ import searchReducer from './search'
 import metaReducer from './meta'
 import characterReducer from './character'
 
-import { isNil } from 'ramda'
+import { isNil, prop, curry, path, pickAll } from 'ramda'
 
 const GlobalStore = createContext({})
 
@@ -35,25 +41,21 @@ export const Provider = ({ children }) => {
   )
 }
 
-export const useDispatch = () => useContext(GlobalStore).dispatch
+// export const useDispatch = () => useContext(GlobalStore).dispatch
+export const useDispatch = () =>
+  useContextSelector(GlobalStore, prop('dispatch'))
 
 export const useStore = (keyPath, initialValue = null) => {
-  const state = useContext(GlobalStore)
-  let path = []
-  const findValue = (keys) =>
-    keys.reduce(
-      (currentState, key) =>
-        isNil(currentState[key]) ? {} : currentState[key],
-      state
-    )
+  const dispatch = useDispatch()
+  let keys = []
   if (keyPath.indexOf('.') !== 1) {
-    path = keyPath.split('.')
+    keys = keyPath.split('.')
   } else if (Array.isArray(keyPath)) {
-    path = keyPath
+    keys = keyPath
   } else {
-    path = [keyPath]
+    keys = [keyPath]
   }
-  let result = findValue(path)
+  let result = useContextSelector(GlobalStore, path(keys))
   if (
     initialValue !== null &&
     result.constructor === Object &&
@@ -62,5 +64,5 @@ export const useStore = (keyPath, initialValue = null) => {
     result = initialValue
   }
 
-  return [result, state.dispatch]
+  return [result, dispatch]
 }

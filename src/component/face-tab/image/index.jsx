@@ -3,9 +3,17 @@ import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 import { F } from 'ramda'
 
-const Image = ({ columnIndex, rowIndex, style, data, region, version }) => {
+const Image = ({
+  columnIndex,
+  rowIndex,
+  style,
+  data,
+  region,
+  version,
+  columnCount,
+}) => {
   const [{ faceColorId, faceId }, dispatch] = useStore('meta.character')
-  const item = data[columnIndex + 5 * rowIndex] || { colors: {} }
+  const item = data[columnIndex + columnCount * rowIndex] || { colors: {} }
   const itemId = item.colors[faceColorId] && item.colors[faceColorId].id
   const itemName =
     item.name ||

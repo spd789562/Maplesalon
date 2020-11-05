@@ -16,6 +16,7 @@
     "antd": "4.7.0",
     "babel-plugin-import": "^1.13.0",
     "express": "^4.17.1",
+    "gif.js.optimized": "^1.0.1",
     "i18next-hmr": "^1.6.0",
     "less": "^3.12.2",
     "moment": "^2.27.0",
@@ -23,11 +24,13 @@
     "next": "9.5.3",
     "next-i18next": "^6.0.2",
     "next-pwa": "^3.1.5",
+    "omggif": "^1.0.10",
     "ramda": "^0.27.1",
     "react": "16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "16.13.1",
     "react-window": "^1.8.5",
-    "throttle-debounce": "^2.3.0"
+    "throttle-debounce": "^2.3.0",
+    "use-context-selector": "^1.2.10"
   }
 }

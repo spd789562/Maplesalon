@@ -1,6 +1,8 @@
+import { clone, includes } from 'ramda'
 const { API_DATA_URL } = require('next/config').default().publicRuntimeConfig
 
-const characterImage = function characterImage(character, dataInformation) {
+const characterImage = function characterImage(_character, dataInformation) {
+  const character = clone(_character)
   let itemEntries = Object.values(character.selectedItems)
     .filter((item) => item.id && (item.visible === undefined || item.visible))
     .map((item) => {
@@ -49,7 +51,11 @@ const characterImage = function characterImage(character, dataInformation) {
   }/${
     character.animating ? 'animated' : character.frame || '0'
   }?showears=${!!character.mercEars}&showLefEars=${!!character.illiumEars}&showHighLefEars=${!!character.highFloraEars}&resize=1&name=&flipX=${!!character.flipX}&renderMode=${
-    character.action === 'ladder' ? '2' : '1'
+    dataInformation.square
+      ? 0
+      : includes(character.action, ['ladder', 'rope'])
+      ? '2'
+      : '1'
   }`
 }
 

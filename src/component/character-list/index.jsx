@@ -9,7 +9,11 @@ import {
 
 /* store */
 import { useStore } from '@store'
-import { CHARACTER_APPEND, CHARACTER_REORDER } from '@store/character'
+import {
+  CHARACTER_INITIAL,
+  CHARACTER_APPEND,
+  CHARACTER_REORDER,
+} from '@store/character'
 
 /* components */
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
@@ -30,16 +34,13 @@ const CharacterList = ({ t }) => {
   const [search, updateSearch] = useState('')
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storageCharacters = (localStorage.getItem(
-        'MAPLESALON_characters'
-      ) &&
-        JSON.parse(localStorage.getItem('MAPLESALON_characters'))) || [
-        fakeCharacter,
-      ]
+      const storageCharacters =
+        localStorage.getItem('MAPLESALON_characters') &&
+        JSON.parse(localStorage.getItem('MAPLESALON_characters'))
 
       !characters.length &&
         dispatch({
-          type: CHARACTER_APPEND,
+          type: CHARACTER_INITIAL,
           payload: storageCharacters,
         })
       /* fake difference */
@@ -63,51 +64,54 @@ const CharacterList = ({ t }) => {
     if (result.destination.index === result.source.index) return
     dispatch({ type: CHARACTER_REORDER, payload: result })
   }, [])
-  return (
-    <Fragment>
-      <Col span={24} sm={18} xl={12} xxl={8}>
-        <Input.Search
-          placeholder={t('search_character')}
-          onChange={({ target: { value } }) => updateSearch(value)}
-          allowClear
-        />
-      </Col>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable
-          droppableId="characters"
-          direction="horizontal"
-          isCombineEnabled={false}
-        >
-          {(dropProvided, dropSnapshot) => (
-            <div
-              ref={(ref) => dropProvided.innerRef(ref)}
-              className="drop"
-              {...dropProvided.droppableProps}
-            >
-              {characters
-                .filter(pipe(prop('name'), includes(search)))
-                .map((character, index) => (
-                  <CharacterItem
-                    data={character}
-                    index={index}
-                    key={character.id}
-                    isDragDisabled={!!search}
-                  />
-                ))}
-              {dropProvided.placeholder}
-              <CharacterNew />
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-      <style jsx>{`
-        .drop {
-          overflow-x: auto;
-          display: flex;
-          height: 200px;
-        }
-      `}</style>
-    </Fragment>
+  return useMemo(
+    () => (
+      <Fragment>
+        <Col span={24} sm={18} xl={12} xxl={8}>
+          <Input.Search
+            placeholder={t('search_character')}
+            onChange={({ target: { value } }) => updateSearch(value)}
+            allowClear
+          />
+        </Col>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable
+            droppableId="characters"
+            direction="horizontal"
+            isCombineEnabled={false}
+          >
+            {(dropProvided, dropSnapshot) => (
+              <div
+                ref={(ref) => dropProvided.innerRef(ref)}
+                className="drop"
+                {...dropProvided.droppableProps}
+              >
+                {characters
+                  .filter(pipe(prop('name'), includes(search)))
+                  .map((character, index) => (
+                    <CharacterItem
+                      data={character}
+                      index={index}
+                      key={character.id}
+                      isDragDisabled={!!search}
+                    />
+                  ))}
+                {dropProvided.placeholder}
+                <CharacterNew />
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <style jsx>{`
+          .drop {
+            overflow-x: auto;
+            display: flex;
+            height: 200px;
+          }
+        `}</style>
+      </Fragment>
+    ),
+    [characters, search]
   )
 }
 

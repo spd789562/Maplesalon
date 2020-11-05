@@ -1,42 +1,63 @@
-import { useMemo, memo, useState, useEffect } from 'react'
+import { useMemo, useRef, useState, useEffect } from 'react'
 
 import { useStore } from '@store'
 
 import characterImage from '@utils/character-image'
 import { formatHairId, getHairColorId } from '@utils/group-hair'
-import {
-  formatFaceId,
-  changeFaceColorId,
-  getFaceColorId,
-} from '@utils/group-face'
+import { changeFaceColorId, getFaceColorId } from '@utils/group-face'
 import transparentifyCharacter from '@utils/transparentify-character'
+import loadImage from '@utils/load-image'
 import { clone, isEmpty, isNil, identity } from 'ramda'
 
 const notEmpty = (str) => str !== '' && str !== undefined
 
-const isImageLoading = (url) =>
-  new Promise((resolve) => {
-    let counter = 0,
-      timer
-    const loadImage = () => {
-      if (counter <= 3) {
-        const img = new Image()
-        img.onload = () => resolve(true)
-        img.onerror = () => {
-          counter += 1
-          setTimeout(loadImage, 500)
-        }
-        img.src = url
-      } else {
-        resolve(false)
-      }
-    }
-    loadImage()
+const renderCharacter = (
+  canvas,
+  images,
+  { frame = 0, mixedCharacter, hairOpacity, faceOpacity, resize = 0.8 }
+) => {
+  images.forEach(({ image, frames }, index) => {
+    const ctx = canvas.getContext('2d')
+    const imageRadio = image.height / image.width
+    const _image = frames ? frames[frame].image : image
+    ctx.save()
+    ctx.globalAlpha =
+      index === 1
+        ? mixedCharacter
+          ? hairOpacity
+          : faceOpacity
+        : index === 2
+        ? faceOpacity
+        : 1
+    ctx.drawImage(
+      _image,
+      canvas.width / 2 - ((canvas.height / imageRadio) * resize) / 2,
+      canvas.height / 2 - (canvas.height * resize) / 2,
+      (canvas.height / imageRadio) * resize,
+      canvas.height * resize
+    )
+    ctx.restore()
   })
+}
 
-const CharacterImage = ({ characterData }) => {
+const useCanvas = (characterData) => {
+  const canvasRef = useRef(null)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (canvas) {
+      const dpr = window.devicePixelRatio || 1
+      const rect = canvas.getBoundingClientRect()
+      canvas.width = rect.width * dpr
+      canvas.height = rect.height * dpr
+    }
+  }, [characterData])
+  return canvasRef
+}
+
+const CharacterImage = ({ characterData, resize = 0.8, square }) => {
   const [regionData] = useStore('meta.region', {})
   const [isLoading, updateState] = useState(true)
+  const canvasRef = useCanvas(characterData)
   const {
     character,
     mixedCharacter,
@@ -50,6 +71,10 @@ const CharacterImage = ({ characterData }) => {
     let faceOpacity = 1
     const hasCharacter =
       !isEmpty(characterData) && !isNil(characterData) && characterData.skin
+    const dataInformation = {
+      ...regionData,
+      square,
+    }
     if (
       hasCharacter &&
       characterData.mixDye &&
@@ -61,7 +86,7 @@ const CharacterImage = ({ characterData }) => {
       copyCharacter.selectedItems.Hair.id =
         formatHairId(characterData.selectedItems.Hair.id) * 10 +
         +characterData.mixDye.hairColorId
-      mixedCharacter = characterImage(copyCharacter, regionData)
+      mixedCharacter = characterImage(copyCharacter, dataInformation)
       hairOpacity = characterData.mixDye.hairOpacity
     }
     if (
@@ -76,11 +101,13 @@ const CharacterImage = ({ characterData }) => {
         characterData.selectedItems.Face.id,
         characterData.mixDye.faceColorId
       )
-      mixedFaceCharacter = characterImage(transparentCharacter, regionData)
+      mixedFaceCharacter = characterImage(transparentCharacter, dataInformation)
       faceOpacity = characterData.mixDye.faceOpacity
     }
     return {
-      character: hasCharacter ? characterImage(characterData, regionData) : '',
+      character: hasCharacter
+        ? characterImage(characterData, dataInformation)
+        : '',
       mixedCharacter,
       mixedFaceCharacter,
       hairOpacity,
@@ -89,74 +116,77 @@ const CharacterImage = ({ characterData }) => {
   }, [characterData])
   useEffect(() => {
     updateState(true)
+    let _timer
+    const canvas = canvasRef.current
+    if (canvas) {
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+    }
+    cancelAnimationFrame(_timer)
     Promise.all(
       [character, mixedCharacter, mixedFaceCharacter]
         .filter(notEmpty)
-        .map(isImageLoading)
+        .map(loadImage)
     ).then((successes) => {
-      if (successes.every(identity)) {
+      if (successes.length && successes.every(identity)) {
+        updateState(false)
+        if (successes[0].frames) {
+          let start = null
+          let currentFrame = 0
+          const frameCount = successes[0].frames.length
+          const renderGif = (timestamp) => {
+            const ms = timestamp - start
+            const currentFrameDelay =
+              successes[0].frames[currentFrame].delay * 10
+            if (ms > currentFrameDelay || !start) {
+              currentFrame =
+                start && currentFrame + 1 < frameCount ? currentFrame + 1 : 0
+              start = timestamp
+              canvas
+                .getContext('2d')
+                .clearRect(0, 0, canvas.width, canvas.height)
+              renderCharacter(canvas, successes, {
+                frame: currentFrame,
+                mixedCharacter,
+                hairOpacity,
+                faceOpacity,
+                resize,
+              })
+            }
+            _timer = requestAnimationFrame(renderGif)
+          }
+          _timer = requestAnimationFrame(renderGif)
+        } else {
+          renderCharacter(canvas, successes, {
+            mixedCharacter,
+            hairOpacity,
+            faceOpacity,
+            resize,
+          })
+        }
+      } else {
         updateState(false)
       }
     })
-  }, [character, mixedCharacter, mixedFaceCharacter])
+    return () => {
+      const cancelAnimationFrame =
+        window.cancelAnimationFrame || window.mozCancelAnimationFrame
+      cancelAnimationFrame(_timer)
+    }
+  }, [character, mixedCharacter, mixedFaceCharacter, resize])
+
   return (
     <div className="character-container">
-      <div
-        className={`character-container-image ${
-          character && isLoading ? 'character-container-image__loading' : ''
-        }`}
-        key={character}
-        style={
-          character && !isLoading
-            ? {
-                backgroundImage: `url(${character})`,
-              }
-            : {}
-        }
-      />
-      {mixedCharacter && (
+      <canvas className="character-container-image" ref={canvasRef} />
+      {isLoading && (
         <div
-          className={`character-container-image ${
-            mixedCharacter && isLoading
-              ? 'character-container-image__loading'
-              : ''
-          }`}
-          key={'mix' + mixedCharacter}
-          style={
-            mixedCharacter && !isLoading
-              ? {
-                  backgroundImage: `url(${mixedCharacter})`,
-                  opacity: hairOpacity,
-                }
-              : {}
-          }
-          data-hair
-        />
-      )}
-      {mixedFaceCharacter && (
-        <div
-          className={`character-container-image ${
-            mixedFaceCharacter && isLoading
-              ? 'character-container-image__loading'
-              : ''
-          }`}
-          key={'face' + mixedFaceCharacter}
-          style={
-            mixedFaceCharacter && !isLoading
-              ? {
-                  backgroundImage: `url(${mixedFaceCharacter})`,
-                  opacity: faceOpacity,
-                }
-              : {}
-          }
-          data-face
+          className={`character-container-image character-container-image__loading`}
         />
       )}
       <style jsx>{`
         .character-container {
           position: relative;
           width: 100%;
-          padding-bottom: 150%;
+          padding-bottom: ${square ? '100%' : '150%'};
         }
         .character-container-image {
           background-repeat: no-repeat;

@@ -47,6 +47,7 @@ const FaceTab = () => {
     },
     []
   )
+  const CLOUMN_COUNT = width < 400 ? 4 : 5
   const initHeight = useMemo(() => {
     if (searchParam.scrollTop && isFirstRender) {
       updateFirstRender(false)
@@ -55,22 +56,22 @@ const FaceTab = () => {
       const index = searchedFace.findIndex(
         propEq('id', formatFaceId(faceId) + '')
       )
-      return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
+      return index !== -1 ? (Math.floor(index / CLOUMN_COUNT) - 1) * 95 : 0
     }
-  }, [colorId])
+  }, [colorId, CLOUMN_COUNT])
 
   const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
     faceId,
     initHeight,
   ])
-  const perWidth = width / 5
+  const perWidth = width / CLOUMN_COUNT
   return (
     <div>
       <Search />
       <FixedSizeGrid
         columnCount={5}
         columnWidth={perWidth}
-        rowCount={Math.ceil(searchedFace.length / 5)}
+        rowCount={Math.ceil(searchedFace.length / CLOUMN_COUNT)}
         rowHeight={95}
         width={width}
         height={300}
@@ -89,6 +90,7 @@ const FaceTab = () => {
                 rowIndex,
                 region,
                 version,
+                columnCount: CLOUMN_COUNT,
               }}
             />
           )

@@ -3,9 +3,17 @@ import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
 import { F } from 'ramda'
 
-const Image = ({ columnIndex, rowIndex, style, data, region, version }) => {
+const Image = ({
+  columnIndex,
+  rowIndex,
+  style,
+  data,
+  region,
+  version,
+  columnCount,
+}) => {
   const [{ hairColorId, hairId }, dispatch] = useStore('meta.character')
-  const item = data[columnIndex + 5 * rowIndex] || { colors: {} }
+  const item = data[columnIndex + columnCount * rowIndex] || { colors: {} }
   const itemId = item.colors[hairColorId] && item.colors[hairColorId].id
   const src = `https://maplestory.io/api/${region}/${version}/item/${itemId}/icon`
   const isSelected = hairId && itemId && hairId === itemId

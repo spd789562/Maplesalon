@@ -64,6 +64,9 @@ const generateTableData = (
       )(currentCharacter),
     currentFace.colors
   )
+
+  data.key = 'hair'
+
   return {
     columns,
     data,

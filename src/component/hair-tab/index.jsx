@@ -49,27 +49,28 @@ const HairTab = () => {
     },
     []
   )
+  const CLOUMN_COUNT = width < 400 ? 4 : 5
   const initHeight = useMemo(() => {
     if (searchParam.scrollTop && isFirstRender) {
       updateFirstRender(false)
       return searchParam.scrollTop
     } else {
       const index = searchedHair.findIndex(propEq('id', formatHairId(hairId)))
-      return index !== -1 ? (Math.floor(index / 5) - 1) * 95 : 0
+      return index !== -1 ? (Math.floor(index / CLOUMN_COUNT) - 1) * 95 : 0
     }
-  }, [colorId])
+  }, [colorId, CLOUMN_COUNT])
   const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
     hairId,
     initHeight,
   ])
-  const perWidth = width / 5
+  const perWidth = width / CLOUMN_COUNT
   return (
     <div>
       <Search />
       <FixedSizeGrid
-        columnCount={5}
+        columnCount={CLOUMN_COUNT}
         columnWidth={perWidth}
-        rowCount={Math.ceil(searchedHair.length / 5)}
+        rowCount={Math.ceil(searchedHair.length / CLOUMN_COUNT)}
         rowHeight={95}
         width={width}
         height={300}
@@ -88,6 +89,7 @@ const HairTab = () => {
                 rowIndex,
                 region,
                 version,
+                columnCount: CLOUMN_COUNT,
               }}
             />
           )

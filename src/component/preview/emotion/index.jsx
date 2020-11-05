@@ -9,32 +9,36 @@ import useChangedCharacter from '@hooks/use-changed-character'
 
 /* helper */
 import { clone, map, pipe, assoc, includes } from 'ramda'
+import { withTranslation } from '@i18n'
 
 /* mapping */
 import Emotions from '@mapping/emotions'
 
-const generateTableData = (currentCharacter) => {
-  const columns = Emotions.map(({ text, type }, index) => ({
-    id: type,
-    title: includes(type, ['default', 'qBlue']) ? (
-      <span>{text}</span>
-    ) : (
-      <img
-        src={`/emotions/${type}.png`}
-        alt={text}
-        title={text}
-        style={{ width: 32 }}
-      />
-    ),
-    dataIndex: index,
-    width: 100,
-    align: 'center',
-    render: (data) => (
-      <div style={{ display: 'inline-block', width: '100px' }}>
-        <CharacterImage characterData={data} />
-      </div>
-    ),
-  }))
+const generateTableData = (currentCharacter, t) => {
+  const columns = Emotions.map(({ text, type }, index) => {
+    const title = t(text)
+    return {
+      id: type,
+      title: includes(type, ['default', 'qBlue']) ? (
+        <span>{title}</span>
+      ) : (
+        <img
+          src={`/emotions/${type}.png`}
+          alt={title}
+          title={title}
+          style={{ width: 32 }}
+        />
+      ),
+      dataIndex: index,
+      width: 100,
+      align: 'center',
+      render: (data) => (
+        <div style={{ display: 'inline-block', width: '100px' }}>
+          <CharacterImage characterData={data} />
+        </div>
+      ),
+    }
+  })
   const data = map(
     ({ type }) => pipe(clone, assoc('emotion', type))(currentCharacter),
     Emotions
@@ -45,11 +49,12 @@ const generateTableData = (currentCharacter) => {
   }
 }
 
-const EmotionPreview = () => {
+const EmotionPreview = ({ t }) => {
   const [{ changedCharacter }] = useChangedCharacter()
 
-  const tableData = useMemo(() => generateTableData(changedCharacter), [
+  const tableData = useMemo(() => generateTableData(changedCharacter, t), [
     changedCharacter,
+    t,
   ])
 
   return (
@@ -63,4 +68,4 @@ const EmotionPreview = () => {
   )
 }
 
-export default memo(EmotionPreview)
+export default memo(withTranslation('index')(EmotionPreview))

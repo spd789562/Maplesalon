@@ -28,6 +28,7 @@ import {
   prop,
   reduce,
   values,
+  isEmpty,
   __,
 } from 'ramda'
 
@@ -51,6 +52,7 @@ const generateTableData = ({
       id,
       title: <ColorDot color={color} name={name} />,
       dataIndex: id,
+      key: `hair-mix-${id}`,
       width: 116,
       align: 'center',
       render: (data) => (
@@ -97,6 +99,7 @@ const generateTableData = ({
         },
         {
           'color-dot': { color, name },
+          key: name,
         }
       )(filterdColors)
     )
@@ -132,7 +135,8 @@ const HairColorPreview = () => {
   const [mixHairOpacity, changeOpacity] = useState(0.5)
   const [hairs] = useStore('hair')
   const currentHair = useMemo(
-    () => (hairId ? hairs[formatHairId(hairId)] : { colors: {} }),
+    () =>
+      !isEmpty(hairs) && hairId ? hairs[formatHairId(hairId)] : { colors: {} },
     [hairs, hairId]
   )
 

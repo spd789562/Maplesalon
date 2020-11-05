@@ -130,8 +130,7 @@ const CharacterNew = ({ t }) => {
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 25%;
-          max-width: 120px;
+          width: 120px;
           flex-shrink: 0;
           transition: background-color 0.3s linear;
         }

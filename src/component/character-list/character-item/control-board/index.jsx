@@ -9,7 +9,9 @@ import {
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* components */
+import { Modal } from 'antd'
 import {
+  ExclamationCircleOutlined,
   SelectOutlined,
   DeleteOutlined,
   CopyOutlined,
@@ -48,10 +50,20 @@ const ControlBoard = ({ characterData, t }) => {
       },
       handleDuplicate: () =>
         dispatch({ type: CHARACTER_DUPLICATE, payload: characterData.id }),
-      handleDelete: () =>
-        dispatch({ type: CHARACTER_DELETE, payload: characterData.id }),
+      handleDelete: () => {
+        Modal.confirm({
+          title: t('control_delete_title'),
+          icon: <ExclamationCircleOutlined />,
+          content: t('control_delete_content', { name: characterData.name }),
+          okButtonProps: { danger: true },
+          okText: t('control_delete_yes'),
+          cancelText: t('control_delete_no'),
+          onOk: () =>
+            dispatch({ type: CHARACTER_DELETE, payload: characterData.id }),
+        })
+      },
     }),
-    [characterData]
+    [characterData, t]
   )
   return (
     <Fragment>
