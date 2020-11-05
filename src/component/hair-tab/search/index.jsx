@@ -27,7 +27,7 @@ const SearchBar = ({ t }) => {
   )
   return (
     <Row gutter={[8, 8]}>
-      <Col span={18}>
+      <Col xs={16} sm={18}>
         <Input.Search
           placeholder={t('type_hair_name')}
           defaultValue={searchParam.name}
@@ -36,7 +36,7 @@ const SearchBar = ({ t }) => {
           allowClear
         />
       </Col>
-      <Col span={6}>
+      <Col xs={8} span={6}>
         <Select
           defaultValue={searchParam.gender}
           onChange={(value) => handleSearch('gender', value)}
