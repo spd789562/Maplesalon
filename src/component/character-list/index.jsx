@@ -41,8 +41,9 @@ const CharacterList = ({ t }) => {
       !characters.length &&
         dispatch({
           type: CHARACTER_INITIAL,
-          payload: storageCharacters,
+          payload: storageCharacters || [],
         })
+
       /* fake difference */
       // dispatch({
       //   type: UPDATE_CHARACTER,

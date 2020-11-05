@@ -10,9 +10,10 @@ const widthRef = createRef()
 const TabResizer = () => {
   const dispatch = useDispatch()
   const updateWidth = useCallback(
-    debounce(200, () =>
-      dispatch({ type: WIDTH_UPDATE, payload: widthRef.current.offsetWidth })
-    ),
+    debounce(200, () => {
+      if (widthRef.current)
+        dispatch({ type: WIDTH_UPDATE, payload: widthRef.current.offsetWidth })
+    }),
     [widthRef.current]
   )
   useEffect(() => {
