@@ -58,7 +58,7 @@ const FaceTab = () => {
       )
       return index !== -1 ? (Math.floor(index / CLOUMN_COUNT) - 1) * 95 : 0
     }
-  }, [colorId, CLOUMN_COUNT])
+  }, [searchedFace, colorId, CLOUMN_COUNT])
 
   const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
     faceId,
