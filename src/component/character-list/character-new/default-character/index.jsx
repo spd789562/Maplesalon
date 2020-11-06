@@ -12,7 +12,7 @@ const DefaultCharacter = ({ id, handleSelect }) => {
       {DefaultCharacters.map(({ title, list }) => (
         <Row gutter={[8, 8]} key={`${title}-list`}>
           {list.map((character, index) => (
-            <Col span={6} md={4} key={`${character.id}-${index}-item`}>
+            <Col span={8} md={6} lg={4} key={`${character.id}-${index}-item`}>
               <div
                 className={`default-character ${
                   character.id === id ? 'default-character__select' : ''
