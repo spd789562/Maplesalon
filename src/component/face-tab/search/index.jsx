@@ -30,7 +30,7 @@ const SearchBar = ({ t }) => {
   )
   return (
     <Row gutter={[8, 8]}>
-      <Col xs={16} sm={18}>
+      <Col xs={16} sm={16}>
         <Input.Search
           placeholder={t('type_face_name')}
           defaultValue={searchParam.name}

@@ -15,6 +15,7 @@
     "@zeit/next-sass": "^1.0.1",
     "antd": "4.7.0",
     "babel-plugin-import": "^1.13.0",
+    "bluebird": "^3.7.2",
     "express": "^4.17.1",
     "gif.js.optimized": "^1.0.1",
     "i18next-hmr": "^1.6.0",

@@ -58,9 +58,9 @@ const HairTab = () => {
       const index = searchedHair.findIndex(propEq('id', formatHairId(hairId)))
       return index !== -1 ? (Math.floor(index / CLOUMN_COUNT) - 1) * 95 : 0
     }
-  }, [colorId, CLOUMN_COUNT])
+  }, [searchedHair.length, colorId, CLOUMN_COUNT])
   const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
-    hairId,
+    // hairId,
     initHeight,
   ])
   const perWidth = width / CLOUMN_COUNT
