@@ -2,6 +2,11 @@
 
 Salon Simulator for Maplestory, preview all of hair cut or eyes color and all mix dye recipe
 
+## Setup
+1. yarn
+2. yarn run dev
+
+
 ## Screenshot
 
 * Hair
