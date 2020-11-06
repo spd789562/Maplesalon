@@ -153,6 +153,12 @@ function Home({ t, i18n }) {
           </Row>
         </Content>
         <Footer className={styles.footer}>
+          <div>
+            Other tools：
+            <a href="https://maplestory-arcane-symbol-calculator.vercel.app/">
+              Arcane Calcaulator
+            </a>
+          </div>
           {t('title')} ©2020 Created by 丫村, data from maplestory.io
         </Footer>
       </Layout>

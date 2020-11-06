@@ -17,7 +17,10 @@ import DefaultCharacter from './default-character'
 import { withTranslation } from '@i18n'
 
 /* utils */
+import getConfig from 'next/config'
 import importCharactersFromFile from '@utils/import-characters-from-file'
+
+const { SIMULATOR_NAME, SIMULATOR_URL } = getConfig().publicRuntimeConfig
 
 const CharacterNew = ({ t }) => {
   const dispatch = useDispatch()
@@ -110,7 +113,13 @@ const CharacterNew = ({ t }) => {
                 multiple
               />
               <ImportOutlined style={{ fontSize: '32px' }} />
-              {t('import_import')}
+              <span>
+                {t('import_from')}&nbsp;
+                <a href={SIMULATOR_URL} target="_blank">
+                  {SIMULATOR_NAME}
+                </a>
+                {t('import_import')}
+              </span>
             </label>
             <div className="control-board-button" onClick={handleOpenModal}>
               <SnippetsOutlined style={{ fontSize: '32px' }} />

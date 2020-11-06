@@ -38,7 +38,8 @@
   "control_delete_yes": "Yes",
   "control_delete_no": "No",
 
-  "import_import": "Import From maples.im",
+  "import_from": "Import From",
+  "import_import": "",
   "import_template": "Select From Template",
   "import_template_title": "Choice Character",
   "import_template_ok": "Ok",
