@@ -113,12 +113,13 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
       hairOpacity,
       faceOpacity,
     }
-  }, [characterData])
+  }, [characterData, square])
   useEffect(() => {
     updateState(true)
     let _timer
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     cancelAnimationFrame(_timer)
     Promise.all(
       [character, mixedCharacter, mixedFaceCharacter]
@@ -126,7 +127,6 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
         .map(loadImage)
     ).then((successes) => {
       if (successes.length && successes.every(identity)) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
         updateState(false)
         if (successes[0].frames) {
           let start = null

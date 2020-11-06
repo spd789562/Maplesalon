@@ -29,8 +29,8 @@ const gifFrameToImage = (frame) => {
 const loadGif = (url) =>
   new Promise((resolve, reject) => {
     fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => blob.arrayBuffer())
+      .then((response) => response.arrayBuffer())
+      // .then((blob) => blob.arrayBuffer())
       .then((arrayBuffer) => {
         var reader = new Omggif.GifReader(new Uint8Array(arrayBuffer))
         const result = new Array(reader.numFrames())

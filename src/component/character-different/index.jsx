@@ -92,8 +92,8 @@ const CharacterDifferent = ({ t }) => {
             <Col flex="1 0 0">
               <CharacterImage
                 characterData={_currentCharacter}
-                resize={0.6}
-                square={isClient && window.innerWidth > 500}
+                resize={isClient && window.innerWidth > 500 ? 0.6 : 0.9}
+                square={true}
               />
             </Col>
             <Col className="character-display">
@@ -103,8 +103,8 @@ const CharacterDifferent = ({ t }) => {
               {changedCharacter.isChange ? (
                 <CharacterImage
                   characterData={_changedCharacter}
-                  resize={0.6}
-                  square={isClient && window.innerWidth > 500}
+                  resize={isClient && window.innerWidth > 500 ? 0.6 : 0.9}
+                  square={true}
                 />
               ) : (
                 <div className="not-change">{t('not_thing_change')}</div>

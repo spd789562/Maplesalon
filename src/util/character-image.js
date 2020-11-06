@@ -45,7 +45,13 @@ const characterImage = function characterImage(_character, dataInformation) {
   itemEntriesPayload = encodeURIComponent(
     itemEntriesPayload.substr(1, itemEntriesPayload.length - 2)
   )
-
+  console.log(
+    dataInformation.square
+      ? '0'
+      : includes(character.action, ['ladder', 'rope'])
+      ? '2'
+      : '1'
+  )
   return `${API_DATA_URL}/api/character/${itemEntriesPayload}/${
     character.action || 'stand1'
   }/${
