@@ -8,6 +8,11 @@ import { changeFaceColorId, getFaceColorId } from '@utils/group-face'
 import transparentifyCharacter from '@utils/transparentify-character'
 import loadImage from '@utils/load-image'
 import { clone, isEmpty, isNil, identity } from 'ramda'
+import Promise from 'bluebird'
+
+Promise.config({
+  cancellation: true,
+})
 
 const notEmpty = (str) => str !== '' && str !== undefined
 
@@ -117,11 +122,12 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
   useEffect(() => {
     updateState(true)
     let _timer
+    let _promise = {}
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     cancelAnimationFrame(_timer)
-    Promise.all(
+    _promise = Promise.all(
       [character, mixedCharacter, mixedFaceCharacter]
         .filter(notEmpty)
         .map(loadImage)
@@ -165,6 +171,8 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
       }
     })
     return () => {
+      // cancel previous request prevent duplicate render
+      _promise.cancel && _promise.cancel()
       const cancelAnimationFrame =
         window.cancelAnimationFrame || window.mozCancelAnimationFrame
       cancelAnimationFrame(_timer)
