@@ -34,6 +34,7 @@ const FaceTab = () => {
         name.toUpperCase().indexOf(searchParam.name.toUpperCase()) !== -1 &&
         (!searchParam.gender || requiredGender === +searchParam.gender)
     )
+
   useEffect(
     () => () => {
       dispatch({
