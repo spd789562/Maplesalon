@@ -14,7 +14,7 @@ import { withTranslation } from '@i18n'
 import { debounce } from 'throttle-debounce'
 
 const SearchBar = ({ t }) => {
-  const [searchParam, dispatch] = useStore('search.hair')
+  const [searchParam, dispatch] = useStore('search.face')
   const handleSearch = useCallback(
     debounce(250, (field, value) => {
       dispatch({
