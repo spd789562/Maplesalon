@@ -23,8 +23,18 @@ const renderCharacter = (
 ) => {
   images.forEach(({ image, frames }, index) => {
     const ctx = canvas.getContext('2d')
-    const imageRadio = image.height / image.width
+    const imageRatio = image.height / image.width
     const _image = frames ? frames[frame].image : image
+    let renderHeight, renderWidth
+    if (resize.toString().includes('origin')) {
+      const [, ratio = 1] = resize.split('-')
+      const dpr = window.devicePixelRatio || 1
+      renderHeight = image.height * +ratio * dpr
+      renderWidth = image.width * +ratio * dpr
+    } else {
+      renderWidth = (canvas.height / imageRatio) * resize
+      renderHeight = canvas.height * resize
+    }
     ctx.save()
     ctx.globalAlpha =
       index === 1
@@ -36,10 +46,12 @@ const renderCharacter = (
         : 1
     ctx.drawImage(
       _image,
-      canvas.width / 2 - ((canvas.height / imageRadio) * resize) / 2,
-      canvas.height / 2 - (canvas.height * resize) / 2,
-      (canvas.height / imageRadio) * resize,
-      canvas.height * resize
+      /* position */
+      (canvas.width - renderWidth) / 2,
+      (canvas.height - renderHeight) / 2,
+      /* inside size */
+      renderWidth,
+      renderHeight
     )
     ctx.restore()
   })

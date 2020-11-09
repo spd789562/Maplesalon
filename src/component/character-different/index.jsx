@@ -9,6 +9,7 @@ import { CHARACTER_UPDATE, CHARACTER_CHANGE } from '@store/character'
 import { Row, Col, Button, Input, Tooltip, Switch, Select } from 'antd'
 import { ReloadOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
+import Scale from './scale'
 
 /* hooks */
 import useChangedCharacter from '@hooks/use-changed-character'
@@ -33,6 +34,7 @@ const CharacterDifferent = ({ t }) => {
   const [property, updateProperty] = useState({
     action: 'stand1',
     animating: false,
+    scale: 'full',
   })
   const handleChangeProperty = (filed) => (value) =>
     updateProperty((state) => ({ ...state, [filed]: value }))
@@ -56,6 +58,12 @@ const CharacterDifferent = ({ t }) => {
   }, [changedCharacter])
   const _currentCharacter = mergeRight(currentCharacter, property)
   const _changedCharacter = mergeRight(changedCharacter, property)
+  const resize =
+    property.scale === 'full'
+      ? isClient && window.innerWidth > 500
+        ? 0.6
+        : 0.9
+      : property.scale
   return (
     <Fragment>
       <Row gutter={[8, 8]}>
@@ -86,13 +94,13 @@ const CharacterDifferent = ({ t }) => {
           <Switch onChange={handleChangeProperty('animating')} />
         </Col>
       </Row>
-      <Row style={{ maxWidth: 620, margin: '0 auto' }}>
+      <Row gutter={[0, 8]} style={{ maxWidth: 620, margin: '0 auto' }}>
         <Col span={24}>
           <Row>
             <Col flex="1 0 0">
               <CharacterImage
                 characterData={_currentCharacter}
-                resize={isClient && window.innerWidth > 500 ? 0.6 : 0.9}
+                resize={resize}
                 square={true}
               />
             </Col>
@@ -103,7 +111,7 @@ const CharacterDifferent = ({ t }) => {
               {changedCharacter.isChange ? (
                 <CharacterImage
                   characterData={_changedCharacter}
-                  resize={isClient && window.innerWidth > 500 ? 0.6 : 0.9}
+                  resize={resize}
                   square={true}
                 />
               ) : (
@@ -111,6 +119,9 @@ const CharacterDifferent = ({ t }) => {
               )}
             </Col>
           </Row>
+        </Col>
+        <Col span={24}>
+          <Scale onChange={handleChangeProperty('scale')} />
         </Col>
         <Col span={24}>
           <Row>

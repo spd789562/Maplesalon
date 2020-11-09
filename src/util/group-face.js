@@ -1,4 +1,4 @@
-const colorRemover = (str) => {
+export const colorRemover = (str) => {
   const replaced = str.replace(
     /\(.*\)|黑色|青色|紅色|綠色|黃色|藍色|紫色|粉色|Black|Blue|Red|Green|Hazel|Sapphire|Violet|Amethyst|White/g,
     ''

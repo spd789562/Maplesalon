@@ -44,6 +44,9 @@
   "control_delete_content": "確定要刪除{{name}}嗎?",
   "control_delete_yes": "確認",
   "control_delete_no": "取消",
+  "control_share": "分享",
+  "success_copy_url": "已複製連結",
+  "save_to_my_list": "儲存至我的列表",
 
   "tab_hair": "美髮",
   "tab_face": "美容",

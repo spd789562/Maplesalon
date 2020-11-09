@@ -7,19 +7,20 @@
   "reset":"Reset",
   "comma": ", ",
 
+  
   "character_apparance": "Apparance",
   "character_comparison": "Character Comparison",
   "character_list": "Character List",
   "character_preview_all_color": "Preview All",
   "character_preview_mix_color": "Preview Mix Dye",
-
+  
   "type_hair_name": "Search hair name",
   "type_face_name": "Search face name",
   "filter_gender_all": "All",
   "filter_gender_general": "General",
   "filter_gender_male": "Male",
   "filter_gender_female": "Female",
-
+  
   "character_animation": "Animation",
   "edit_character_name": "Edit Character Name",
   "type_character_name": "Character Name",
@@ -27,11 +28,14 @@
   "reset_character": "Reset",
   "save_character": "Save",
   "not_thing_change": "Nothing Change",
-
+  
   "control_select": "Select",
   "control_export": "Export",
   "control_duplicate": "Duplicate",
   "control_delete": "Delete",
+  "control_share": "Share",
+  "success_copy_url": "Copy url success",
+  "save_to_my_list": "Save to My List",
 
   "control_delete_title": "Delete Confirm",
   "control_delete_content": "Are you sure want to delete {{name}}?",
