@@ -3,7 +3,7 @@ import { Radio } from 'antd'
 
 const ScaleOption = [
   { label: '1x', value: 'origin' },
-  { label: '2x', value: 'origin-2' },
+  { label: '1.5x', value: 'origin-1.5' },
   { label: 'Full', value: 'full' },
 ]
 

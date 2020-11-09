@@ -27,7 +27,6 @@ const renderCharacter = (
     const _image = frames ? frames[frame].image : image
     let renderHeight, renderWidth
     if (resize.toString().includes('origin')) {
-      console.log(image)
       const [, ratio = 1] = resize.split('-')
       const dpr = window.devicePixelRatio || 1
       renderHeight = image.height * +ratio * dpr

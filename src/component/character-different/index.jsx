@@ -64,7 +64,6 @@ const CharacterDifferent = ({ t }) => {
         ? 0.6
         : 0.9
       : property.scale
-  console.log(resize)
   return (
     <Fragment>
       <Row gutter={[8, 8]}>
