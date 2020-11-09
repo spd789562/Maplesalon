@@ -9,13 +9,14 @@ import {
 import { UPDATE_CHARACTER } from '@store/meta'
 
 /* components */
-import { Modal } from 'antd'
+import { Modal, message } from 'antd'
 import {
   ExclamationCircleOutlined,
   SelectOutlined,
   DeleteOutlined,
   CopyOutlined,
   DownloadOutlined,
+  LinkOutlined,
 } from '@ant-design/icons'
 
 /* i18n */
@@ -23,11 +24,24 @@ import { withTranslation } from '@i18n'
 
 /* utils */
 import getCharacterUpdateData from '@utils/get-character-update-data'
+import copyTextToClipboard from '@utils/copy-to-clipboard'
+import getShareUrl from '@utils/get-share-url'
 
 const ControlBoard = ({ characterData, t }) => {
   const dispatch = useDispatch()
-  const { handleChange, handleExport, handleDuplicate, handleDelete } = useMemo(
+  const {
+    handleShare,
+    handleChange,
+    handleExport,
+    handleDuplicate,
+    handleDelete,
+  } = useMemo(
     () => ({
+      handleShare: () => {
+        const url = getShareUrl(characterData)
+        copyTextToClipboard(url)
+        message.success(t('success_copy_url'))
+      },
       handleChange: () => {
         dispatch({ type: CHARACTER_CHANGE, payload: characterData.id })
         if (characterData.selectedItems.Hair?.id) {
@@ -69,11 +83,11 @@ const ControlBoard = ({ characterData, t }) => {
     <Fragment>
       <div className="control-board">
         <div
-          title={t('control_select')}
+          title={t('control_share')}
           className="control-board-button"
-          onClick={handleChange}
+          onClick={handleShare}
         >
-          <SelectOutlined style={{ fontSize: '24px' }} />
+          <LinkOutlined style={{ fontSize: '24px' }} />
         </div>
         <div
           title={t('control_export')}
@@ -95,6 +109,13 @@ const ControlBoard = ({ characterData, t }) => {
           onClick={handleDelete}
         >
           <DeleteOutlined style={{ fontSize: '24px' }} />
+        </div>
+        <div
+          title={t('control_delete')}
+          className="control-board-button"
+          onClick={handleChange}
+        >
+          <SelectOutlined style={{ fontSize: '24px' }} />
         </div>
       </div>
       <style jsx>{`
@@ -126,7 +147,7 @@ const ControlBoard = ({ characterData, t }) => {
           width: 100%;
         }
         .control-board-button:nth-child(1) {
-          background-color: #c1c8f1;
+          background-color: #6da8ff;
         }
         .control-board-button:nth-child(2) {
           background-color: #8ed66c;
@@ -136,6 +157,15 @@ const ControlBoard = ({ characterData, t }) => {
         }
         .control-board-button:nth-child(4) {
           background-color: #fc4d4f;
+        }
+        .control-board-button:nth-child(5) {
+          background-color: #c1c8f1;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          height: 35%;
+          width: 50%;
+          transform: translate(-50%, -50%);
         }
         .control-board-button:hover {
           opacity: 0.9;
