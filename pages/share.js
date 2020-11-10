@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect, memo, Fragment } from 'react'
 import { useRouter } from 'next/router'
 
 /* component */
-import { Row, Col, Card, Switch, Select, Tooltip } from 'antd'
+import { Row, Col, Card, Switch, Select, Tooltip, message } from 'antd'
 import { SaveOutlined } from '@ant-design/icons'
 import CharacterImage from '@components/character-image'
 import Scale from '@components/character-different/scale'
@@ -13,7 +13,7 @@ import Skins from '@mapping/skins'
 import LanguageToRegion from '@mapping/language-to-region'
 
 /* helper */
-import { withTranslation } from '@i18n'
+import { withTranslation, Router } from '@i18n'
 import {
   changeHairColorId,
   colorRemover as removeHairColor,
@@ -93,6 +93,17 @@ function Share({ t, i18n: { language } }) {
       []
     characterList.push({ ...characterData, id: new Date().getTime() })
     localStorage.setItem('MAPLESALON_characters', JSON.stringify(characterList))
+    const toHomePage = () => {
+      message.destroy()
+      Router.push('/')
+    }
+    message.success(
+      <span>
+        {t('success_save')}
+        <a onClick={toHomePage}>{t('click_to_home')}</a>
+      </span>,
+      10
+    )
   }
 
   const skin = Skins.find(propEq('id', +characterData.skin))
