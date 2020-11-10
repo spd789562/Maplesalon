@@ -6,6 +6,7 @@
 
   "reset":"Reset",
   "comma": ", ",
+  
 
   
   "character_apparance": "Apparance",
@@ -36,6 +37,8 @@
   "control_share": "Share",
   "success_copy_url": "Copy url success",
   "save_to_my_list": "Save to My List",
+  "success_save": "Save success, ",
+  "click_to_home": "click here to Home Page",
 
   "control_delete_title": "Delete Confirm",
   "control_delete_content": "Are you sure want to delete {{name}}?",
@@ -48,6 +51,12 @@
   "import_template_title": "Choice Character",
   "import_template_ok": "Ok",
   "import_template_cancel": "Cancel",
+
+  "random_title": "Random Style",
+  "random_hair": "Hair",
+  "random_face": "Face",
+  "random_skin": "Skin",
+  "random_ears": "Ears",
 
   "tab_hair": "Hair",
   "tab_face": "Face",

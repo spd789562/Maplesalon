@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import App from 'next/app'
 import Head from 'next/head'
 import { Layout, Select, BackTop } from 'antd'
-import { appWithTranslation, withTranslation } from '../src/i18n'
+import { appWithTranslation, withTranslation, Link } from '../src/i18n'
 import { Provider } from '../src/store'
 import '../styles/antd.less'
 import '../styles/globals.css'
@@ -48,10 +48,12 @@ const NextHead = withTranslation('index')(({ t, i18n: { language } }) => (
 const AppHeader = withTranslation('index')(({ t, i18n }) => (
   <Header className={styles.header}>
     <div className={styles['header-container']}>
-      <h2 style={{ marginBottom: 0 }}>
-        {t('title')}
-        &nbsp;
-      </h2>
+      <Link href="/">
+        <h2 style={{ marginBottom: 0, cursor: 'pointer' }}>
+          {t('title')}
+          &nbsp;
+        </h2>
+      </Link>
       <div>
         <Select
           onChange={(value) =>

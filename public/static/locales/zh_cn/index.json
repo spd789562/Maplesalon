@@ -47,6 +47,14 @@
   "control_share": "分享",
   "success_copy_url": "已复制连结",
   "save_to_my_list": "储存至我的列表",
+  "success_save": "储存成功，",
+  "click_to_home": "点此返回首页",
+
+  "random_title": "随机样式",
+  "random_hair": "美发",
+  "random_face": "美容",
+  "random_skin": "皮肤",
+  "random_ears": "耳朵",
 
   "tab_hair": "美发",
   "tab_face": "美容",

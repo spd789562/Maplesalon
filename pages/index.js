@@ -18,6 +18,7 @@ import MixDyeFaceTab from '@components/mix-dye-face-tab'
 import TabResizer from '@components/tab-resizer'
 import CharacterDifferent from '@components/character-different'
 import CharacterList from '@components/character-list'
+import RandomStyle from '@components/random-style'
 
 /* mapping */
 import LanguageToRegion from '@mapping/language-to-region'
@@ -91,7 +92,11 @@ function Home({ t, i18n }) {
           </Card>
         </Col>
         <Col span={24} lg={12} xl={16}>
-          <Card title={t('character_comparison')} bordered={false}>
+          <Card
+            title={t('character_comparison')}
+            bordered={false}
+            extra={<RandomStyle />}
+          >
             <CharacterDifferent />
           </Card>
           <Card title={t('character_list')} bordered={false}>
