@@ -73,7 +73,6 @@ const RandomStyle = ({ t }) => {
       changes.hairColorId = hairColorId
       if (needMix) {
         const randomMixColor = pickRandom(colors)
-        console.log(getHairColorId(randomMixColor.id))
         changes.mixHairColorId = getHairColorId(randomMixColor.id)
         changes.mixHairOpacity = 0.5
       } else {
