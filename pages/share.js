@@ -50,9 +50,10 @@ const useMixItem = (item, mixColor) => {
 
 function Share({ t, i18n: { language } }) {
   const router = useRouter()
+  const characterQuery = decodeURIComponent(router.query.character) || ''
   const characterData = mergeRight(
     { selectedItems: { Hair: {}, Face: {} } },
-    JSON.parse(decodeURIComponent(router.query.character))
+    JSON.parse(characterQuery.replace(/xxx/g, '"'))
   )
   const name = characterData.name || ''
   const [property, updateProperty] = useState({
