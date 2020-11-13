@@ -75,6 +75,28 @@ const applyChangesCharacter = function applyChangesCharacter(
     )
     copyCharacter.isChange = true
   }
+  if (
+    !copyCharacter.selectedItems.Overall ||
+    (characterChanges.overall.id &&
+      characterChanges.overall.id !== copyCharacter.selectedItems.Overall.id)
+  ) {
+    copyCharacter.selectedItems.Overall = mergeRight(
+      copyCharacter.selectedItems.Overall || {},
+      characterChanges.overall
+    )
+    copyCharacter.isChange = true
+  }
+  if (
+    !copyCharacter.selectedItems.Hat ||
+    (characterChanges.hat.id &&
+      characterChanges.hat.id !== copyCharacter.selectedItems.Hat.id)
+  ) {
+    copyCharacter.selectedItems.Hat = mergeRight(
+      copyCharacter.selectedItems.Hat || {},
+      characterChanges.hat
+    )
+    copyCharacter.isChange = true
+  }
   // has mix dye hair
   if (
     (characterChanges.mixHairColorId &&
