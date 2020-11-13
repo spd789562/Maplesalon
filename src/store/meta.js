@@ -22,6 +22,16 @@ const initialState = {
       region: '',
       version: '',
     },
+    hat: {
+      id: '',
+      region: '',
+      version: '',
+    },
+    overall: {
+      id: '',
+      region: '',
+      version: '',
+    },
     earsType: '0',
     skinId: '',
     hairId: '',

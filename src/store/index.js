@@ -13,6 +13,8 @@ import faceReducer from './face'
 import searchReducer from './search'
 import metaReducer from './meta'
 import characterReducer from './character'
+import hatReducer from './hat'
+import overallReducer from './overall'
 
 import { isNil, prop, curry, path, pickAll } from 'ramda'
 
@@ -24,7 +26,8 @@ const [combinedReducers, initialState] = combineReducer({
   character: characterReducer,
   face: faceReducer,
   search: searchReducer,
-  // skin: skinReducer,
+  hat: hatReducer,
+  overall: overallReducer,
 })
 
 export const Provider = ({ children }) => {
