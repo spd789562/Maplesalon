@@ -15,6 +15,8 @@ const initialState = {
     version: (isClient && localStorage.getItem('version')) || '',
     hair: '',
     face: '',
+    overall: '',
+    hat: '',
   },
   character: {
     skin: {
