@@ -17,8 +17,8 @@ const LoadCharacter = (file) =>
 const validateCharacter = (character) => {
   if (!character) return false
   if (!character.type || character.type !== 'character') return false
-  if (!character.selectedItems?.Body?.id) return false
-  if (!character.selectedItems?.Head?.id) return false
+  // if (!character.selectedItems?.Body?.id) return false
+  // if (!character.selectedItems?.Head?.id) return false
   return true
 }
 

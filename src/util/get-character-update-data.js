@@ -5,8 +5,8 @@ import getEarsType from '@utils/get-ears-type'
 
 const getCharacterUpdateData = function getCharacterUpdateData(character) {
   const name = character.name
-  const characterHairId = character.selectedItems?.Hair.id || ''
-  const characterFaceId = character.selectedItems?.Face.id || ''
+  const characterHairId = character.selectedItems?.Hair?.id || ''
+  const characterFaceId = character.selectedItems?.Face?.id || ''
   const characterHairColorId = getHairColorId(characterHairId) + ''
   const characterFaceColorId = getFaceColorId(characterFaceId) + ''
   const skin = getSkinRegion(character.skin)
