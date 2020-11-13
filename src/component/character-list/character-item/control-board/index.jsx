@@ -44,12 +44,10 @@ const ControlBoard = ({ characterData, t }) => {
       },
       handleChange: () => {
         dispatch({ type: CHARACTER_CHANGE, payload: characterData.id })
-        if (characterData.selectedItems.Hair?.id) {
-          dispatch({
-            type: UPDATE_CHARACTER,
-            payload: getCharacterUpdateData(characterData),
-          })
-        }
+        dispatch({
+          type: UPDATE_CHARACTER,
+          payload: getCharacterUpdateData(characterData),
+        })
       },
       handleExport: () => {
         const target = document.createElement('a')
