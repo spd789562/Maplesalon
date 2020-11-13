@@ -12,6 +12,8 @@ import FaceTab from '@components/face-tab'
 import SkinTab from '@components/skin-tab'
 import EarsTab from '@components/ears-tab'
 import Preview from '@components/preview'
+import HatTab from '@components/hat-tab'
+import OverallTab from '@components/overall-tab'
 import MixPreview from '@components/preview/mix-preview'
 import MixDyeHairTab from '@components/mix-dye-hair-tab'
 import MixDyeFaceTab from '@components/mix-dye-face-tab'
@@ -34,6 +36,8 @@ const ApparanceTabs = [
   { key: 'ears', tab: 'tab_ears', Component: <EarsTab /> },
   { key: 'mixdyehair', tab: 'tab_mix_dye_hair', Component: <MixDyeHairTab /> },
   { key: 'mixdyeface', tab: 'tab_mix_dye_face', Component: <MixDyeFaceTab /> },
+  { key: 'hat', tab: 'tab_hat', Component: <HatTab /> },
+  { key: 'overall', tab: 'tab_overall', Component: <OverallTab /> },
 ]
 
 const TabMapping = ApparanceTabs.reduce(

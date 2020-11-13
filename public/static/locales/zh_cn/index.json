@@ -15,6 +15,8 @@
 
   "type_hair_name": "输入发型名称",
   "type_face_name": "输入脸型名称",
+  "type_hat_name": "输入帽子名称",
+  "type_overall_name": "输入套服名称",
   "filter_gender_all": "全部",
   "filter_gender_general": "共通",
   "filter_gender_male": "男",
@@ -61,6 +63,8 @@
   "tab_skin": "护肤",
   "tab_ears": "耳朵",
   "tab_emotion": "表情",
+  "tab_hat": "帽子",
+  "tab_overall": "套服",
   "tab_mix_dye_hair": "混染发",
   "tab_mix_dye_face": "混染眼",
 

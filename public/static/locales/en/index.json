@@ -17,6 +17,8 @@
   
   "type_hair_name": "Search hair name",
   "type_face_name": "Search face name",
+  "type_hat_name": "Search hat name",
+  "type_overall_name": "Search overall name",
   "filter_gender_all": "All",
   "filter_gender_general": "General",
   "filter_gender_male": "Male",
@@ -63,6 +65,8 @@
   "tab_skin": "Skin",
   "tab_ears": "Ears",
   "tab_emotion": "Emotion",
+  "tab_hat": "Hat",
+  "tab_overall": "Overall",
   "tab_mix_dye_hair": "Mix Dye Hair",
   "tab_mix_dye_face": "Mix Dye Face",
 

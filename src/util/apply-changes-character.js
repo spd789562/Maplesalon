@@ -48,7 +48,7 @@ const applyChangesCharacter = function applyChangesCharacter(
     copyCharacter.isChange = true
   }
   if (
-    !copyCharacter.selectedItems.Hair ||
+    (characterChanges.hairId && !copyCharacter.selectedItems.Hair) ||
     (characterChanges.hairId &&
       characterChanges.hairId !== copyCharacter.selectedItems.Hair.id)
   ) {
@@ -62,7 +62,7 @@ const applyChangesCharacter = function applyChangesCharacter(
     copyCharacter.isChange = true
   }
   if (
-    !copyCharacter.selectedItems.Face ||
+    (characterChanges.faceId && !copyCharacter.selectedItems.Face) ||
     (characterChanges.faceId &&
       characterChanges.faceId !== copyCharacter.selectedItems.Face.id)
   ) {
@@ -76,7 +76,7 @@ const applyChangesCharacter = function applyChangesCharacter(
     copyCharacter.isChange = true
   }
   if (
-    !copyCharacter.selectedItems.Overall ||
+    (characterChanges.overall.id && !copyCharacter.selectedItems.Overall) ||
     (characterChanges.overall.id &&
       characterChanges.overall.id !== copyCharacter.selectedItems.Overall.id)
   ) {
@@ -87,7 +87,7 @@ const applyChangesCharacter = function applyChangesCharacter(
     copyCharacter.isChange = true
   }
   if (
-    !copyCharacter.selectedItems.Hat ||
+    (characterChanges.hat.id && !copyCharacter.selectedItems.Hat) ||
     (characterChanges.hat.id &&
       characterChanges.hat.id !== copyCharacter.selectedItems.Hat.id)
   ) {
