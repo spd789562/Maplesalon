@@ -73,6 +73,34 @@ export default [
   {
     title: 'default_character_other',
     list: [
+      {
+        id: 1001,
+        type: 'character',
+        action: 'stand1',
+        emotion: 'default',
+        skin: 2000,
+        zoom: 1,
+        frame: 0,
+        mercEars: false,
+        illiumEars: false,
+        selectedItems: {
+          Body: {
+            name: 'Body',
+            noIcon: true,
+            id: 2000,
+            region: 'GMS',
+            version: '217',
+          },
+          Head: {
+            name: 'Head',
+            noIcon: true,
+            id: 12000,
+            region: 'GMS',
+            version: '217',
+          },
+        },
+        name: 'Basic',
+      },
       AdventurerMale,
       AdventurerFemale,
       ThunderBreaker,
