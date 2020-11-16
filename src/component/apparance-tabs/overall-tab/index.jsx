@@ -20,7 +20,7 @@ const overallRef = createRef()
 const OverallTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
   const [overalls, dispatch] = useStore('overall')
-  const { region, version } = useOverallCheck()
+  const { region, version, overall: overallRegion } = useOverallCheck()
   const [currentOverall] = useStore('meta.character.overall')
   const [searchParam] = useStore('search.overall')
   const [width] = useStore('search.tabWidth')
@@ -67,7 +67,7 @@ const OverallTab = () => {
         height={350}
         itemData={searchedOverall}
         initialScrollTop={initHeight}
-        key={`overall-${renderKey}`}
+        key={`overall-${renderKey}-${overallRegion}`}
         ref={overallRef}
       >
         {({ columnIndex, rowIndex, data, style }) => {

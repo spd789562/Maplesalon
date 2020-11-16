@@ -20,7 +20,7 @@ const hatRef = createRef()
 const HatTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
   const [hats, dispatch] = useStore('hat')
-  const { region, version } = useHatCheck()
+  const { region, version, hat: hatRegion } = useHatCheck()
   const [currentHat] = useStore('meta.character.hat')
   const [searchParam] = useStore('search.hat')
   const [width] = useStore('search.tabWidth')
@@ -67,7 +67,7 @@ const HatTab = () => {
         height={350}
         itemData={searchedHat}
         initialScrollTop={initHeight}
-        key={`hat-${renderKey}`}
+        key={`hat-${renderKey}-${hatRegion}`}
         ref={hatRef}
       >
         {({ columnIndex, rowIndex, data, style }) => {

@@ -22,7 +22,7 @@ const faceRef = createRef()
 const FaceTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
   const [faces, dispatch] = useStore('face')
-  const { region, version } = useFaceCheck()
+  const { region, version, face: faceRegion } = useFaceCheck()
   const [{ faceColorId: colorId, faceId }] = useStore('meta.character', '')
   const [searchParam] = useStore('search.face')
   const [width] = useStore('search.tabWidth')
@@ -59,10 +59,9 @@ const FaceTab = () => {
       )
       return index !== -1 ? (Math.floor(index / CLOUMN_COUNT) - 1) * 95 : 0
     }
-  }, [searchedFace, colorId, CLOUMN_COUNT])
+  }, [searchedFace.length, colorId, CLOUMN_COUNT])
 
   const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
-    faceId,
     initHeight,
   ])
   const perWidth = width / CLOUMN_COUNT
@@ -78,7 +77,7 @@ const FaceTab = () => {
         height={300}
         itemData={searchedFace}
         initialScrollTop={initHeight}
-        key={`face-${renderKey}`}
+        key={`face-${renderKey}-${faceRegion}`}
         ref={faceRef}
       >
         {({ columnIndex, rowIndex, data, style }) => {
