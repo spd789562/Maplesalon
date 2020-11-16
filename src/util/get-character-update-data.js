@@ -2,6 +2,7 @@ import { getHairColorId } from '@utils/group-hair'
 import { getFaceColorId } from '@utils/group-face'
 import getSkinRegion from '@utils/get-skin-region'
 import getEarsType from '@utils/get-ears-type'
+import getSelectedItemInfo from '@utils/get-selected-item-info'
 
 const getCharacterUpdateData = function getCharacterUpdateData(character) {
   const name = character.name
@@ -15,6 +16,8 @@ const getCharacterUpdateData = function getCharacterUpdateData(character) {
   const mixHairOpacity = character.mixDye?.hairOpacity || 0.5
   const mixFaceColorId = character.mixDye?.faceColorId || characterFaceColorId
   const mixFaceOpacity = character.mixDye?.faceOpacity || 0.5
+  const overall = getSelectedItemInfo(character, 'Overall')
+  const hat = getSelectedItemInfo(character, 'Hat')
 
   return {
     name,
@@ -28,6 +31,8 @@ const getCharacterUpdateData = function getCharacterUpdateData(character) {
     mixHairOpacity,
     mixFaceColorId,
     mixFaceOpacity,
+    overall,
+    hat,
   }
 }
 
