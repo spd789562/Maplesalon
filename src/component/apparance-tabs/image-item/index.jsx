@@ -7,6 +7,7 @@ const ImageItem = ({
   src,
   hasItem = false,
   imageHeight = 60,
+  paddingTop = 0,
   handleChange,
 }) => (
   <figure
@@ -28,6 +29,7 @@ const ImageItem = ({
         flex-direction: column;
         align-items: center;
         font-size: 12px;
+        padding-top: ${paddingTop}px;
       }
       .item__selected {
         background-color: #c1c8f1;

@@ -24,6 +24,7 @@ const Image = ({ columnIndex, rowIndex, style, data, t }) => {
   )
   return (
     <ImageItem
+      paddingTop={10}
       style={style}
       name={itemName}
       isSelected={isSelected}
