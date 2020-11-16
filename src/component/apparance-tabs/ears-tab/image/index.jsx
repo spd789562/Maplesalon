@@ -4,10 +4,12 @@ import { UPDATE_CHARACTER } from '@store/meta'
 import { F } from 'ramda'
 import { withTranslation } from '@i18n'
 
+import ImageItem from '../../image-item'
+
 const Image = ({ columnIndex, rowIndex, style, data, t }) => {
   const [{ skin, earsType }, dispatch] = useStore('meta.character')
   const [{ region, version }] = useStore('meta.region')
-  const item = data[columnIndex + 4 * rowIndex]
+  const item = data[columnIndex + 4 * rowIndex] || {}
   const itemId = item.id
   const itemName = t(item.name)
   const src = `https://maplestory.io/api/${
@@ -20,51 +22,15 @@ const Image = ({ columnIndex, rowIndex, style, data, t }) => {
     },
     []
   )
-  return useMemo(
-    () => (
-      <figure
-        style={style}
-        className={`item ${isSelected ? 'item__selected' : ''}`}
-        onClick={itemId ? handleChange(itemId) : F}
-      >
-        {item && (
-          <Fragment>
-            <div className="item-icon">
-              <img src={src} alt={itemName} />
-            </div>
-            <figcaption className="item-name">{itemName}</figcaption>
-          </Fragment>
-        )}
-        <style jsx>{`
-          .item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 10px;
-            font-size: 12px;
-          }
-          .item__selected {
-            background-color: #c1c8f1;
-          }
-          .item-icon {
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          .item-icon > img {
-            max-height: 100%;
-          }
-          .item-name {
-            padding-left: 8px;
-            padding-right: 8px;
-            text-align: center;
-            word-break: break-all;
-          }
-        `}</style>
-      </figure>
-    ),
-    [isSelected, item, earsType, skin.id, t]
+  return (
+    <ImageItem
+      style={style}
+      name={itemName}
+      isSelected={isSelected}
+      src={src}
+      hasItem={!!itemId}
+      handleChange={itemId ? handleChange(itemId) : F}
+    />
   )
 }
 

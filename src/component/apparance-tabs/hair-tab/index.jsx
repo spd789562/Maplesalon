@@ -76,7 +76,7 @@ const HairTab = () => {
         height={300}
         itemData={searchedHair}
         initialScrollTop={initHeight}
-        key={`hair-${renderKey}`}
+        key={`hair-${renderKey}-${hairRegion}`}
         ref={hairRef}
       >
         {({ columnIndex, rowIndex, data, style }) => {
