@@ -88,8 +88,8 @@ function MyApp({ Component, pageProps }) {
       <NextHead />
       <AppHeader />
       <BackTop />
-      <Content>
-        <Provider className={styles.content}>
+      <Content className={styles.content}>
+        <Provider>
           <Component {...pageProps} />
         </Provider>
       </Content>

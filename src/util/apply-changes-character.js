@@ -48,7 +48,7 @@ const applyChangesCharacter = function applyChangesCharacter(
     copyCharacter.isChange = true
   }
   if (
-    !copyCharacter.selectedItems.Hair ||
+    (characterChanges.hairId && !copyCharacter.selectedItems.Hair) ||
     (characterChanges.hairId &&
       characterChanges.hairId !== copyCharacter.selectedItems.Hair.id)
   ) {
@@ -62,7 +62,7 @@ const applyChangesCharacter = function applyChangesCharacter(
     copyCharacter.isChange = true
   }
   if (
-    !copyCharacter.selectedItems.Face ||
+    (characterChanges.faceId && !copyCharacter.selectedItems.Face) ||
     (characterChanges.faceId &&
       characterChanges.faceId !== copyCharacter.selectedItems.Face.id)
   ) {
@@ -72,6 +72,28 @@ const applyChangesCharacter = function applyChangesCharacter(
         id: characterChanges.faceId,
         ...pick(['region', 'version'], regionData),
       }
+    )
+    copyCharacter.isChange = true
+  }
+  if (
+    (characterChanges.overall.id && !copyCharacter.selectedItems.Overall) ||
+    (characterChanges.overall.id &&
+      characterChanges.overall.id !== copyCharacter.selectedItems.Overall.id)
+  ) {
+    copyCharacter.selectedItems.Overall = mergeRight(
+      copyCharacter.selectedItems.Overall || {},
+      characterChanges.overall
+    )
+    copyCharacter.isChange = true
+  }
+  if (
+    (characterChanges.hat.id && !copyCharacter.selectedItems.Hat) ||
+    (characterChanges.hat.id &&
+      characterChanges.hat.id !== copyCharacter.selectedItems.Hat.id)
+  ) {
+    copyCharacter.selectedItems.Hat = mergeRight(
+      copyCharacter.selectedItems.Hat || {},
+      characterChanges.hat
     )
     copyCharacter.isChange = true
   }

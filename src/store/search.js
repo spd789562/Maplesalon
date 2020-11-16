@@ -12,6 +12,14 @@ const initialState = {
     name: '',
     gender: '',
   },
+  hat: {
+    name: '',
+    gender: '',
+  },
+  overall: {
+    name: '',
+    gender: '',
+  },
   tabWidth: 300,
 }
 

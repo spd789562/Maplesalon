@@ -12,12 +12,6 @@
 .content {
   padding-top: 0.5rem;
 }
-/* .header-container,
-.content,
-.footer {
-  padding-left: 3rem;
-  padding-right: 3rem;
-} */
 
 .footer {
   text-align: center;
@@ -25,7 +19,6 @@
 
 @media screen and (max-width: 1599px) {
   .header-container,
-  .content,
   .footer {
     padding-left: 1rem;
     padding-right: 1rem;

@@ -6,44 +6,36 @@ import { SEARCH_UPDATE } from '@store/search'
 
 /* components */
 import { FixedSizeGrid } from 'react-window'
-import ColorSelect from './color-select'
 import Search from './search'
 import Image from './image'
 
 /* hooks */
-import { useHairCheck } from '@hooks/use-check-data'
+import { useOverallCheck } from '@hooks/use-check-data'
 
 /* utils */
-import { formatHairId } from '@utils/group-hair'
 import { propEq } from 'ramda'
 
-const hairRef = createRef()
+const overallRef = createRef()
 
-const HairTab = () => {
+const OverallTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
-  const [hairs, dispatch] = useStore('hair')
-  const { region, version } = useHairCheck()
-  const [{ hairColorId: colorId, hairId }] = useStore('meta.character', '')
-  const [searchParam] = useStore('search.hair')
+  const [overalls, dispatch] = useStore('overall')
+  const { region, version, overall: overallRegion } = useOverallCheck()
+  const [currentOverall] = useStore('meta.character.overall')
+  const [searchParam] = useStore('search.overall')
   const [width] = useStore('search.tabWidth')
-
-  const hairsValues = useMemo(() => Object.values(hairs), [hairs])
-
-  const searchedHair = hairsValues
-    .filter(({ colors }) => colors && colors[colorId])
-    .filter(
-      ({ name, colors: { [colorId]: { requiredGender } = {} } }) =>
-        name.toUpperCase().indexOf(searchParam.name.toUpperCase()) !== -1 &&
-        (!searchParam.gender || requiredGender === +searchParam.gender)
-    )
+  const searchedOverall = overalls.filter(
+    ({ name = '', requiredGender }) =>
+      name.toUpperCase().indexOf(searchParam.name.toUpperCase()) !== -1
+  )
   useEffect(
     () => () => {
       dispatch({
         type: SEARCH_UPDATE,
         payload: {
-          type: 'hair',
+          type: 'overall',
           field: 'scrollTop',
-          value: hairRef?.current?.state?.scrollTop || 0,
+          value: overallRef?.current?.state?.scrollTop || 0,
         },
       })
     },
@@ -55,12 +47,11 @@ const HairTab = () => {
       updateFirstRender(false)
       return searchParam.scrollTop
     } else {
-      const index = searchedHair.findIndex(propEq('id', formatHairId(hairId)))
+      const index = searchedOverall.findIndex(propEq('id', currentOverall.id))
       return index !== -1 ? (Math.floor(index / CLOUMN_COUNT) - 1) * 95 : 0
     }
-  }, [searchedHair.length, colorId, CLOUMN_COUNT])
+  }, [searchedOverall.length, CLOUMN_COUNT])
   const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
-    // hairId,
     initHeight,
   ])
   const perWidth = width / CLOUMN_COUNT
@@ -70,14 +61,14 @@ const HairTab = () => {
       <FixedSizeGrid
         columnCount={CLOUMN_COUNT}
         columnWidth={perWidth}
-        rowCount={Math.ceil(searchedHair.length / CLOUMN_COUNT)}
+        rowCount={Math.ceil(searchedOverall.length / CLOUMN_COUNT)}
         rowHeight={95}
         width={width}
-        height={300}
-        itemData={searchedHair}
+        height={350}
+        itemData={searchedOverall}
         initialScrollTop={initHeight}
-        key={`hair-${renderKey}`}
-        ref={hairRef}
+        key={`overall-${renderKey}-${overallRegion}`}
+        ref={overallRef}
       >
         {({ columnIndex, rowIndex, data, style }) => {
           return (
@@ -95,9 +86,8 @@ const HairTab = () => {
           )
         }}
       </FixedSizeGrid>
-      <ColorSelect />
     </div>
   )
 }
 
-export default memo(HairTab)
+export default memo(OverallTab)

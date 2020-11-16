@@ -1,4 +1,5 @@
 import getConfig from 'next/config'
+import { prop } from 'ramda'
 
 const { API_DATA_URL } = getConfig().publicRuntimeConfig
 
@@ -25,3 +26,17 @@ export const APIGetFace = ({ region, version }) =>
   fetch(
     `${API_DATA_URL}/api/${region}/${version}/item/?&categoryFilter=Character&overallCategoryFilter=Equip&subCategoryFilter=Face`
   ).then(toJson)
+
+export const APIGetHat = ({ region, version }) =>
+  fetch(
+    `${API_DATA_URL}/api/${region}/${version}/item/?&categoryFilter=Armor&overallCategoryFilter=Equip&subCategoryFilter=Hat`
+  )
+    .then(toJson)
+    .then((data) => data.filter(prop('isCash')))
+
+export const APIGetCloth = ({ region, version }) =>
+  fetch(
+    `${API_DATA_URL}/api/${region}/${version}/item/?&categoryFilter=Armor&overallCategoryFilter=Equip&subCategoryFilter=Overall`
+  )
+    .then(toJson)
+    .then((data) => data.filter(prop('isCash')))
