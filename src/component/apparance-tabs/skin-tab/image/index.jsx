@@ -27,7 +27,7 @@ const Image = ({ columnIndex, rowIndex, style, data, t }) => {
       isSelected={isSelected}
       src={src}
       hasItem={!!itemId}
-      handleChange={itemId ? handleChange(itemId) : F}
+      handleChange={itemId ? handleChange(item) : F}
     />
   )
 }
