@@ -32,7 +32,7 @@ const MixDyeHair = ({ tabType, t }) => {
   )
   const hasThisColor = useCallback(
     (id) =>
-      hairId && currentHair ? includes(id, keys(currentHair.colors)) : true,
+      hairId && currentHair ? includes(id, keys(currentHair.colors)) : false,
     [currentHair, hairId]
   )
 

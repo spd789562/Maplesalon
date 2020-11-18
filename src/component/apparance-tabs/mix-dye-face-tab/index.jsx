@@ -42,7 +42,7 @@ const MixDyeFace = ({ t }) => {
   )
   const hasThisColor = useCallback(
     (id) =>
-      faceId && currentFace ? includes(id, keys(currentFace.colors)) : true,
+      faceId && currentFace ? includes(id, keys(currentFace.colors)) : false,
     [currentFace, faceId]
   )
 
