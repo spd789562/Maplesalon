@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
-import { Card, Select } from 'antd'
+import { Card, Select, Row, Col } from 'antd'
 
 import { APIGetWz } from '@api'
 import { useStore } from '@store'
@@ -68,24 +68,37 @@ function ApparanceTabs({ t, i18n }) {
   )
   return useMemo(
     () => (
-      <Card
-        title={t('character_apparance')}
-        bordered={false}
-        tabList={translateTab}
-        onTabChange={changeTab}
-        extra={
-          <Select value={region} onChange={handleChangeWz} name="region">
-            <Select.Option value="KMS">KMS</Select.Option>
-            <Select.Option value="GMS">GMS</Select.Option>
-            <Select.Option value="TWMS">TWMS</Select.Option>
-            <Select.Option value="JMS">JMS</Select.Option>
-            <Select.Option value="CMS">CMS</Select.Option>
-          </Select>
-        }
-      >
-        <TabResizer />
-        {TabMapping[tab].Component}
-      </Card>
+      <Row style={{ height: '100%' }}>
+        <Col span={24}>
+          <Card
+            title={t('character_apparance')}
+            bordered={false}
+            tabList={translateTab}
+            onTabChange={changeTab}
+            extra={
+              <Select value={region} onChange={handleChangeWz} name="region">
+                <Select.Option value="KMS">KMS</Select.Option>
+                <Select.Option value="GMS">GMS</Select.Option>
+                <Select.Option value="TWMS">TWMS</Select.Option>
+                <Select.Option value="JMS">JMS</Select.Option>
+                <Select.Option value="CMS">CMS</Select.Option>
+              </Select>
+            }
+          >
+            <TabResizer />
+            {TabMapping[tab].Component}
+          </Card>
+        </Col>
+        <Col span={24}>
+          <Card
+            title={t('recent_useage')}
+            bordered={false}
+            style={{ height: '100%', minHeight: 200 }}
+          >
+            <div>123</div>
+          </Card>
+        </Col>
+      </Row>
     ),
     [region, tab]
   )
