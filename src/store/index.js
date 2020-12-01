@@ -48,6 +48,9 @@ export const Provider = ({ children }) => {
 export const useDispatch = () =>
   useContextSelector(GlobalStore, prop('dispatch'))
 
+export const useStroeSelector = (field, selector) =>
+  useContextSelector(GlobalStore, pipe(prop(field), selector))
+
 export const useStore = (keyPath, initialValue = null) => {
   const dispatch = useDispatch()
   let keys = []

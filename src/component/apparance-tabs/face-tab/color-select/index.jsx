@@ -21,7 +21,10 @@ const colors = [
 ]
 
 const ColorSelect = () => {
-  const [{ faceColorId, faceId }, dispatch] = useStore('meta.character')
+  const [{ id: faceId, colorId: faceColorId }, dispatch] = useStore(
+    'meta.character.face'
+  )
+  const [{ region, version }] = useStore('meta.region')
   const [faces] = useStore('face')
   const currentFace = useMemo(
     () => (faceId ? faces[formatFaceId(faceId)] : { colors: {} }),
@@ -40,13 +43,17 @@ const ColorSelect = () => {
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          faceColorId,
+          face: {
+            id: hasColor ? hasColor.id : faceId,
+            colorId: faceColorId,
+            region,
+            version,
+          },
           mixFaceColorId: faceColorId,
-          faceId: hasColor ? hasColor.id : faceId,
         },
       })
     },
-    [currentFace, faceId]
+    [currentFace, faceId, region, version]
   )
   return (
     <ul className="select">

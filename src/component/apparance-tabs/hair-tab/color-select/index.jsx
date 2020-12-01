@@ -20,7 +20,10 @@ const colors = [
 ]
 
 const ColorSelect = () => {
-  const [{ hairColorId, hairId }, dispatch] = useStore('meta.character')
+  const [{ id: hairId, colorId: hairColorId }, dispatch] = useStore(
+    'meta.character.hair'
+  )
+  const [{ region, version }] = useStore('meta.region')
   const [hairs] = useStore('hair')
   const currentHair = useMemo(
     () =>
@@ -40,13 +43,17 @@ const ColorSelect = () => {
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hairColorId,
+          hair: {
+            id: hasColor ? hasColor.id : hairId,
+            colorId: hairColorId,
+            region,
+            version,
+          },
           mixHairColorId: hairColorId,
-          hairId: hasColor ? hasColor.id : hairId,
         },
       })
     },
-    [currentHair, hairId]
+    [currentHair, hairId, region, version]
   )
   return (
     <ul className="select">

@@ -3,6 +3,7 @@ import { getFaceColorId } from '@utils/group-face'
 import getSkinRegion from '@utils/get-skin-region'
 import getEarsType from '@utils/get-ears-type'
 import getSelectedItemInfo from '@utils/get-selected-item-info'
+import { pickAll } from 'ramda'
 
 const getCharacterUpdateData = function getCharacterUpdateData(character) {
   const name = character.name
@@ -21,10 +22,20 @@ const getCharacterUpdateData = function getCharacterUpdateData(character) {
 
   return {
     name,
-    hairId: characterHairId,
-    hairColorId: characterHairColorId,
-    faceId: characterFaceId,
-    faceColorId: characterFaceColorId,
+    hair: {
+      ...pickAll(
+        ['id', 'region', 'version'],
+        character.selectedItems?.Hair || {}
+      ),
+      colorId: characterHairColorId,
+    },
+    face: {
+      ...pickAll(
+        ['id', 'region', 'version'],
+        character.selectedItems?.Face || {}
+      ),
+      colorId: characterFaceColorId,
+    },
     skin,
     earsType,
     mixHairColorId,

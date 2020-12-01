@@ -20,7 +20,11 @@ import HairColors from '@mapping/hair-color'
 
 const MixDyeHair = ({ tabType, t }) => {
   const [
-    { hairId, hairColorId, mixHairColorId, mixHairOpacity },
+    {
+      hair: { id: hairId, colorId: hairColorId },
+      mixHairColorId,
+      mixHairOpacity,
+    },
     dispatch,
   ] = useStore('meta.character')
   const [{ region, version }] = useStore('meta.region')
@@ -39,18 +43,25 @@ const MixDyeHair = ({ tabType, t }) => {
   const handleChangeColor = useCallback(
     (field) => ({ target: { value: colorId } }) => {
       const hasColor = currentHair.colors[colorId]
-      const payload = {
-        ...{ [field]: colorId },
-        ...(field === 'hairColorId'
-          ? { hairId: hasColor ? hasColor.id : hairId }
-          : {}),
-      }
+      const payload =
+        field === 'hair'
+          ? {
+              hair: {
+                id: hasColor ? hasColor.id : hairId,
+                colorId,
+                region,
+                version,
+              },
+            }
+          : {
+              [field]: colorId,
+            }
       dispatch({
         type: UPDATE_CHARACTER,
         payload,
       })
     },
-    [currentHair, hairId]
+    [currentHair, hairId, region, version]
   )
   const getImageSrc = useCallback(
     (id) =>
@@ -78,9 +89,7 @@ const MixDyeHair = ({ tabType, t }) => {
                   className="select-item-checkbox"
                   value={id}
                   checked={+id === +hairColorId}
-                  onChange={
-                    hasThisColor(id) ? handleChangeColor('hairColorId') : F
-                  }
+                  onChange={hasThisColor(id) ? handleChangeColor('hair') : F}
                 />
                 <label
                   htmlFor={`hair-base-select-${id}`}

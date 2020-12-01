@@ -1,8 +1,8 @@
 import { reducerCreator } from './_helper'
 import { append, find, ifElse, propEq, takeLast } from 'ramda'
 
-export const HISTORY_INITIAL = 'HISTORY_INITIAL'
-export const HISTORY_APPEND = 'HISTORY_APPEND'
+export const INITIAL_HISTORY = 'INITIAL_HISTORY'
+export const APPEND_HISTORY = 'APPEND_HISTORY'
 
 const initialState = []
 const HISTORY_LIMIT = 10
@@ -13,8 +13,8 @@ const SaveToStorage = (state) => {
 }
 
 const reducer = reducerCreator(initialState, {
-  [HISTORY_INITIAL]: (state, payload) => payload,
-  [HISTORY_APPEND]: (state, payload) =>
+  [INITIAL_HISTORY]: (state, payload) => payload,
+  [APPEND_HISTORY]: (state, payload) =>
     pipe(
       ifElse(find(propEq('id', payload.id)), identity, append(payload)),
       takeLast(HISTORY_LIMIT),

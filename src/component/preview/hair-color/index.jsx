@@ -84,7 +84,9 @@ const generateTableData = (
 const HairColorPreview = () => {
   const [
     {
-      characterChanges: { hairColorId, hairId },
+      characterChanges: {
+        hair: { id: hairId, colorId: hairColorId },
+      },
       changedCharacter,
       regionData,
     },
@@ -98,17 +100,21 @@ const HairColorPreview = () => {
   )
 
   const handleChange = useCallback(
-    (hairColorId) => {
+    (colorId) => {
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hairColorId,
-          mixHairColorId: hairColorId,
-          hairId: currentHair.colors[hairColorId].id,
+          hair: {
+            id: currentHair.colors[colorId].id,
+            colorId,
+            region: regionData.region,
+            version: regionData.version,
+          },
+          mixHairColorId: colorId,
         },
       })
     },
-    [currentHair, hairId]
+    [currentHair, hairId, regionData.region, regionData.version]
   )
 
   const tableData = useMemo(

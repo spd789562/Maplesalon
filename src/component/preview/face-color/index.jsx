@@ -77,7 +77,9 @@ const FaceColorPreview = () => {
   useFaceCheck()
   const [
     {
-      characterChanges: { faceColorId, faceId },
+      characterChanges: {
+        face: { id: faceId, colorId: faceColorId },
+      },
       changedCharacter,
       regionData,
     },
@@ -92,17 +94,21 @@ const FaceColorPreview = () => {
   )
 
   const handleChange = useCallback(
-    (faceColorId) => {
+    (colorId) => {
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          faceColorId,
-          mixFaceColorId: faceColorId,
-          faceId: currentFace.colors[faceColorId].id,
+          hair: {
+            id: currentFace.colors[colorId].id,
+            colorId,
+            region: regionData.region,
+            version: regionData.version,
+          },
+          mixFaceColorId: colorId,
         },
       })
     },
-    [currentFace, faceId]
+    [currentFace, faceId, regionData.region, regionData.version]
   )
 
   const tableData = useMemo(

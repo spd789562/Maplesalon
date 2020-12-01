@@ -23,7 +23,7 @@ const FaceTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
   const [faces, dispatch] = useStore('face')
   const { region, version, face: faceRegion } = useFaceCheck()
-  const [{ faceColorId: colorId, faceId }] = useStore('meta.character', '')
+  const [{ id: faceId, colorId }] = useStore('meta.character.face', '')
   const [searchParam] = useStore('search.face')
   const [width] = useStore('search.tabWidth')
   const facesValues = useMemo(() => Object.values(faces), [faces])

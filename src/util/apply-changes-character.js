@@ -48,29 +48,35 @@ const applyChangesCharacter = function applyChangesCharacter(
     copyCharacter.isChange = true
   }
   if (
-    (characterChanges.hairId && !copyCharacter.selectedItems.Hair) ||
-    (characterChanges.hairId &&
-      characterChanges.hairId !== copyCharacter.selectedItems.Hair.id)
+    (characterChanges.hair.id && !copyCharacter.selectedItems.Hair) ||
+    (characterChanges.hair.id &&
+      characterChanges.hair.id !== copyCharacter.selectedItems.Hair.id)
   ) {
     copyCharacter.selectedItems.Hair = mergeRight(
       copyCharacter.selectedItems.Hair || {},
       {
-        id: characterChanges.hairId,
-        ...pick(['region', 'version'], regionData),
+        id: characterChanges.hair.id,
+        ...pick(
+          ['region', 'version'],
+          characterChanges.hair.region ? characterChanges.hair : regionData
+        ),
       }
     )
     copyCharacter.isChange = true
   }
   if (
-    (characterChanges.faceId && !copyCharacter.selectedItems.Face) ||
-    (characterChanges.faceId &&
-      characterChanges.faceId !== copyCharacter.selectedItems.Face.id)
+    (characterChanges.face.id && !copyCharacter.selectedItems.Face) ||
+    (characterChanges.face.id &&
+      characterChanges.face.id !== copyCharacter.selectedItems.Face.id)
   ) {
     copyCharacter.selectedItems.Face = mergeRight(
       copyCharacter.selectedItems.Face || {},
       {
-        id: characterChanges.faceId,
-        ...pick(['region', 'version'], regionData),
+        id: characterChanges.face.id,
+        ...pick(
+          ['region', 'version'],
+          characterChanges.face.region ? characterChanges.face : regionData
+        ),
       }
     )
     copyCharacter.isChange = true

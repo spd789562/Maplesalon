@@ -27,10 +27,10 @@ const TypeMapping = {
   },
   ear: {
     payload: ({ id }) => ({ earsType: id }),
-    src: ({ id }, { skin, region, version }) =>
+    src: ({ query }, { skin, region, version }) =>
       `https://maplestory.io/api/${
         skin.region ? `${skin.region}/${skin.version}` : `${region}/${version}`
-      }/character/${skin.id || 2000}?${item.query ? `${item.query}=true` : ''}`,
+      }/character/${skin.id || 2000}?${query ? `${query}=true` : ''}`,
   },
 }
 

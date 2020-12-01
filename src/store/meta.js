@@ -36,13 +36,13 @@ const initialState = {
     },
     hair: {
       id: '',
-      colorId: '',
+      colorId: '0',
       region: '',
       version: '',
     },
     face: {
       id: '',
-      colorId: '',
+      colorId: '0',
       region: '',
       version: '',
     },
