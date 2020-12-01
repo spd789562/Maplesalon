@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 import { F } from 'ramda'
 
 import ImageItem from '../../image-item'
@@ -19,15 +20,25 @@ const Image = ({
   const itemId = item.id
   const src = `https://maplestory.io/api/${region}/${version}/item/${itemId}/icon`
   const isSelected = overall && overall.id && overall.id === itemId
-  const handleChange = useCallback(
-    (id) => () => {
-      dispatch({
-        type: UPDATE_CHARACTER,
-        payload: { overall: { id, region, version } },
-      })
-    },
-    []
-  )
+  const handleChange = useCallback(() => {
+    const updateData = {
+      id: itemId,
+      region,
+      version,
+    }
+    dispatch({
+      type: UPDATE_CHARACTER,
+      payload: { overall: updateData },
+    })
+    dispatch({
+      type: APPEND_HISTORY,
+      payload: {
+        type: 'overall',
+        name: item.name,
+        ...updateData,
+      },
+    })
+  }, [])
   return (
     <ImageItem
       style={style}
@@ -35,7 +46,7 @@ const Image = ({
       isSelected={isSelected}
       src={src}
       hasItem={!!itemId}
-      handleChange={itemId ? handleChange(itemId) : F}
+      handleChange={itemId ? handleChange : F}
     />
   )
 }

@@ -35,13 +35,14 @@ const Image = ({
       version,
     }
     dispatch({ type: UPDATE_CHARACTER, payload: { face: updateData } })
-    // dispatch({
-    //   type: APPEND_HISTORY,
-    //   payload: {
-    //     type: 'face',
-    //     ...updateData,
-    //   },
-    // })
+    dispatch({
+      type: APPEND_HISTORY,
+      payload: {
+        type: 'face',
+        name: itemName,
+        ...updateData,
+      },
+    })
   }, [itemId, region, version])
   return (
     <ImageItem

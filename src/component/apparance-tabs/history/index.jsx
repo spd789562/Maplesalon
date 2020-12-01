@@ -1,4 +1,11 @@
-import { memo, useMemo, useState, useEffect, createRef } from 'react'
+import {
+  memo,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+  createRef,
+} from 'react'
 import { useStore } from '@store'
 
 /* components */
@@ -34,11 +41,11 @@ const HatTab = () => {
   ])
   const perWidth = width / CLOUMN_COUNT
   return (
-    <div ref={historyHeight}>
+    <div ref={historyHeight} style={{ height: '100%' }}>
       <FixedSizeGrid
         columnCount={CLOUMN_COUNT}
         columnWidth={perWidth}
-        rowCount={Math.ceil(searchedHat.length / CLOUMN_COUNT)}
+        rowCount={Math.ceil(history.length / CLOUMN_COUNT)}
         rowHeight={95}
         width={width}
         height={initHeight}
@@ -53,8 +60,6 @@ const HatTab = () => {
                 style,
                 columnIndex,
                 rowIndex,
-                region,
-                version,
                 columnCount: CLOUMN_COUNT,
               }}
             />

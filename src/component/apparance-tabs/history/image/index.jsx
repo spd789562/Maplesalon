@@ -7,28 +7,11 @@ import ImageItem from '../../image-item'
 
 import useItem from './use-item'
 
-const Image = ({
-  columnIndex,
-  rowIndex,
-  style,
-  data,
-  region,
-  version,
-  columnCount,
-}) => {
+const Image = ({ columnIndex, rowIndex, style, data, columnCount, t }) => {
   const item = data[columnIndex + columnCount * rowIndex] || {}
   const { iconSrc: src, handleChange } = useItem(item)
   const itemId = item.id
   const itemName = item.translate ? t(item.name) : item.name
-  const handleChange = useCallback(
-    (id) => () => {
-      dispatch({
-        type: UPDATE_CHARACTER,
-        payload: { hat: { id, region, version } },
-      })
-    },
-    []
-  )
   return (
     <ImageItem
       style={style}

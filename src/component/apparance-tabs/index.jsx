@@ -14,6 +14,7 @@ import MixDyeHairTab from './mix-dye-hair-tab'
 import MixDyeFaceTab from './mix-dye-face-tab'
 import HatTab from './hat-tab'
 import OverallTab from './overall-tab'
+import History from './history'
 import TabResizer from './tab-resizer'
 
 /* mapping */
@@ -69,12 +70,13 @@ function ApparanceTabs({ t, i18n }) {
   return useMemo(
     () => (
       <Row style={{ height: '100%' }}>
-        <Col span={24}>
+        <Col span={24} style={{ paddingBottom: 8 }}>
           <Card
             title={t('character_apparance')}
             bordered={false}
             tabList={translateTab}
             onTabChange={changeTab}
+            tabProps={{ type: 'card' }}
             extra={
               <Select value={region} onChange={handleChangeWz} name="region">
                 <Select.Option value="KMS">KMS</Select.Option>
@@ -89,13 +91,14 @@ function ApparanceTabs({ t, i18n }) {
             {TabMapping[tab].Component}
           </Card>
         </Col>
-        <Col span={24}>
+        <Col span={24} style={{ paddingTop: 8 }}>
           <Card
             title={t('recent_useage')}
             bordered={false}
             style={{ height: '100%', minHeight: 200 }}
+            bodyStyle={{ height: 'calc(100% - 58px)' }}
           >
-            <div>123</div>
+            <History />
           </Card>
         </Col>
       </Row>
