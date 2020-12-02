@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.13",
     "@next/bundle-analyzer": "^9.5.3",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",

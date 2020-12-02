@@ -1,11 +1,20 @@
 import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
-import { Card, Select, Row, Col } from 'antd'
 
 import { APIGetWz } from '@api'
 import { useStore } from '@store'
 import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
 
 /* component */
+import {
+  faUser,
+  faGrinAlt,
+  faMale,
+  faEyeDropper,
+  faHatCowboySide,
+  faTshirt,
+} from '@fortawesome/free-solid-svg-icons'
+import { Card, Select, Row, Col } from 'antd'
+import Tab from './tab'
 import HairTab from './hair-tab'
 import FaceTab from './face-tab'
 import SkinTab from './skin-tab'
@@ -25,14 +34,29 @@ import { withTranslation } from '@i18n'
 import { assoc, evolve } from 'ramda'
 
 const ApparanceTabMapping = [
-  { key: 'hair', tab: 'tab_hair', Component: <HairTab /> },
-  { key: 'face', tab: 'tab_face', Component: <FaceTab /> },
-  { key: 'skin', tab: 'tab_skin', Component: <SkinTab /> },
-  { key: 'ears', tab: 'tab_ears', Component: <EarsTab /> },
-  { key: 'mixdyehair', tab: 'tab_mix_dye_hair', Component: <MixDyeHairTab /> },
-  { key: 'mixdyeface', tab: 'tab_mix_dye_face', Component: <MixDyeFaceTab /> },
-  { key: 'hat', tab: 'tab_hat', Component: <HatTab /> },
-  { key: 'overall', tab: 'tab_overall', Component: <OverallTab /> },
+  { key: 'hair', tab: 'tab_hair', icon: faUser, Component: <HairTab /> },
+  { key: 'face', tab: 'tab_face', icon: faGrinAlt, Component: <FaceTab /> },
+  { key: 'skin', tab: 'tab_skin', icon: faMale, Component: <SkinTab /> },
+  { key: 'ears', tab: 'tab_ears', icon: 'ears', Component: <EarsTab /> },
+  {
+    key: 'mixdyehair',
+    tab: 'tab_mix_dye_hair',
+    icon: 'hair-mixdye',
+    Component: <MixDyeHairTab />,
+  },
+  {
+    key: 'mixdyeface',
+    tab: 'tab_mix_dye_face',
+    icon: faEyeDropper,
+    Component: <MixDyeFaceTab />,
+  },
+  { key: 'hat', tab: 'tab_hat', icon: faHatCowboySide, Component: <HatTab /> },
+  {
+    key: 'overall',
+    tab: 'tab_overall',
+    icon: faTshirt,
+    Component: <OverallTab />,
+  },
 ]
 
 const TabMapping = ApparanceTabMapping.reduce(
@@ -76,6 +100,15 @@ function ApparanceTabs({ t, i18n }) {
             bordered={false}
             tabList={translateTab}
             onTabChange={changeTab}
+            tabProps={{
+              renderTabBar: ({ activeKey, onTabClick }) => (
+                <Tab
+                  tabs={translateTab}
+                  activeKey={activeKey}
+                  onTabClick={onTabClick}
+                />
+              ),
+            }}
             extra={
               <Select value={region} onChange={handleChangeWz} name="region">
                 <Select.Option value="KMS">KMS</Select.Option>

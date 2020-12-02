@@ -41,7 +41,6 @@ const HatTab = () => {
   const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
     initHeight,
   ])
-  containerRef.current && console.log(containerRef.current.offsetHeight)
 
   const perWidth = width / CLOUMN_COUNT
   return (
