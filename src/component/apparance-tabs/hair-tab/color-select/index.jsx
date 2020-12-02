@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* helper */
 import { formatHairId } from '@utils/group-hair'
@@ -20,9 +21,7 @@ const colors = [
 ]
 
 const ColorSelect = () => {
-  const [{ id: hairId, colorId: hairColorId }, dispatch] = useStore(
-    'meta.character.hair'
-  )
+  const [{ id: hairId, colorId }, dispatch] = useStore('meta.character.hair')
   const [{ region, version }] = useStore('meta.region')
   const [hairs] = useStore('hair')
   const currentHair = useMemo(
@@ -40,16 +39,25 @@ const ColorSelect = () => {
   const handleChange = useCallback(
     ({ target: { value: hairColorId } }) => {
       const hasColor = currentHair.colors[hairColorId]
+      const updateData = {
+        id: hasColor ? hasColor.id : hairId,
+        colorId: hairColorId,
+        region,
+        version,
+      }
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hair: {
-            id: hasColor ? hasColor.id : hairId,
-            colorId: hairColorId,
-            region,
-            version,
-          },
+          hair: updateData,
           mixHairColorId: hairColorId,
+        },
+      })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'hair',
+          name: currentHair.name,
+          ...updateData,
         },
       })
     },
@@ -65,7 +73,7 @@ const ColorSelect = () => {
             id={`color-select-${id}`}
             className="select-item-checkbox"
             value={id}
-            checked={+id === +hairColorId}
+            checked={+id === +colorId}
             onChange={handleChange}
           />
           <label

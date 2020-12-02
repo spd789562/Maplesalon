@@ -76,7 +76,6 @@ function ApparanceTabs({ t, i18n }) {
             bordered={false}
             tabList={translateTab}
             onTabChange={changeTab}
-            tabProps={{ type: 'card' }}
             extra={
               <Select value={region} onChange={handleChangeWz} name="region">
                 <Select.Option value="KMS">KMS</Select.Option>
