@@ -14,6 +14,8 @@
   "character_list": "Character List",
   "character_preview_all_color": "Preview All",
   "character_preview_mix_color": "Preview Mix Dye",
+  "item_history": "Item History",
+  "history_limit": "only show last {{count}}",
   
   "type_hair_name": "Search hair name",
   "type_face_name": "Search face name",

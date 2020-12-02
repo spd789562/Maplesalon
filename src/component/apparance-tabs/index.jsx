@@ -125,7 +125,14 @@ function ApparanceTabs({ t, i18n }) {
         </Col>
         <Col span={24} style={{ paddingTop: 8 }}>
           <Card
-            title={t('recent_useage')}
+            title={
+              <span>
+                {t('item_history')}
+                <span style={{ fontSize: 12, color: '#999' }}>
+                  ({t('history_limit', { count: 20 })})
+                </span>
+              </span>
+            }
             bordered={false}
             style={{ height: '100%', minHeight: 220 }}
             bodyStyle={{ height: 'calc(100% - 58px)' }}
