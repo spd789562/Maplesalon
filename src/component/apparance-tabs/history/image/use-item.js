@@ -10,10 +10,16 @@ const pickData = pick(['id', 'region', 'version'])
 
 const TypeMapping = {
   hair: {
-    payload: (data) => ({ hair: pickData(data) }),
+    payload: (data) => ({
+      hair: { colorId: data.colorId, ...pickData(data) },
+      mixHairColorId: data.colorId,
+    }),
   },
   face: {
-    payload: (data) => ({ face: pickData(data) }),
+    payload: (data) => ({
+      face: { colorId: data.colorId, ...pickData(data) },
+      mixFaceColorId: data.colorId,
+    }),
   },
   hat: {
     payload: (data) => ({ hat: pickData(data) }),

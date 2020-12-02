@@ -94,7 +94,7 @@ function ApparanceTabs({ t, i18n }) {
           <Card
             title={t('recent_useage')}
             bordered={false}
-            style={{ height: '100%', minHeight: 200 }}
+            style={{ height: '100%', minHeight: 220 }}
             bodyStyle={{ height: 'calc(100% - 58px)' }}
           >
             <History />
