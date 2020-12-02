@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* components */
 import { Table } from 'antd'
@@ -95,16 +96,25 @@ const FaceColorPreview = () => {
 
   const handleChange = useCallback(
     (colorId) => {
+      const updateData = {
+        id: currentFace.colors[colorId].id,
+        colorId,
+        region: regionData.region,
+        version: regionData.version,
+      }
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hair: {
-            id: currentFace.colors[colorId].id,
-            colorId,
-            region: regionData.region,
-            version: regionData.version,
-          },
+          hair: updateData,
           mixFaceColorId: colorId,
+        },
+      })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'face',
+          name: currentFace.name,
+          ...updateData,
         },
       })
     },

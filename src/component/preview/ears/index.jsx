@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* components */
 import { Table } from 'antd'
@@ -30,7 +31,7 @@ const generateTableData = (currentCharacter, earsType, handleChange, t) => {
       <div
         className="character-block"
         style={{ display: 'inline-block', width: '100px' }}
-        onClick={() => handleChange(id)}
+        onClick={() => handleChange(Ears[index])}
       >
         <CharacterImage characterData={data} />
         <style jsx>{`
@@ -59,18 +60,31 @@ const generateTableData = (currentCharacter, earsType, handleChange, t) => {
 
 const EarsPreview = ({ t }) => {
   const [
-    { characterChanges, changedCharacter },
+    { characterChanges, changedCharacter, regionData },
     dispatch,
   ] = useChangedCharacter()
   const earsType = characterChanges.earsType
-  const handleChange = useCallback((earsType) => {
-    dispatch({
-      type: UPDATE_CHARACTER,
-      payload: {
-        earsType,
-      },
-    })
-  }, [])
+  const handleChange = useCallback(
+    ({ id, name, query }) => {
+      dispatch({
+        type: UPDATE_CHARACTER,
+        payload: {
+          earsType: id,
+        },
+      })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'ears',
+          translate: true,
+          name,
+          id,
+          query,
+        },
+      })
+    },
+    [regionData.region, regionData.version]
+  )
 
   const tableData = useMemo(
     () => generateTableData(changedCharacter, earsType, handleChange, t),

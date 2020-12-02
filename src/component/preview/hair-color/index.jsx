@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* components */
 import { Table } from 'antd'
@@ -101,16 +102,25 @@ const HairColorPreview = () => {
 
   const handleChange = useCallback(
     (colorId) => {
+      const updateData = {
+        id: currentHair.colors[colorId].id,
+        colorId,
+        region: regionData.region,
+        version: regionData.version,
+      }
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hair: {
-            id: currentHair.colors[colorId].id,
-            colorId,
-            region: regionData.region,
-            version: regionData.version,
-          },
+          hair: updateData,
           mixHairColorId: colorId,
+        },
+      })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'hair',
+          name: currentHair.name,
+          ...updateData,
         },
       })
     },

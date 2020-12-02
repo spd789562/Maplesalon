@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* components */
 import { Table } from 'antd'
@@ -73,6 +74,14 @@ const SkinPreview = ({ t }) => {
       type: UPDATE_CHARACTER,
       payload: {
         skin,
+      },
+    })
+    dispatch({
+      type: APPEND_HISTORY,
+      payload: {
+        type: 'skin',
+        translate: true,
+        ...skin,
       },
     })
   }, [])
