@@ -1,6 +1,7 @@
 import { Fragment, useCallback, useMemo } from 'react'
 import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 import { F } from 'ramda'
 import { withTranslation } from '@i18n'
 
@@ -16,12 +17,19 @@ const Image = ({ columnIndex, rowIndex, style, data, t }) => {
     skin.region ? `${skin.region}/${skin.version}` : `${region}/${version}`
   }/character/${skin.id || 2000}?${item.query ? `${item.query}=true` : ''}`
   const isSelected = itemId === earsType
-  const handleChange = useCallback(
-    (id) => () => {
-      dispatch({ type: UPDATE_CHARACTER, payload: { earsType: id } })
-    },
-    []
-  )
+  const handleChange = useCallback(() => {
+    dispatch({ type: UPDATE_CHARACTER, payload: { earsType: itemId } })
+    dispatch({
+      type: APPEND_HISTORY,
+      payload: {
+        type: 'ears',
+        name: item.name,
+        id: itemId,
+        query: item.query,
+        translate: true,
+      },
+    })
+  }, [])
   return (
     <ImageItem
       paddingTop={10}
@@ -30,7 +38,7 @@ const Image = ({ columnIndex, rowIndex, style, data, t }) => {
       isSelected={isSelected}
       src={src}
       hasItem={!!itemId}
-      handleChange={itemId ? handleChange(itemId) : F}
+      handleChange={itemId ? handleChange : F}
     />
   )
 }

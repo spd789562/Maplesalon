@@ -12,6 +12,8 @@
   "character_list": "角色列表",
   "character_preview_all_color": "预览所有外观",
   "character_preview_mix_color": "预览所有混染",
+  "item_history": "使用纪录",
+  "history_limit": "仅保留最后 {{count}} 个",
 
   "type_hair_name": "输入发型名称",
   "type_face_name": "输入脸型名称",

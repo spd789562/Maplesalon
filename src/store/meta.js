@@ -34,6 +34,18 @@ const initialState = {
       region: '',
       version: '',
     },
+    hair: {
+      id: '',
+      colorId: '0',
+      region: '',
+      version: '',
+    },
+    face: {
+      id: '',
+      colorId: '0',
+      region: '',
+      version: '',
+    },
     earsType: '0',
     skinId: '',
     hairId: '',

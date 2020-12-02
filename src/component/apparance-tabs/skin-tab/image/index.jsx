@@ -1,6 +1,7 @@
 import { Fragment, useCallback, useMemo } from 'react'
 import { useStore } from '@store'
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 import { F } from 'ramda'
 import { withTranslation } from '@i18n'
 
@@ -16,6 +17,15 @@ const Image = ({ columnIndex, rowIndex, style, data, t }) => {
   const handleChange = useCallback(
     (data) => () => {
       dispatch({ type: UPDATE_CHARACTER, payload: { skin: data } })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'skin',
+          name: item.name,
+          translate: true,
+          ...data,
+        },
+      })
     },
     []
   )

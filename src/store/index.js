@@ -9,7 +9,7 @@ import {
 import { combineReducer } from './_helper'
 import hairReducer from './hair'
 import faceReducer from './face'
-// import skinReducer from './skin'
+import hsitoryReducer from './history'
 import searchReducer from './search'
 import metaReducer from './meta'
 import characterReducer from './character'
@@ -28,6 +28,7 @@ const [combinedReducers, initialState] = combineReducer({
   search: searchReducer,
   hat: hatReducer,
   overall: overallReducer,
+  history: hsitoryReducer,
 })
 
 export const Provider = ({ children }) => {
@@ -47,6 +48,9 @@ export const Provider = ({ children }) => {
 // export const useDispatch = () => useContext(GlobalStore).dispatch
 export const useDispatch = () =>
   useContextSelector(GlobalStore, prop('dispatch'))
+
+export const useStroeSelector = (field, selector) =>
+  useContextSelector(GlobalStore, pipe(prop(field), selector))
 
 export const useStore = (keyPath, initialValue = null) => {
   const dispatch = useDispatch()

@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* components */
 import { Table } from 'antd'
@@ -84,7 +85,9 @@ const generateTableData = (
 const HairColorPreview = () => {
   const [
     {
-      characterChanges: { hairColorId, hairId },
+      characterChanges: {
+        hair: { id: hairId, colorId: hairColorId },
+      },
       changedCharacter,
       regionData,
     },
@@ -98,17 +101,30 @@ const HairColorPreview = () => {
   )
 
   const handleChange = useCallback(
-    (hairColorId) => {
+    (colorId) => {
+      const updateData = {
+        id: currentHair.colors[colorId].id,
+        colorId,
+        region: regionData.region,
+        version: regionData.version,
+      }
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hairColorId,
-          mixHairColorId: hairColorId,
-          hairId: currentHair.colors[hairColorId].id,
+          hair: updateData,
+          mixHairColorId: colorId,
+        },
+      })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'hair',
+          name: currentHair.name,
+          ...updateData,
         },
       })
     },
-    [currentHair, hairId]
+    [currentHair, hairId, regionData.region, regionData.version]
   )
 
   const tableData = useMemo(

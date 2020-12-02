@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* components */
 import { Table } from 'antd'
@@ -77,7 +78,9 @@ const FaceColorPreview = () => {
   useFaceCheck()
   const [
     {
-      characterChanges: { faceColorId, faceId },
+      characterChanges: {
+        face: { id: faceId, colorId: faceColorId },
+      },
       changedCharacter,
       regionData,
     },
@@ -92,17 +95,30 @@ const FaceColorPreview = () => {
   )
 
   const handleChange = useCallback(
-    (faceColorId) => {
+    (colorId) => {
+      const updateData = {
+        id: currentFace.colors[colorId].id,
+        colorId,
+        region: regionData.region,
+        version: regionData.version,
+      }
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          faceColorId,
-          mixFaceColorId: faceColorId,
-          faceId: currentFace.colors[faceColorId].id,
+          hair: updateData,
+          mixFaceColorId: colorId,
+        },
+      })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'face',
+          name: currentFace.name,
+          ...updateData,
         },
       })
     },
-    [currentFace, faceId]
+    [currentFace, faceId, regionData.region, regionData.version]
   )
 
   const tableData = useMemo(

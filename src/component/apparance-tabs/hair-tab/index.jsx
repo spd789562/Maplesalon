@@ -23,7 +23,7 @@ const HairTab = () => {
   const [isFirstRender, updateFirstRender] = useState(true)
   const [hairs, dispatch] = useStore('hair')
   const { region, version, hair: hairRegion } = useHairCheck()
-  const [{ hairColorId: colorId, hairId }] = useStore('meta.character', '')
+  const [{ id: hairId, colorId }] = useStore('meta.character.hair', '')
   const [searchParam] = useStore('search.hair')
   const [width] = useStore('search.tabWidth')
 

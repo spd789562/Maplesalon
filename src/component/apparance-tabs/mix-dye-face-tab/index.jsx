@@ -27,7 +27,11 @@ import FaceColors from '@mapping/face-color'
 
 const MixDyeFace = ({ t }) => {
   const [
-    { faceId, faceColorId, mixFaceColorId, mixFaceOpacity },
+    {
+      face: { id: faceId, colorId: faceColorId },
+      mixFaceColorId,
+      mixFaceOpacity,
+    },
     dispatch,
   ] = useStore('meta.character')
   const { region, version } = useFaceCheck()
@@ -49,18 +53,25 @@ const MixDyeFace = ({ t }) => {
   const handleChangeColor = useCallback(
     (field) => ({ target: { value: colorId } }) => {
       const hasColor = currentFace.colors[colorId]
-      const payload = {
-        ...{ [field]: colorId },
-        ...(field === 'faceColorId'
-          ? { faceId: hasColor ? hasColor.id : faceId }
-          : {}),
-      }
+      const payload =
+        field === 'face'
+          ? {
+              face: {
+                id: hasColor ? hasColor.id : faceId,
+                colorId,
+                region,
+                version,
+              },
+            }
+          : {
+              [field]: colorId,
+            }
       dispatch({
         type: UPDATE_CHARACTER,
         payload,
       })
     },
-    [currentFace, faceId]
+    [currentFace, faceId, region, version]
   )
   const getImageSrc = useCallback(
     (id) =>
@@ -89,9 +100,7 @@ const MixDyeFace = ({ t }) => {
                   className="select-item-checkbox"
                   value={id}
                   checked={+id === +faceColorId}
-                  onChange={
-                    hasThisColor(id) ? handleChangeColor('faceColorId') : F
-                  }
+                  onChange={hasThisColor(id) ? handleChangeColor('face') : F}
                 />
                 <label
                   htmlFor={`face-base-select-${id}`}

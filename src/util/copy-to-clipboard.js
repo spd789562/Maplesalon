@@ -22,7 +22,6 @@ const copyTextToClipboard = (text) => {
     selection.removeAllRanges()
     selection.addRange(range)
     textArea.setSelectionRange(0, 999999)
-    console.log(textArea)
   } else {
     textArea.focus()
     textArea.select()

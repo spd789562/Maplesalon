@@ -3,6 +3,7 @@ import { useStore } from '@store'
 
 /* action */
 import { UPDATE_CHARACTER } from '@store/meta'
+import { APPEND_HISTORY } from '@store/history'
 
 /* helper */
 import { formatFaceId } from '@utils/group-face'
@@ -21,7 +22,8 @@ const colors = [
 ]
 
 const ColorSelect = () => {
-  const [{ faceColorId, faceId }, dispatch] = useStore('meta.character')
+  const [{ id: faceId, colorId }, dispatch] = useStore('meta.character.face')
+  const [{ region, version }] = useStore('meta.region')
   const [faces] = useStore('face')
   const currentFace = useMemo(
     () => (faceId ? faces[formatFaceId(faceId)] : { colors: {} }),
@@ -37,16 +39,29 @@ const ColorSelect = () => {
   const handleChange = useCallback(
     ({ target: { value: faceColorId } }) => {
       const hasColor = currentFace.colors[faceColorId]
+      const updateData = {
+        id: hasColor ? hasColor.id : faceId,
+        colorId: faceColorId,
+        region,
+        version,
+      }
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          faceColorId,
+          face: updateData,
           mixFaceColorId: faceColorId,
-          faceId: hasColor ? hasColor.id : faceId,
+        },
+      })
+      dispatch({
+        type: APPEND_HISTORY,
+        payload: {
+          type: 'face',
+          name: currentFace.name,
+          ...updateData,
         },
       })
     },
-    [currentFace, faceId]
+    [currentFace, faceId, region, version]
   )
   return (
     <ul className="select">
@@ -58,7 +73,7 @@ const ColorSelect = () => {
             id={`color-select-${id}`}
             className="select-item-checkbox"
             value={id}
-            checked={id === faceColorId}
+            checked={id === colorId}
             onChange={handleChange}
           />
           <label
