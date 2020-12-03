@@ -163,6 +163,10 @@
   "action_swing_t3":"游泳 (T3)",
   "action_swing_tf":"游泳 (TF)",
 
+  "other_tools": "其他工具",
+  "web_arcane_symbol_calculator": "神秘徽章计算机",
+  "web_boss_crystal_calculator": "力量结晶计算机",
+
   "page_not_found": "无此页面",
   "error_with_status": "A {{statusCode}} error occurred on server",
   "error_without_status": "An error occurred on the server"

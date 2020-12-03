@@ -73,9 +73,13 @@ const AppHeader = withTranslation('index')(({ t, i18n }) => (
 const AppFooter = withTranslation('index')(({ t }) => (
   <Footer className={styles.footer}>
     <div>
-      Other tools：
-      <a href="https://maplestory-arcane-symbol-calculator.vercel.app/">
-        Arcane Calcaulator
+      {t('other_tools')}：
+      <a href="https://maplestory-arcane-symbol-calculator.vercel.app">
+        {t('web_arcane_symbol_calculator')}
+      </a>
+      、
+      <a href="https://maplestory-boss-crystal-calculator.vercel.app">
+        {t('web_boss_crystal_calculator')}
       </a>
     </div>
     {t('title')} ©2020 Created by 丫村, data from maplestory.io
