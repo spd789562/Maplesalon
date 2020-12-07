@@ -28,7 +28,7 @@ const TabResizer = () => {
         widthRef.current.removeEventListener('resize', updateWidth)
       }
     }
-  }, [])
+  }, [process.browser])
   return <div ref={widthRef}></div>
 }
 

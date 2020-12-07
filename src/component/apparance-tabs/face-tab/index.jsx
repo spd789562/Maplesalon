@@ -69,7 +69,7 @@ const FaceTab = () => {
     <div>
       <Search />
       <FixedSizeGrid
-        columnCount={5}
+        columnCount={CLOUMN_COUNT}
         columnWidth={perWidth}
         rowCount={Math.ceil(searchedFace.length / CLOUMN_COUNT)}
         rowHeight={95}
