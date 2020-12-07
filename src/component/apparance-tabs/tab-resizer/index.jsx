@@ -18,8 +18,16 @@ const TabResizer = () => {
   )
   useEffect(() => {
     window.addEventListener('resize', updateWidth)
+    if (widthRef.current) {
+      widthRef.current.addEventListener('resize', updateWidth)
+    }
     updateWidth()
-    return () => window.removeEventListener('resize', updateWidth)
+    return () => {
+      window.removeEventListener('resize', updateWidth)
+      if (widthRef.current) {
+        widthRef.current.removeEventListener('resize', updateWidth)
+      }
+    }
   }, [])
   return <div ref={widthRef}></div>
 }
