@@ -66,7 +66,7 @@ const generateTableData = (
     currentFace.colors
   )
 
-  data.key = 'hair'
+  data.key = 'face'
 
   return {
     columns,
@@ -105,7 +105,7 @@ const FaceColorPreview = () => {
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hair: updateData,
+          face: updateData,
           mixFaceColorId: colorId,
         },
       })
