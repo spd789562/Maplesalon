@@ -143,7 +143,7 @@ const FaceColorPreview = () => {
       dispatch({
         type: UPDATE_CHARACTER,
         payload: {
-          hair: {
+          face: {
             id: faceId,
             colorId: getFaceColorId(faceId),
             region: regionData.region,
