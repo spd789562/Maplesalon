@@ -54,9 +54,9 @@ const FaceTab = () => {
       updateFirstRender(false)
       return searchParam.scrollTop
     } else {
-      const index = searchedFace.findIndex(
-        propEq('id', formatFaceId(faceId) + '')
-      )
+      const index = faceId
+        ? searchedFace.findIndex(propEq('id', formatFaceId(faceId) + ''))
+        : -1
       return index !== -1 ? (Math.floor(index / CLOUMN_COUNT) - 1) * 95 : 0
     }
   }, [searchedFace.length, colorId, CLOUMN_COUNT])
