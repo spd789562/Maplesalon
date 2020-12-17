@@ -112,6 +112,7 @@ function ApparanceTabs({ t, i18n }) {
             extra={
               <Select value={region} onChange={handleChangeWz} name="region">
                 <Select.Option value="KMS">KMS</Select.Option>
+                <Select.Option value="KMST">KMST</Select.Option>
                 <Select.Option value="GMS">GMS</Select.Option>
                 <Select.Option value="TWMS">TWMS</Select.Option>
                 <Select.Option value="JMS">JMS</Select.Option>
