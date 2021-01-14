@@ -117,6 +117,7 @@ function ApparanceTabs({ t, i18n }) {
                 <Select.Option value="TWMS">TWMS</Select.Option>
                 <Select.Option value="JMS">JMS</Select.Option>
                 <Select.Option value="CMS">CMS</Select.Option>
+                <Select.Option value="MSEA">MSEA</Select.Option>
               </Select>
             }
           >
