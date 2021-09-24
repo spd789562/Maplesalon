@@ -55,6 +55,7 @@ const RandomStyle = ({ t }) => {
   const [hairs, dispatch] = useStore('hair')
   const [faces] = useStore('face')
   const [character] = useStore('character.current')
+  const [regionData] = useStore('meta.region', {})
   const dataReady =
     !isEmpty(hairs) &&
     !isEmpty(faces) &&
@@ -69,8 +70,13 @@ const RandomStyle = ({ t }) => {
       const randomHairColor = pickRandom(colors)
       const hairId = randomHairColor.id
       const hairColorId = getHairColorId(hairId)
-      changes.hairId = hairId
-      changes.hairColorId = hairColorId
+      const data = {
+        id: hairId,
+        colorId: hairColorId,
+        region: regionData.region,
+        version: regionData.version,
+      }
+      changes.hair = data
       if (needMix) {
         const randomMixColor = pickRandom(colors)
         changes.mixHairColorId = getHairColorId(randomMixColor.id)
@@ -86,8 +92,13 @@ const RandomStyle = ({ t }) => {
       const randomFaceColor = pickRandom(colors)
       const faceId = randomFaceColor.id
       const faceColorId = getFaceColorId(faceId)
-      changes.faceId = faceId
-      changes.faceColorId = faceColorId
+      const data = {
+        id: faceId,
+        colorId: faceColorId,
+        region: regionData.region,
+        version: regionData.version,
+      }
+      changes.face = data
       if (needMix) {
         const randomMixColor = pickRandom(colors)
         changes.mixFaceColorId = getFaceColorId(randomMixColor.id)
@@ -109,7 +120,7 @@ const RandomStyle = ({ t }) => {
         type: UPDATE_CHARACTER,
         payload: changes,
       })
-  }, [options, hairs, faces])
+  }, [options, hairs, faces, regionData])
   return (
     <Fragment>
       <Popover
