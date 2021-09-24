@@ -42,7 +42,8 @@ export const changeFaceColorId = (id, changeColorId) =>
  *  formatFaceId(40100) // -> 1
  *  formatFaceId(52301) // -> 3
  */
-export const getFaceColorId = (id) => +id.toString().split('').splice(2, 1)
+export const getFaceColorId = (id) =>
+  id && +id.toString().split('').splice(2, 1)
 
 /**
  * groupFace

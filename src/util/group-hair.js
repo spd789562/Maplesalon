@@ -15,7 +15,7 @@ export const colorRemover = (str) =>
  *  formatHairId(30000) // -> 3000
  *  formatHairId(34503) // -> 3450
  */
-export const formatHairId = (id) => Math.floor(+id / 10)
+export const formatHairId = (id) => id && Math.floor(+id / 10)
 
 /**
  * changeHairColorId
