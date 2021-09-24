@@ -73,7 +73,7 @@ const ColorSelect = () => {
             id={`color-select-${id}`}
             className="select-item-checkbox"
             value={id}
-            checked={id === colorId}
+            checked={+id === +colorId}
             onChange={handleChange}
           />
           <label

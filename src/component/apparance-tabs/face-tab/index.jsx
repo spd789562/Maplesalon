@@ -61,9 +61,10 @@ const FaceTab = () => {
     }
   }, [searchedFace.length, colorId, CLOUMN_COUNT])
 
-  const renderKey = useMemo(() => Math.random().toString(36).slice(2, 7), [
-    initHeight,
-  ])
+  const renderKey = useMemo(
+    () => Math.random().toString(36).slice(2, 7),
+    [initHeight]
+  )
   const perWidth = width / CLOUMN_COUNT
   return (
     <div>

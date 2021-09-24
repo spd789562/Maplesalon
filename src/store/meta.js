@@ -6,6 +6,7 @@ export const INITIAL_WZ = 'INITIAL_WZ'
 export const UPDATE_CHARACTER = 'UPDATE_CHARACTER'
 export const CHANGE_REGION = 'CHANGE_REGION'
 export const CHANGE_DATA_REGION = 'CHANGE_DATA_REGION'
+export const UPDATE_REGION_VERSION = 'UPDATE_REGION_VERSION'
 
 const isClient = typeof window !== 'undefined'
 
@@ -67,6 +68,10 @@ const reducer = reducerCreator(initialState, {
     localStorage.setItem('region', region)
     localStorage.setItem('version', version)
     return { ...state, region: { ...state.region, region, version } }
+  },
+  [UPDATE_REGION_VERSION]: (state, version) => {
+    localStorage.setItem('version', version)
+    return { ...state, region: { ...state.region, version } }
   },
   [CHANGE_DATA_REGION]: (state, payload) => {
     return {

@@ -65,7 +65,6 @@ const CharacterList = ({ t }) => {
     if (result.destination.index === result.source.index) return
     dispatch({ type: CHARACTER_REORDER, payload: result })
   }, [])
-  console.log(characters, search)
 
   return useMemo(
     () => (

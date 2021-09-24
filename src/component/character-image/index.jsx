@@ -96,12 +96,13 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
       hasCharacter &&
       characterData.mixDye &&
       characterData.mixDye.hairColorId &&
-      getHairColorId(characterData.selectedItems.Hair.id) !==
+      characterData.selectedItems.Hair &&
+      getHairColorId(characterData.selectedItems.Hair?.id) !==
         +characterData.mixDye.hairColorId
     ) {
       const copyCharacter = clone(characterData)
       copyCharacter.selectedItems.Hair.id =
-        formatHairId(characterData.selectedItems.Hair.id) * 10 +
+        formatHairId(characterData.selectedItems.Hair?.id) * 10 +
         +characterData.mixDye.hairColorId
       mixedCharacter = characterImage(copyCharacter, dataInformation)
       hairOpacity = characterData.mixDye.hairOpacity
@@ -110,7 +111,8 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
       hasCharacter &&
       characterData.mixDye &&
       characterData.mixDye.faceColorId &&
-      getFaceColorId(characterData.selectedItems.Face.id) !==
+      characterData.selectedItems.Face &&
+      getFaceColorId(characterData.selectedItems.Face?.id) !==
         +characterData.mixDye.faceColorId
     ) {
       const transparentCharacter = transparentifyCharacter(characterData)
@@ -189,7 +191,15 @@ const CharacterImage = ({ characterData, resize = 0.8, square }) => {
         window.cancelAnimationFrame || window.mozCancelAnimationFrame
       cancelAnimationFrame(_timer)
     }
-  }, [character, mixedCharacter, mixedFaceCharacter, resize, square])
+  }, [
+    character,
+    mixedCharacter,
+    mixedFaceCharacter,
+    hairOpacity,
+    faceOpacity,
+    resize,
+    square,
+  ])
 
   return (
     <div className="character-container">
