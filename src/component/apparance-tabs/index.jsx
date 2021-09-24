@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useMemo, memo } from 'react'
 
 import { APIGetWz } from '@api'
 import { useStore } from '@store'
-import { INITIAL_WZ, CHANGE_REGION } from '@store/meta'
+import { INITIAL_WZ, CHANGE_REGION, UPDATE_REGION_VERSION } from '@store/meta'
 
 /* component */
 import {
@@ -69,11 +69,14 @@ const useInitWz = (language) => {
   useEffect(() => {
     APIGetWz().then((data) => {
       dispatch({ type: INITIAL_WZ, payload: data })
-      if (!region)
+      if (!region) {
         dispatch({
           type: CHANGE_REGION,
           payload: data[LanguageToRegion[language] || 'GMS'],
         })
+      } else {
+        dispatch({ type: UPDATE_REGION_VERSION, payload: data[region].version })
+      }
     })
   }, [])
   const handleChangeWz = (value) =>
